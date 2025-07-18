@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
-import { TubsOfFunLogo } from '@/components/ui/logo';
+import { TubsOfFunLogo, TubbyLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -48,7 +48,7 @@ export function Header() {
           <div className="hidden lg:flex items-center space-x-2">
             <DesktopNav links={topNavLinks} />
           </div>
-           <Image src="https://placehold.co/80x100.png" alt="Polar Bear Mascot" width={80} height={100} className="hidden lg:block" data-ai-hint="polar bear mascot superhero"/>
+           <TubbyLogo className="hidden lg:block" />
 
           <div className="lg:hidden">
             <MobileNav />
