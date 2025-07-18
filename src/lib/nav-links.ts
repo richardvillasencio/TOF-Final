@@ -4,11 +4,28 @@ export type NavLink = {
   subLinks?: NavLink[];
 };
 
-export const navLinks: NavLink[] = [
+export const topNavLinks: NavLink[] = [
+  { 
+    href: '/contact', 
+    label: 'Contact Us',
+    subLinks: [
+      { href: '/about', label: 'About Us' },
+    ]
+  },
+  { 
+    href: '/about', 
+    label: 'Our Company',
+    subLinks: [
+      { href: '/service-repair', label: 'Service/Repair' },
+    ]
+  },
   { href: '/', label: 'Home' },
+];
+
+export const mainNavLinks: NavLink[] = [
   {
     href: '/hot-tubs',
-    label: 'Hot Tubs',
+    label: 'HOT TUBS',
     subLinks: [
       {
         href: '/hot-tubs/bullfrog-spas',
@@ -37,30 +54,27 @@ export const navLinks: NavLink[] = [
       }
     ],
   },
-  {
-    href: '/swim-spas',
-    label: 'Swim Spas',
-    subLinks: [
-      { href: '/swim-spas/collection', label: 'Swim Spa Collection' },
-    ],
-  },
+  { href: '/saunas', label: 'SAUNAS' },
   {
     href: '/pools',
-    label: 'Pool',
+    label: 'POOL',
     subLinks: [
         { href: '/pools/endless-pools', label: 'Fastlane Pro / Endless Pool' }
     ],
   },
-  { href: '/saunas', label: 'Saunas' },
-  { href: '/game-room', label: 'Game Room' },
+  {
+    href: '/swim-spas',
+    label: 'SWIM SPAS',
+    subLinks: [
+      { href: '/swim-spas/collection', label: 'Swim Spa Collection' },
+    ],
+  },
+  { href: '/game-room', label: 'GAME ROOM ESSENTIALS' },
   { 
     href: '/grills',
-    label: 'Grills',
+    label: 'GRILLS',
     subLinks: [
         { href: '/grills/calflame', label: 'CalFlame Grills' }
     ]
   },
-  { href: '/service-repair', label: 'Service/Repair' },
-  { href: '/about', label: 'About Us' },
-  { href: '/contact', label: 'Contact Us' },
 ];

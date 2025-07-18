@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
-import { Logo } from '@/components/ui/logo';
+import { TubsOfFunLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -18,54 +19,59 @@ import {
 } from '@/components/ui/menubar';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-import { navLinks, type NavLink } from '@/lib/nav-links';
+import { topNavLinks, mainNavLinks, type NavLink } from '@/lib/nav-links';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 
 export function Header() {
-  const isMobile = useIsMobile();
-
   return (
-    <header className="bg-background/95 backdrop-blur-sm sticky top-0 z-50 border-b">
+    <header className="bg-gradient-to-r from-[rgb(81,158,172)] to-[rgb(231,121,49)] text-white sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        {/* Top bar with contact info */}
-        <div className="flex justify-end items-center h-10 text-sm text-muted-foreground space-x-6">
-          <a href="tel:701-234-7727" className="flex items-center gap-2 hover:text-primary transition-colors">
-            <Phone size={14}/>
-            <span className="hidden sm:inline">Fargo: (701) 234-7727</span>
-          </a>
-          <a href="tel:952-435-4096" className="flex items-center gap-2 hover:text-primary transition-colors">
-            <Phone size={14}/>
-            <span className="hidden sm:inline">Lakeville: (952) 435-4096</span>
-          </a>
-           <Link href="/contact" className="flex items-center gap-2 hover:text-primary transition-colors">
-            <MapPin size={14}/>
-            <span className="hidden sm:inline">Locations</span>
-          </Link>
-        </div>
-
+        {/* Top Section */}
         <div className="flex justify-between items-center py-4">
-          <Link href="/" aria-label="TubClone Home">
-            <Logo />
-          </Link>
-          <nav className="hidden lg:flex items-center space-x-2">
-            <DesktopNav />
-          </nav>
+          <div className="flex items-center gap-4">
+             <Image src="https://placehold.co/80x80.png" alt="SDVOSB Logo" width={80} height={80} data-ai-hint="service disabled veteran owned small business logo"/>
+            <Link href="/" aria-label="Tubs of Fun Home">
+              <TubsOfFunLogo />
+            </Link>
+          </div>
+          <div className="hidden lg:flex flex-col items-end text-sm">
+             <div className="flex items-center gap-2">
+                <Phone size={16} />
+                <span>(701) 234-0705</span>
+             </div>
+             <div className="flex items-center gap-2">
+                <MapPin size={16} />
+                <span>601 Main Ave W. West Fargo, ND 58708</span>
+             </div>
+          </div>
+          <div className="hidden lg:flex items-center space-x-2">
+            <DesktopNav links={topNavLinks} />
+          </div>
+           <Image src="https://placehold.co/80x100.png" alt="Polar Bear Mascot" width={80} height={100} className="hidden lg:block" data-ai-hint="polar bear mascot superhero"/>
+
           <div className="lg:hidden">
             <MobileNav />
           </div>
+        </div>
+
+        {/* Separator */}
+        <hr className="border-t border-white/50" />
+
+        {/* Bottom Navigation */}
+        <div className="hidden lg:flex justify-center items-center py-2">
+          <DesktopNav links={mainNavLinks} />
         </div>
       </div>
     </header>
   );
 }
 
-const DesktopNav = () => {
+const DesktopNav = ({ links }: { links: NavLink[] }) => {
     const pathname = usePathname();
   
     const renderSubLinks = (subLinks: NavLink[]) => (
-      <MenubarContent>
+      <MenubarContent className="bg-background text-foreground">
         {subLinks.map((subLink) => (
           subLink.subLinks ? (
             <MenubarMenu key={subLink.href}>
@@ -75,7 +81,7 @@ const DesktopNav = () => {
                 )}>
                     {subLink.label} <ChevronDown className="h-4 w-4 transform -rotate-90" />
                 </MenubarSubTrigger>
-                <MenubarSubContent>
+                <MenubarSubContent className="bg-background text-foreground">
                   {renderSubLinks(subLink.subLinks)}
                 </MenubarSubContent>
             </MenubarMenu>
@@ -92,15 +98,20 @@ const DesktopNav = () => {
   
     return (
       <Menubar className="border-none bg-transparent p-0">
-        {navLinks.map((link) => (
+        {links.map((link) => (
+          link.href === '/' ? (
+             <Button key={link.href} variant="ghost" asChild className="font-semibold text-white hover:bg-white/20 hover:text-white">
+                <Link href={link.href}>{link.label}</Link>
+            </Button>
+          ) : (
           <MenubarMenu key={link.href}>
             <MenubarTrigger asChild>
               <Button
                 variant="ghost"
                 className={cn(
-                  "font-medium",
-                  pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)) ? 'bg-muted text-primary' : '',
-                  'hover:bg-muted/50'
+                  "font-semibold text-white",
+                  pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href)) ? 'bg-white/20' : '',
+                  'hover:bg-white/20 hover:text-white'
                 )}
               >
                 <Link href={link.href}>{link.label}</Link>
@@ -109,6 +120,7 @@ const DesktopNav = () => {
             </MenubarTrigger>
             {link.subLinks && renderSubLinks(link.subLinks)}
           </MenubarMenu>
+          )
         ))}
       </Menubar>
     );
@@ -117,26 +129,27 @@ const DesktopNav = () => {
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const allNavLinks = [...topNavLinks, ...mainNavLinks.filter(l => l.href !== '/')];
   
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 hover:text-white">
           <Menu className="h-6 w-6" />
           <span className="sr-only">Open menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-full max-w-sm p-0">
+      <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
         <div className="flex flex-col h-full">
             <div className="p-4 flex justify-between items-center border-b">
-                <Logo />
+                <TubsOfFunLogo />
                  <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
                     <X className="h-6 w-6" />
                     <span className="sr-only">Close menu</span>
                 </Button>
             </div>
           <div className="flex-grow overflow-y-auto p-4">
-            <MobileNavLinks onLinkClick={() => setIsOpen(false)} />
+            <MobileNavLinks links={allNavLinks} onLinkClick={() => setIsOpen(false)} />
           </div>
         </div>
       </SheetContent>
@@ -144,7 +157,7 @@ const MobileNav = () => {
   );
 };
 
-const MobileNavLinks = ({ onLinkClick }: { onLinkClick: () => void }) => {
+const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[], onLinkClick: () => void }) => {
     const pathname = usePathname();
   
     const renderLinks = (links: NavLink[], isSubmenu: boolean = false) => {
@@ -190,29 +203,5 @@ const MobileNavLinks = ({ onLinkClick }: { onLinkClick: () => void }) => {
       });
     };
   
-    return <div className="flex flex-col space-y-2">{renderLinks(navLinks)}</div>;
-  };
-  
-  const NavItem = ({ href, children, onLinkClick }: { href: string, children: React.ReactNode, onLinkClick: () => void }) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
-  
-    return (
-      <Link href={href} onClick={onLinkClick}>
-        <span className={cn('block px-4 py-2 rounded-md', isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>
-          {children}
-        </span>
-      </Link>
-    );
-  };
-  
-  const NestedNavItem = ({ label, children }: { label: string, children: React.ReactNode }) => {
-    return (
-      <div>
-        <h3 className="px-4 py-2 font-semibold">{label}</h3>
-        <div className="pl-4 border-l ml-4">
-          {children}
-        </div>
-      </div>
-    );
+    return <div className="flex flex-col space-y-2">{renderLinks(links)}</div>;
   };

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Logo } from '@/components/ui/logo';
+import { TubsOfFunLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Facebook, Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react';
@@ -18,7 +18,7 @@ export function Footer() {
           {/* About Section */}
           <div className="space-y-4">
             <Link href="/">
-              <Logo />
+              <TubsOfFunLogo className="fill-primary" />
             </Link>
             <p className="text-sm">
               Your premier destination for relaxation and recreation. We offer top-quality hot tubs, swim spas, and more to enhance your lifestyle.
