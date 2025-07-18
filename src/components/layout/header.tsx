@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
-import { TubsOfFunLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -21,6 +20,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 import { topNavLinks, mainNavLinks, type NavLink } from '@/lib/nav-links';
 import { cn } from '@/lib/utils';
+import { TubsOfFunLogo } from '@/components/ui/logo';
 
 
 export function Header() {
