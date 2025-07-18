@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
 import { TubsOfFunLogo, TubbyLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menubar,
   MenubarContent,
@@ -30,7 +30,7 @@ export function Header() {
         {/* Top Section */}
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
-             <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmp8t2sv2nz.webp?alt=media&token=7ed20596-228a-4a65-9891-e5544f8eaff4" alt="Tubs of Fun Logo" width={200} height={43} />
+             <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.appspot.com/o/tubs-of-fun-logo.svg?alt=media&token=e2d77413-4022-441f-8255-a4176840733d" alt="Tubs of Fun Logo" width={200} height={43} />
             <Link href="/" aria-label="Tubs of Fun Home">
               
             </Link>
@@ -140,14 +140,18 @@ const MobileNav = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
+        <SheetHeader className="p-4 border-b">
+          <SheetTitle className="sr-only">Main Menu</SheetTitle>
+          <SheetDescription className="sr-only">Website navigation links</SheetDescription>
+           <div className="flex justify-between items-center">
+             <TubsOfFunLogo />
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                 <X className="h-6 w-6" />
+                 <span className="sr-only">Close menu</span>
+             </Button>
+           </div>
+        </SheetHeader>
         <div className="flex flex-col h-full">
-            <div className="p-4 flex justify-between items-center border-b">
-                <TubsOfFunLogo />
-                 <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-                    <X className="h-6 w-6" />
-                    <span className="sr-only">Close menu</span>
-                </Button>
-            </div>
           <div className="flex-grow overflow-y-auto p-4">
             <MobileNavLinks links={allNavLinks} onLinkClick={() => setIsOpen(false)} />
           </div>
