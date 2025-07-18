@@ -30,9 +30,9 @@ export function Header() {
         {/* Top Section */}
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
-             <Image src="https://placehold.co/80x80.png" alt="SDVOSB Logo" width={80} height={80} data-ai-hint="service disabled veteran owned small business logo"/>
+             <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmp8t2sv2nz.webp?alt=media&token=7ed20596-228a-4a65-9891-e5544f8eaff4" alt="Tubs of Fun Logo" width={200} height={43} />
             <Link href="/" aria-label="Tubs of Fun Home">
-              <TubsOfFunLogo />
+              
             </Link>
           </div>
           <div className="hidden lg:flex flex-col items-end text-sm">
