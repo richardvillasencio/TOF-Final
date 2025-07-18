@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
 import { TubsOfFunLogo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menubar,
   MenubarContent,
