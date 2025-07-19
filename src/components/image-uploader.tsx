@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { UploadCloud, AlertCircle } from 'lucide-react';
+import { storage } from '@/lib/firebase/client'; // Import client storage
 
 interface ImageUploaderProps {
   currentImageUrl: string;
@@ -40,7 +41,6 @@ export function ImageUploader({
     reader.readAsDataURL(file);
 
     try {
-      const storage = getStorage();
       const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
       const uploadTask = await uploadBytes(fileRef, file);
       const downloadURL = await getDownloadURL(uploadTask.ref);

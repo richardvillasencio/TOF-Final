@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
-import { adminDb } from '../lib/firebase';
+import { adminDb } from '../lib/firebase/admin';
 import { designStudioContent } from '../lib/content/design-studio';
 import { homeContent } from '../lib/content/home';
 import { aboutContent } from '../lib/content/about';

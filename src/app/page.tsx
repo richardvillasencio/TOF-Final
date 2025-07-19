@@ -1,8 +1,9 @@
+
 // src/app/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import {
   DndContext,
   closestCenter,
@@ -21,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { GripVertical, LayoutList, Check } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
+import { firestore } from '@/lib/firebase/client'; // Import client firestore
 
 // Import all possible section components
 import { HeroSection } from '@/components/page-sections/hero-section';
@@ -61,8 +63,7 @@ function EditablePageLayout() {
         return;
       }
       try {
-        const db = getFirestore();
-        const layoutDocRef = doc(db, 'layouts', 'homePage');
+        const layoutDocRef = doc(firestore, 'layouts', 'homePage');
         const docSnap = await getDoc(layoutDocRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
@@ -100,8 +101,7 @@ function EditablePageLayout() {
   const handleSaveOrder = async () => {
     setIsSaving(true);
     try {
-      const db = getFirestore();
-      const layoutDocRef = doc(db, 'layouts', 'homePage');
+      const layoutDocRef = doc(firestore, 'layouts', 'homePage');
       await setDoc(layoutDocRef, { order: sectionOrder });
       setIsReorderMode(false);
     } catch (err) {

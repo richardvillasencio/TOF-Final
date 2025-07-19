@@ -1,6 +1,6 @@
 
 import 'server-only';
-import { adminDb } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebase/admin';
 import { unstable_cache } from 'next/cache';
 
 // A generic "PageSection" type that can represent any of our section components.

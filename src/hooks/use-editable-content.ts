@@ -2,7 +2,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { getFirestore, doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/firebase/client'; // Import client firestore
 
 /**
  * A custom hook to manage editable content for a component,
@@ -24,8 +25,7 @@ export function useEditableContent<T>({
   // For this prototype, we'll assume the user is always authenticated.
   const isAuth = true; 
 
-  const db = getFirestore();
-  const contentRef = doc(db, collectionName, docId);
+  const contentRef = doc(firestore, collectionName, docId);
 
   useEffect(() => {
     if (!isAuth) {
