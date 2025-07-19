@@ -377,13 +377,13 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
             <ImageUploader 
                 label="Logo"
                 currentImageUrl={content.logoImageUrl}
-                onUploadComplete={url => handleContentChange('logoImageUrl', url)}
+                onUploadComplete={(url) => handleContentChange('logoImageUrl', url)}
                 storagePath="globals/header"
             />
             <ImageUploader
                 label="Mascot"
                 currentImageUrl={content.mascotImageUrl}
-                onUploadComplete={url => handleContentChange('mascotImageUrl', url)}
+                onUploadComplete={(url) => handleContentChange('mascotImageUrl', url)}
                 storagePath="globals/header"
             />
           </div>

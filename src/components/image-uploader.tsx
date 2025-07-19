@@ -1,10 +1,9 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import {
-  getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
@@ -34,11 +33,7 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(currentImageUrl);
-
-  useEffect(() => {
-    setPreviewUrl(currentImageUrl);
-  }, [currentImageUrl]);
+  const [localPreview, setLocalPreview] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -47,8 +42,9 @@ export function ImageUploader({
     setUploading(true);
     setError(null);
     setProgress(0);
-    const localUrl = URL.createObjectURL(file);
-    setPreviewUrl(localUrl);
+
+    const tempUrl = URL.createObjectURL(file);
+    setLocalPreview(tempUrl);
 
     const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
@@ -56,39 +52,41 @@ export function ImageUploader({
     uploadTask.on(
       'state_changed',
       (snapshot) => {
-        const progress =
+        const currentProgress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
+        setProgress(currentProgress);
       },
       (error) => {
         console.error('Upload failed:', error);
         setError('Upload failed. Please try again.');
         setUploading(false);
-        setPreviewUrl(currentImageUrl); // Revert on error
-        URL.revokeObjectURL(localUrl);
+        setLocalPreview(null);
+        URL.revokeObjectURL(tempUrl);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           onUploadComplete(downloadURL);
           setUploading(false);
-          // The preview will be updated via the useEffect watching currentImageUrl
-          URL.revokeObjectURL(localUrl);
+          setLocalPreview(null);
+          URL.revokeObjectURL(tempUrl);
         });
       }
     );
   };
+  
+  const displayUrl = localPreview || currentImageUrl;
 
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {previewUrl && (
+      {displayUrl && (
         <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
           <Image
-            src={previewUrl}
+            src={displayUrl}
             alt="Image preview"
             fill
             className="object-contain"
-            key={previewUrl}
+            key={displayUrl}
           />
         </div>
       )}
