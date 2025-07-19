@@ -36,7 +36,6 @@ export function TextWithImageSection({ id, title, paragraphs, image, imagePositi
               className="rounded-lg shadow-xl" 
               data-ai-hint={image.dataAiHint}
               data-studio-id={`${id}/image/src`}
-              data-studio-props='{ "src": "image" }'
             />
           </div>
         </div>

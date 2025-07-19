@@ -27,7 +27,7 @@ export function FeaturedProductsSection({ id, title, products }: FeaturedProduct
           {products.map((product, index) => (
             <Card key={product.name} data-studio-id={`${id}/products/${index}`} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="p-0">
-                <Image src={product.image} alt={product.name} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={product.dataAiHint} data-studio-id={`${id}/products/${index}/image`} data-studio-props='{ "image": "image" }' />
+                <Image src={product.image} alt={product.name} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={product.dataAiHint} data-studio-id={`${id}/products/${index}/image`} />
               </CardHeader>
               <CardContent className="p-6 flex-grow">
                 <p data-studio-id={`${id}/products/${index}/brand`} className="text-sm text-primary font-semibold">{product.brand}</p>

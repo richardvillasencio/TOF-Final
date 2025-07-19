@@ -7,7 +7,7 @@ type ButtonLink = {
 };
 
 export type HeroSectionProps = {
-  id: string; // The document ID from Firestore
+  id: string; 
   component: 'HeroSection';
   backgroundImage: string;
   backgroundHint: string;
@@ -26,7 +26,7 @@ export function HeroSection({ id, backgroundImage, backgroundHint, title, subtit
       className="relative h-[60vh] md:h-[70vh] bg-cover bg-center" 
       style={{ backgroundImage: `url('${backgroundImage}')` }} 
       data-ai-hint={backgroundHint}
-      data-studio-props='{ "backgroundImage": "image" }'
+      data-studio-id-prop="backgroundImage"
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white p-4">
@@ -44,10 +44,10 @@ export function HeroSection({ id, backgroundImage, backgroundHint, title, subtit
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <Button asChild size="lg" variant="accent" className="text-lg px-8 py-6">
-            <Link href={buttons.primary.href} data-studio-id={`${id}/buttons/primary/text`}>{buttons.primary.text}</Link>
+            <Link href={buttons.primary.href} data-studio-id={`${id}/buttons/primary`}>{buttons.primary.text}</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent text-white border-white hover:bg-white hover:text-primary">
-            <Link href={buttons.secondary.href} data-studio-id={`${id}/buttons/secondary/text`}>{buttons.secondary.text}</Link>
+            <Link href={buttons.secondary.href} data-studio-id={`${id}/buttons/secondary`}>{buttons.secondary.text}</Link>
           </Button>
         </div>
       </div>

@@ -117,7 +117,7 @@ export function ContactForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" variant="accent" size="lg" disabled={form.formState.isSubmitting}>
+        <Button type="submit" variant="default" size="lg" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </form>

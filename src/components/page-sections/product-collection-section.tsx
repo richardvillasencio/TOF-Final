@@ -23,7 +23,7 @@ export function ProductCollectionSection({ id, title, products }: ProductCollect
         <div data-studio-id-mode="reorder" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.map((product, index) => (
             <div key={product.name} data-studio-id={`${id}/products/${index}`}>
-                <ProductCard {...product} />
+                <ProductCard {...product} idPrefix={`${id}/products/${index}`} />
             </div>
           ))}
         </div>

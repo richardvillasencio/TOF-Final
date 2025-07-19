@@ -29,7 +29,6 @@ export function TeamSection({ id, title, members }: TeamSectionProps) {
                 className="rounded-full mx-auto mb-4 shadow-lg" 
                 data-ai-hint={member.dataAiHint}
                 data-studio-id={`${id}/members/${index}/image`}
-                data-studio-props='{ "image": "image" }'
               />
               <h3 data-studio-id={`${id}/members/${index}/name`} className="text-lg font-bold">{member.name}</h3>
               <p data-studio-id={`${id}/members/${index}/role`} className="text-primary">{member.role}</p>

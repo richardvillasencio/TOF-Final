@@ -8,7 +8,7 @@ type Review = {
 };
 
 export type TestimonialsSectionProps = {
-  id: string; // The document ID from Firestore
+  id: string;
   component: 'TestimonialsSection';
   title: string;
   reviews: Review[];

@@ -34,26 +34,26 @@ export function FeaturedBrandsSection({ id, subtitle, title, description, brands
             </p>
             <div className="flex space-x-4">
               <Button asChild>
-                <Link href={buttons.primary.href} data-studio-id={`${id}/buttons/primary/text`}>{buttons.primary.text}</Link>
+                <Link href={buttons.primary.href} data-studio-id={`${id}/buttons/primary`}>{buttons.primary.text}</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href={buttons.secondary.href} data-studio-id={`${id}/buttons/secondary/text`}>{buttons.secondary.text}</Link>
+                <Link href={buttons.secondary.href} data-studio-id={`${id}/buttons/secondary`}>{buttons.secondary.text}</Link>
               </Button>
             </div>
           </div>
           <div data-studio-id-mode="reorder" className="grid grid-cols-2 gap-4">
             {brands.map((brand, index) => (
-                <Image 
-                    key={brand.name}
-                    src={brand.logoUrl} 
-                    alt={`${brand.name} Logo`}
-                    width={400} 
-                    height={300} 
-                    className="rounded-lg" 
-                    data-ai-hint={brand.dataAiHint}
-                    data-studio-id={`${id}/brands/${index}/logoUrl`}
-                    data-studio-props='{ "logoUrl": "image" }'
-                />
+                <div key={brand.name} data-studio-id={`${id}/brands/${index}`}>
+                    <Image 
+                        src={brand.logoUrl} 
+                        alt={`${brand.name} Logo`}
+                        width={400} 
+                        height={300} 
+                        className="rounded-lg" 
+                        data-ai-hint={brand.dataAiHint}
+                        data-studio-id={`${id}/brands/${index}/logoUrl`}
+                    />
+                </div>
             ))}
           </div>
         </div>
