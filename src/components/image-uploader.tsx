@@ -43,8 +43,8 @@ export function ImageUploader({
     try {
         const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
         
-        const snapshot = await uploadBytes(fileRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
 
         onUploadComplete(downloadURL);
 
@@ -95,7 +95,7 @@ export function ImageUploader({
           />
         </label>
         
-        {uploading && (
+        {uploading && !localPreview && (
           <div className="w-full space-y-2">
             <Progress value={100} className="h-2 animate-pulse" />
             <p className="text-xs text-muted-foreground">Uploading...</p>

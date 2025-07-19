@@ -352,9 +352,10 @@ function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
     key: K,
     value: HeaderContent[K]
   ) => {
-    if (content) {
-        setContent(prev => ({ ...prev!, [key]: value }));
-    }
+    setContent(prev => {
+        if (!prev) return null;
+        return { ...prev, [key]: value };
+    });
   };
 
   return (
