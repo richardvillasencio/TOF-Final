@@ -15,13 +15,14 @@ export type CtaSectionProps = {
 };
 
 export function CtaSection({ id, title, subtitle, button }: CtaSectionProps) {
+  const docPath = `pages/hot-tubs/sections/${id}`;
   return (
-    <section data-studio-id={id} className="bg-primary text-primary-foreground">
+    <section data-studio-id={docPath} className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-16 text-center">
-          <h2 data-studio-id={`${id}/title`} className="text-3xl font-bold">{title}</h2>
-          <p data-studio-id={`${id}/subtitle`} className="mt-2 mb-6 max-w-2xl mx-auto">{subtitle}</p>
+          <h2 data-studio-id={`${docPath}/title`} className="text-3xl font-bold">{title}</h2>
+          <p data-studio-id={`${docPath}/subtitle`} className="mt-2 mb-6 max-w-2xl mx-auto">{subtitle}</p>
           <Button asChild variant="accent" size="lg">
-              <Link href={button.href} data-studio-id={`${id}/button`}>{button.text} <ArrowRight className="ml-2 h-5 w-5"/></Link>
+              <Link href={button.href} data-studio-id={`${docPath}/button`}>{button.text} <ArrowRight className="ml-2 h-5 w-5"/></Link>
           </Button>
       </div>
     </section>

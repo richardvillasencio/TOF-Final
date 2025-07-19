@@ -31,7 +31,7 @@ export default async function DesignStudioPage() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error Loading Content</AlertTitle>
               <AlertDescription>
-                We were unable to load the content for the 'Design Studio' page. Please ensure you have run the database seed command: 'npm run seed'.
+                We were unable to load the content for the &apos;Design Studio&apos; page. Please ensure you have run the database seed command: `npm run seed`.
               </AlertDescription>
             </Alert>
         </div>
@@ -39,7 +39,7 @@ export default async function DesignStudioPage() {
   }
 
   return (
-    <div className="flex flex-col" data-studio-id="design-studio-page-container" data-studio-id-mode="reorder">
+    <div data-studio-id="pages/design-studio/sections" data-studio-id-mode="reorder" className="flex flex-col">
       {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
     </div>
   );

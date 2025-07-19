@@ -33,7 +33,7 @@ export default async function AboutPage() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error Loading Content</AlertTitle>
               <AlertDescription>
-                We were unable to load the content for the 'About' page. Please ensure you have run the database seed command: 'npm run seed'.
+                We were unable to load the content for the &apos;About&apos; page. Please ensure you have run the database seed command: `npm run seed`.
               </AlertDescription>
             </Alert>
         </div>
@@ -41,7 +41,7 @@ export default async function AboutPage() {
   }
 
   return (
-    <div className="flex flex-col" data-studio-id="about-page-container" data-studio-id-mode="reorder">
+    <div data-studio-id="pages/about/sections" data-studio-id-mode="reorder" className="flex flex-col">
       {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
     </div>
   );
