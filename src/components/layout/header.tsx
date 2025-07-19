@@ -330,7 +330,7 @@ interface EditHeaderDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   content: HeaderContent;
-  setContent: (content: HeaderContent) => void;
+  setContent: React.Dispatch<React.SetStateAction<HeaderContent>>;
   onSave: () => void;
 }
 
@@ -344,7 +344,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
     key: K,
     value: HeaderContent[K]
   ) => {
-    setContent({ ...content, [key]: value });
+    setContent(prev => ({ ...prev, [key]: value }));
   };
 
   return (

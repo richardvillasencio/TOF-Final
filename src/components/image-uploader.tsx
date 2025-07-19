@@ -64,13 +64,14 @@ export function ImageUploader({
         console.error('Upload failed:', error);
         setError('Upload failed. Please try again.');
         setUploading(false);
-        setPreviewUrl(currentImageUrl);
+        setPreviewUrl(currentImageUrl); // Revert on error
         URL.revokeObjectURL(localUrl);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           onUploadComplete(downloadURL);
           setUploading(false);
+          // The preview will be updated via the useEffect watching currentImageUrl
           URL.revokeObjectURL(localUrl);
         });
       }
@@ -92,24 +93,26 @@ export function ImageUploader({
         </div>
       )}
       <div className="flex flex-col gap-4">
-        <Button asChild variant="outline" className="relative w-fit">
-          <label
-            htmlFor={`image-upload-${label}`}
-            className="flex cursor-pointer items-center"
-          >
-            <UploadCloud className="mr-2 h-4 w-4" />
-            Change Image
-            <Input
-              id={`image-upload-${label}`}
-              type="file"
-              accept="image/*"
-              className="sr-only"
-              onChange={handleFileChange}
-              disabled={uploading}
-            />
-          </label>
-        </Button>
-
+        <label
+          htmlFor={`image-upload-${label}`}
+          className={cn(
+              "relative w-fit",
+              buttonVariants({ variant: 'outline' }),
+              "flex cursor-pointer items-center"
+            )}
+        >
+          <UploadCloud className="mr-2 h-4 w-4" />
+          Change Image
+          <Input
+            id={`image-upload-${label}`}
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={handleFileChange}
+            disabled={uploading}
+          />
+        </label>
+        
         {uploading && (
           <div className="w-full space-y-2">
             <Progress value={progress} className="h-2" />
