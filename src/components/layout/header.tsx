@@ -61,7 +61,7 @@ export function Header() {
     const docRef = doc(firestore, 'globals', 'header');
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
-            setContent(docSnap.data() as HeaderContent);
+            setContent(prev => ({ ...prev, ...docSnap.data() as HeaderContent}));
         }
         setLoading(false);
     }, (error) => {
@@ -151,8 +151,9 @@ export function Header() {
         <EditHeaderDialog
             isOpen={isEditDialogOpen}
             onOpenChange={setIsEditDialogOpen}
-            currentContent={content}
-            onSave={updateContent}
+            content={content}
+            setContent={setContent}
+            onSave={() => updateContent(content)}
         />
       )}
     </header>
@@ -321,21 +322,14 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 interface EditHeaderDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  currentContent: HeaderContent;
-  onSave: (newContent: Partial<HeaderContent>) => void;
+  content: HeaderContent;
+  setContent: (content: HeaderContent) => void;
+  onSave: () => void;
 }
 
-function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: EditHeaderDialogProps) {
-  const [editedContent, setEditedContent] = useState(currentContent);
-
-  useEffect(() => {
-    if (isOpen) {
-      setEditedContent(currentContent);
-    }
-  }, [isOpen, currentContent]);
-
+function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }: EditHeaderDialogProps) {
   const handleSave = () => {
-    onSave(editedContent);
+    onSave();
     onOpenChange(false);
   };
   
@@ -343,7 +337,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
     key: K,
     value: HeaderContent[K]
   ) => {
-    setEditedContent(prev => ({ ...prev, [key]: value }));
+    setContent({ ...content, [key]: value });
   };
 
   return (
@@ -362,21 +356,21 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
             <div>
               <Label>Phone Number</Label>
               <Input
-                value={editedContent.phoneNumber}
+                value={content.phoneNumber}
                 onChange={e => handleContentChange('phoneNumber', e.target.value)}
               />
             </div>
              <div>
               <Label>Address</Label>
               <Input
-                value={editedContent.address}
+                value={content.address}
                 onChange={e => handleContentChange('address', e.target.value)}
               />
             </div>
             <div>
               <Label>Company Logo</Label>
               <ImageUploader 
-                currentImageUrl={editedContent.logoImageUrl}
+                currentImageUrl={content.logoImageUrl}
                 onUploadComplete={url => handleContentChange('logoImageUrl', url)}
                 storagePath="globals/header"
               />
@@ -384,7 +378,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
              <div>
               <Label>Mascot Image</Label>
               <ImageUploader 
-                currentImageUrl={editedContent.mascotImageUrl}
+                currentImageUrl={content.mascotImageUrl}
                 onUploadComplete={url => handleContentChange('mascotImageUrl', url)}
                 storagePath="globals/header"
               />
@@ -395,13 +389,13 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
           <div className="space-y-4">
              <h3 className="text-lg font-medium">Top Navigation</h3>
              <EditableNavMenu 
-                links={editedContent.topNavLinks}
+                links={content.topNavLinks}
                 onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
              />
              <hr className="my-4"/>
              <h3 className="text-lg font-medium">Main Navigation</h3>
               <EditableNavMenu 
-                links={editedContent.mainNavLinks}
+                links={content.mainNavLinks}
                 onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
              />
           </div>
