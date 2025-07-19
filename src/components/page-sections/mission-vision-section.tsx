@@ -1,6 +1,6 @@
 import type { LucideProps } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes } from 'react';
-import *LucideIcons from 'lucide-react';
+import *as LucideIcons from 'lucide-react';
 
 type Item = {
   icon: keyof typeof LucideIcons;
