@@ -2,10 +2,8 @@ import { loadPageContent, type PageSection } from '@/lib/content-loader';
 import { HeroSection } from '@/components/page-sections/hero-section';
 import { WhyChooseUsSection } from '@/components/page-sections/why-choose-us-section';
 import { TestimonialsSection } from '@/components/page-sections/testimonials-section';
-import { notFound } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import type { ComponentProps } from 'react';
 
 const componentMap: Record<string, React.ComponentType<any>> = {
   HeroSection,
@@ -13,7 +11,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   TestimonialsSection,
 };
 
-function renderComponent(config: PageSection, index: number) {
+function renderComponent(config: PageSection) {
   const Component = componentMap[config.component];
   if (!Component) {
     return null;
@@ -40,7 +38,7 @@ export default async function DesignStudioPage() {
 
   return (
     <div data-studio-id="pages/design-studio/sections" data-studio-id-mode="reorder" className="flex flex-col">
-      {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
+      {pageContent.map((sectionConfig) => renderComponent(sectionConfig))}
     </div>
   );
 }

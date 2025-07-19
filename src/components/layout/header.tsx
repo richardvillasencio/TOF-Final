@@ -22,6 +22,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { topNavLinks, mainNavLinks, type NavLink } from '@/lib/nav-links';
 import { cn } from '@/lib/utils';
 import { TubsOfFunLogo } from '@/components/ui/logo';
+import { ThemeToggle } from '../theme-toggle';
 
 
 export function Header() {
@@ -47,6 +48,7 @@ export function Header() {
           </div>
           <div className="hidden lg:flex items-center space-x-2">
             <DesktopNav links={topNavLinks} />
+            <ThemeToggle />
           </div>
            <Image 
              src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpw_imh3fc.webp?alt=media&token=49a0cdfb-d711-4eea-a4b5-3713bc4da3be" 
@@ -56,7 +58,8 @@ export function Header() {
              className="hidden lg:block"
            />
 
-          <div className="lg:hidden">
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
             <MobileNav />
           </div>
         </div>

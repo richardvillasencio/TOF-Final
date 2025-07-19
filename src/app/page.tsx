@@ -15,7 +15,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   ShowroomsSection,
 };
 
-function renderComponent(config: PageSection, index: number) {
+function renderComponent(config: PageSection) {
   const Component = componentMap[config.component];
   if (!Component) {
     return null;
@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <div data-studio-id="pages/home/sections" data-studio-id-mode="reorder" className="flex flex-col">
-      {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
+      {pageContent.map((sectionConfig) => renderComponent(sectionConfig))}
     </div>
   );
 }

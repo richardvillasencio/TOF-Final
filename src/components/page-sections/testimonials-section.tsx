@@ -18,14 +18,13 @@ export type TestimonialsSectionProps = {
 
 export function TestimonialsSection({ id, title, reviews }: TestimonialsSectionProps) {
   const pathname = usePathname();
-  // Determine page slug from pathname for constructing doc path
   const pageSlug = pathname.substring(1) || 'home';
   const docPath = `pages/${pageSlug}/sections/${id}`;
 
   return (
     <section data-studio-id={docPath} className="py-16 sm:py-24 bg-muted">
        <div className="container mx-auto px-4">
-        <h2 data-studio-id={`${docPath}/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
+        <h2 data-studio-id={`${docPath}/props/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
         <Carousel
           opts={{
             align: "start",
@@ -33,15 +32,15 @@ export function TestimonialsSection({ id, title, reviews }: TestimonialsSectionP
           }}
           className="w-full max-w-4xl mx-auto"
         >
-          <CarouselContent data-studio-id={`${docPath}/reviews`} data-studio-id-mode="reorder">
+          <CarouselContent data-studio-id={`${docPath}/props/reviews`} data-studio-id-mode="reorder">
             {reviews.map((testimonial, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2" data-studio-id={`${docPath}/reviews/${index}`}>
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2" data-studio-id={`${docPath}/props/reviews/${index}`}>
                 <div className="p-1">
                   <Card className="h-full">
                     <CardContent className="flex flex-col justify-center p-6 text-center h-full">
-                      <p data-studio-id={`${docPath}/reviews/${index}/quote`} className="text-lg italic text-muted-foreground mb-4">"{testimonial.quote}"</p>
-                      <p data-studio-id={`${docPath}/reviews/${index}/name`} className="font-bold text-primary">{testimonial.name}</p>
-                      <p data-studio-id={`${docPath}/reviews/${index}/location`} className="text-sm text-muted-foreground">{testimonial.location}</p>
+                      <p data-studio-id={`${docPath}/props/reviews/${index}/quote`} className="text-lg italic text-muted-foreground mb-4">"{testimonial.quote}"</p>
+                      <p data-studio-id={`${docPath}/props/reviews/${index}/name`} className="font-bold text-primary">{testimonial.name}</p>
+                      <p data-studio-id={`${docPath}/props/reviews/${index}/location`} className="text-sm text-muted-foreground">{testimonial.location}</p>
                     </CardContent>
                   </Card>
                 </div>

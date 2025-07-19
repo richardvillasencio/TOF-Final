@@ -19,10 +19,10 @@ export function TextWithImageSection({ id, title, paragraphs, image, imagePositi
       <div className="container mx-auto px-4">
         <div className={`grid md:grid-cols-2 gap-12 items-center ${imagePosition === 'right' ? '' : 'md:grid-flow-col-dense'}`}>
           <div className={imagePosition === 'right' ? '' : 'md:col-start-2'}>
-            <h2 data-studio-id={`${docPath}/title`} className="text-3xl font-bold mb-4">{title}</h2>
-            <div data-studio-id={`${docPath}/paragraphs`} data-studio-id-mode="reorder">
+            <h2 data-studio-id={`${docPath}/props/title`} className="text-3xl font-bold mb-4">{title}</h2>
+            <div data-studio-id={`${docPath}/props/paragraphs`} data-studio-id-mode="reorder">
                 {paragraphs.map((text, index) => (
-                <p key={index} data-studio-id={`${docPath}/paragraphs/${index}`} className="text-muted-foreground mb-4">
+                <p key={index} data-studio-id={`${docPath}/props/paragraphs/${index}`} className="text-muted-foreground mb-4">
                     {text}
                 </p>
                 ))}
@@ -36,7 +36,7 @@ export function TextWithImageSection({ id, title, paragraphs, image, imagePositi
               height={400} 
               className="rounded-lg shadow-xl" 
               data-ai-hint={image.dataAiHint}
-              data-studio-id={`${docPath}/image/src`}
+              data-studio-id={`${docPath}/props/image/src`}
             />
           </div>
         </div>

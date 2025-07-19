@@ -3,10 +3,8 @@ import { HeroSection } from '@/components/page-sections/hero-section';
 import { FeaturedBrandsSection } from '@/components/page-sections/featured-brands-section';
 import { ProductCollectionSection } from '@/components/page-sections/product-collection-section';
 import { CtaSection } from '@/components/page-sections/cta-section';
-import { notFound } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import type { ComponentProps } from 'react';
 
 const componentMap: Record<string, React.ComponentType<any>> = {
   HeroSection,
@@ -15,14 +13,13 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   CtaSection,
 };
 
-function renderComponent(config: PageSection, index: number) {
+function renderComponent(config: PageSection) {
   const Component = componentMap[config.component];
   if (!Component) {
     return null;
   }
   return <Component key={config.id} {...config.props} id={config.id} />;
 }
-
 
 export default async function HotTubsPage() {
   const pageContent = await loadPageContent('hot-tubs');
@@ -43,7 +40,7 @@ export default async function HotTubsPage() {
 
   return (
     <div data-studio-id="pages/hot-tubs/sections" data-studio-id-mode="reorder" className="flex flex-col">
-      {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
+      {pageContent.map((sectionConfig) => renderComponent(sectionConfig))}
     </div>
   );
 }

@@ -18,10 +18,10 @@ export function TeamSection({ id, title, members }: TeamSectionProps) {
   return (
     <section data-studio-id={docPath} className="py-16 sm:py-24">
       <div className="container mx-auto px-4">
-        <h2 data-studio-id={`${docPath}/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
-        <div data-studio-id={`${docPath}/members`} data-studio-id-mode="reorder" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <h2 data-studio-id={`${docPath}/props/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
+        <div data-studio-id={`${docPath}/props/members`} data-studio-id-mode="reorder" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {members.map((member, index) => (
-            <div key={member.name} data-studio-id={`${docPath}/members/${index}`} className="text-center">
+            <div key={member.name} data-studio-id={`${docPath}/props/members/${index}`} className="text-center">
               <Image 
                 src={member.image} 
                 alt={member.name} 
@@ -29,10 +29,10 @@ export function TeamSection({ id, title, members }: TeamSectionProps) {
                 height={200} 
                 className="rounded-full mx-auto mb-4 shadow-lg" 
                 data-ai-hint={member.dataAiHint}
-                data-studio-id={`${docPath}/members/${index}/image`}
+                data-studio-id={`${docPath}/props/members/${index}/image`}
               />
-              <h3 data-studio-id={`${docPath}/members/${index}/name`} className="text-lg font-bold">{member.name}</h3>
-              <p data-studio-id={`${docPath}/members/${index}/role`} className="text-primary">{member.role}</p>
+              <h3 data-studio-id={`${docPath}/props/members/${index}/name`} className="text-lg font-bold">{member.name}</h3>
+              <p data-studio-id={`${docPath}/props/members/${index}/role`} className="text-primary">{member.role}</p>
             </div>
           ))}
         </div>
