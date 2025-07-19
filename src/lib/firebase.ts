@@ -1,6 +1,12 @@
+
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import admin from 'firebase-admin';
+import dotenv from 'dotenv';
+
+// Force load .env.local for server-side operations, especially for scripts.
+dotenv.config({ path: '.env.local' });
+
 
 // Client-side Firebase configuration
 const firebaseConfig: FirebaseOptions = {
