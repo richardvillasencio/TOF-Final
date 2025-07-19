@@ -31,7 +31,7 @@ export function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Tubs of Fun Home">
-              <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.appspot.com/o/tubs-of-fun-logo.png?alt=media&token=1b57c963-c7b4-4340-a615-9c8c83e2008f" alt="Tubs of Fun Logo" width={200} height={43} />
+              <TubsOfFunLogo />
             </Link>
           </div>
           <div className="hidden lg:flex flex-col items-end text-sm">
