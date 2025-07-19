@@ -20,7 +20,7 @@ function renderComponent(config: PageSection, index: number) {
   if (!Component) {
     return null;
   }
-  return <Component key={`${config.component}-${index}`} {...config.props} id={config.id} />;
+  return <Component key={config.id} {...config.props} id={config.id} />;
 }
 
 export default async function Home() {
@@ -31,9 +31,9 @@ export default async function Home() {
         <div className="container mx-auto px-4 py-16">
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Content Unavailable</AlertTitle>
+              <AlertTitle>Error Loading Content</AlertTitle>
               <AlertDescription>
-                 We were unable to load the content for this page. Please try again later. This may be due to a misconfigured database connection or missing content. Try running 'npm run seed' to populate the database.
+                 We were unable to load the content for the 'Home' page. Please ensure you have run the database seed command: 'npm run seed'.
               </AlertDescription>
             </Alert>
         </div>

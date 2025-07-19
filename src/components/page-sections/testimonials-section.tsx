@@ -9,7 +9,6 @@ type Review = {
 
 export type TestimonialsSectionProps = {
   id: string;
-  component: 'TestimonialsSection';
   title: string;
   reviews: Review[];
 };
@@ -26,7 +25,7 @@ export function TestimonialsSection({ id, title, reviews }: TestimonialsSectionP
           }}
           className="w-full max-w-4xl mx-auto"
         >
-          <CarouselContent data-studio-id-mode="reorder">
+          <CarouselContent data-studio-id={`${id}/reviews`} data-studio-id-mode="reorder">
             {reviews.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2" data-studio-id={`${id}/reviews/${index}`}>
                 <div className="p-1">

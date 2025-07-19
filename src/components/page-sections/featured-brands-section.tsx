@@ -41,7 +41,7 @@ export function FeaturedBrandsSection({ id, subtitle, title, description, brands
               </Button>
             </div>
           </div>
-          <div data-studio-id-mode="reorder" className="grid grid-cols-2 gap-4">
+          <div data-studio-id={`${id}/brands`} data-studio-id-mode="reorder" className="grid grid-cols-2 gap-4">
             {brands.map((brand, index) => (
                 <div key={brand.name} data-studio-id={`${id}/brands/${index}`}>
                     <Image 

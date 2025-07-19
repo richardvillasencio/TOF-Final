@@ -17,7 +17,7 @@ export function MissionVisionSection({ id, items }: MissionVisionSectionProps) {
   return (
     <section data-studio-id={id} className="py-16 sm:py-24 bg-muted">
       <div className="container mx-auto px-4">
-        <div data-studio-id-mode="reorder" className="grid md:grid-cols-3 gap-8 text-center">
+        <div data-studio-id={`${id}/items`} data-studio-id-mode="reorder" className="grid md:grid-cols-3 gap-8 text-center">
           {items.map((item, index) => {
              const IconComponent = LucideIcons[item.icon] as ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>> | undefined;
              return (

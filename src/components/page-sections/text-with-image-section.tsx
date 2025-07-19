@@ -19,7 +19,7 @@ export function TextWithImageSection({ id, title, paragraphs, image, imagePositi
         <div className={`grid md:grid-cols-2 gap-12 items-center ${imagePosition === 'right' ? '' : 'md:grid-flow-col-dense'}`}>
           <div className={imagePosition === 'right' ? '' : 'md:col-start-2'}>
             <h2 data-studio-id={`${id}/title`} className="text-3xl font-bold mb-4">{title}</h2>
-            <div data-studio-id-mode="reorder">
+            <div data-studio-id={`${id}/paragraphs`} data-studio-id-mode="reorder">
                 {paragraphs.map((text, index) => (
                 <p key={index} data-studio-id={`${id}/paragraphs/${index}`} className="text-muted-foreground mb-4">
                     {text}

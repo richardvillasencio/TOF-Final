@@ -21,7 +21,7 @@ export function LocationsSection({ id, title, locations }: LocationsSectionProps
     <section data-studio-id={id} className="py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <h2 data-studio-id={`${id}/title`} className="text-3xl font-bold mb-6">{title}</h2>
-        <div data-studio-id-mode="reorder" className="space-y-12">
+        <div data-studio-id={`${id}/locations`} data-studio-id-mode="reorder" className="space-y-12">
           {locations.map((location, index) => (
             <div key={index} data-studio-id={`${id}/locations/${index}`} className="grid sm:grid-cols-2 gap-8 items-center">
               <div>
@@ -32,7 +32,7 @@ export function LocationsSection({ id, title, locations }: LocationsSectionProps
                   <a href={`mailto:${location.email}`} className="flex items-center gap-3 hover:text-primary"><Mail size={16} /> <span data-studio-id={`${id}/locations/${index}/email`}>{location.email}</span></a>
                   <div className="flex items-start gap-3">
                     <Clock size={16} className="mt-1" />
-                    <div data-studio-id-mode="reorder">
+                    <div data-studio-id={`${id}/locations/${index}/hours`} data-studio-id-mode="reorder">
                       <strong>Hours:</strong>
                       {location.hours.map((line, hourIndex) => (
                         <p key={hourIndex} data-studio-id={`${id}/locations/${index}/hours/${hourIndex}`}>{line}</p>

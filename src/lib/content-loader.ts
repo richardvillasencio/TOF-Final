@@ -12,7 +12,7 @@ export type PageSection = {
 };
 
 // A map to dynamically import the fallback content.
-const staticContentFallbacks: Record<string, () => Promise<{ default: any }>> = {
+const staticContentFallbacks: Record<string, () => Promise<{ [key: string]: PageSection[] }>> = {
   'home': () => import('@/lib/content/home').then(m => ({ default: m.homeContent })),
   'design-studio': () => import('@/lib/content/design-studio').then(m => ({ default: m.designStudioContent })),
   'about': () => import('@/lib/content/about').then(m => ({ default: m.aboutContent })),
@@ -39,7 +39,8 @@ export const loadPageContent = unstable_cache(
         if (!snapshot.empty) {
           const content = snapshot.docs.map(doc => ({
             id: doc.id,
-            ...doc.data(),
+            component: doc.data().component,
+            props: doc.data().props,
           } as PageSection));
           console.log(`Successfully fetched ${content.length} sections for page: ${page} from Firestore.`);
           return content;
@@ -58,7 +59,9 @@ export const loadPageContent = unstable_cache(
         if (fallbackLoader) {
             console.log(`Loading fallback content for page: ${page}`);
             const contentModule = await fallbackLoader();
-            return contentModule.default;
+            // The dynamic import returns a module object, the content is the default export
+            const pageContent = (contentModule as any).default || contentModule[Object.keys(contentModule)[0]];
+            return pageContent;
         } else {
             console.error(`No static fallback content found for page: ${page}`);
             return null;

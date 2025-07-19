@@ -8,7 +8,6 @@ type ButtonLink = {
 
 export type HeroSectionProps = {
   id: string; 
-  component: 'HeroSection';
   backgroundImage: string;
   backgroundHint: string;
   title: string;
