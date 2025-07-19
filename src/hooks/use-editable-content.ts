@@ -3,7 +3,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import { useUser } from '@clerk/nextjs'; // Assuming you are using Clerk for auth
 
 /**
  * A custom hook to manage editable content for a component,
@@ -24,9 +23,7 @@ export function useEditableContent<T>({
   const [loading, setLoading] = useState(true);
   
   // Placeholder for real authentication. In this prototype, we'll assume the user is always authenticated.
-  // In a real app, you would use something like:
-  // const { user } = useUser();
-  // const isAuth = !!user;
+  // In a real app, you would integrate your actual authentication provider here.
   const isAuth = true; 
 
   const db = getFirestore();
@@ -55,7 +52,7 @@ export function useEditableContent<T>({
     };
 
     fetchContent();
-  }, [docPath, isAuth]); // Re-fetch if docPath or auth state changes
+  }, [docPath, isAuth, contentRef, initialContent]);
 
   const saveContent = useCallback(async (newContent: T) => {
     if (!isAuth) {
@@ -68,7 +65,7 @@ export function useEditableContent<T>({
     } catch (error) {
       console.error('Error saving content:', error);
     }
-  }, [docPath, isAuth]);
+  }, [contentRef, isAuth]);
 
   return {
     content,
