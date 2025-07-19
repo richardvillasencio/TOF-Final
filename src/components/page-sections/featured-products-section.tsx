@@ -13,28 +13,29 @@ type Product = {
 };
 
 export type FeaturedProductsSectionProps = {
+  id: string;
   title: string;
   products: Product[];
 };
 
-export function FeaturedProductsSection({ title, products }: FeaturedProductsSectionProps) {
+export function FeaturedProductsSection({ id, title, products }: FeaturedProductsSectionProps) {
   return (
-    <section className="py-16 sm:py-24 bg-muted">
+    <section data-studio-id={id} className="py-16 sm:py-24 bg-muted">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <Card key={product.name} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+        <h2 data-studio-id={`${id}/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
+        <div data-studio-id-mode="reorder" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product, index) => (
+            <Card key={product.name} data-studio-id={`${id}/products/${index}`} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
               <CardHeader className="p-0">
-                <Image src={product.image} alt={product.name} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={product.dataAiHint}/>
+                <Image src={product.image} alt={product.name} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={product.dataAiHint} data-studio-id={`${id}/products/${index}/image`} data-studio-props='{ "image": "image" }' />
               </CardHeader>
               <CardContent className="p-6 flex-grow">
-                <p className="text-sm text-primary font-semibold">{product.brand}</p>
-                <CardTitle className="text-xl mt-2">{product.name}</CardTitle>
+                <p data-studio-id={`${id}/products/${index}/brand`} className="text-sm text-primary font-semibold">{product.brand}</p>
+                <CardTitle data-studio-id={`${id}/products/${index}/name`} className="text-xl mt-2">{product.name}</CardTitle>
               </CardContent>
               <CardFooter className="p-6 pt-0">
                 <Button asChild className="w-full" variant="accent">
-                  <Link href={product.href}>{product.price}</Link>
+                  <Link href={product.href} data-studio-id={`${id}/products/${index}/price`}>{product.price}</Link>
                 </Button>
               </CardFooter>
             </Card>

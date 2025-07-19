@@ -24,16 +24,18 @@ export function ProductCard({ name, category, imageUrl, imageHint, href, price }
             height={400}
             className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
             data-ai-hint={imageHint}
+            data-studio-id={`${name}/imageUrl`}
+            data-studio-props='{ "imageUrl": "image" }'
             />
         </div>
       </CardHeader>
       <CardContent className="p-6 flex-grow">
-        <p className="text-sm text-primary font-semibold">{category}</p>
-        <CardTitle className="text-xl mt-2 group-hover:text-primary transition-colors">{name}</CardTitle>
+        <p data-studio-id={`${name}/category`} className="text-sm text-primary font-semibold">{category}</p>
+        <CardTitle data-studio-id={`${name}/name`} className="text-xl mt-2 group-hover:text-primary transition-colors">{name}</CardTitle>
       </CardContent>
       <CardFooter className="p-6 pt-0">
         <Button asChild className="w-full" variant="accent">
-          <Link href={href}>{price || 'View Details'}</Link>
+          <Link href={href} data-studio-id={`${name}/price`}>{price || 'View Details'}</Link>
         </Button>
       </CardFooter>
     </Card>

@@ -22,7 +22,7 @@ export function WhyChooseUsSection({ id, title, subtitle, features }: WhyChooseU
       <div className="container mx-auto px-4">
         <h2 data-studio-id={`${id}/title`} className="text-3xl md:text-4xl font-bold text-center mb-4">{title}</h2>
         <p data-studio-id={`${id}/subtitle`} className="text-center text-muted-foreground max-w-2xl mx-auto mb-12">{subtitle}</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div data-studio-id-mode="reorder" className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {features.map((feature, index) => {
             const IconComponent = LucideIcons[feature.icon] as ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>> | undefined;
             return (

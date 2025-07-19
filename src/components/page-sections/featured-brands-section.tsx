@@ -34,14 +34,14 @@ export function FeaturedBrandsSection({ id, subtitle, title, description, brands
             </p>
             <div className="flex space-x-4">
               <Button asChild>
-                <Link href={buttons.primary.href}>{buttons.primary.text}</Link>
+                <Link href={buttons.primary.href} data-studio-id={`${id}/buttons/primary/text`}>{buttons.primary.text}</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href={buttons.secondary.href}>{buttons.secondary.text}</Link>
+                <Link href={buttons.secondary.href} data-studio-id={`${id}/buttons/secondary/text`}>{buttons.secondary.text}</Link>
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div data-studio-id-mode="reorder" className="grid grid-cols-2 gap-4">
             {brands.map((brand, index) => (
                 <Image 
                     key={brand.name}
@@ -52,6 +52,7 @@ export function FeaturedBrandsSection({ id, subtitle, title, description, brands
                     className="rounded-lg" 
                     data-ai-hint={brand.dataAiHint}
                     data-studio-id={`${id}/brands/${index}/logoUrl`}
+                    data-studio-props='{ "logoUrl": "image" }'
                 />
             ))}
           </div>

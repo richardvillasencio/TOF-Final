@@ -33,7 +33,7 @@ export default async function DesignStudioPage() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Content Unavailable</AlertTitle>
               <AlertDescription>
-                We were unable to load the content for this page from both our database and local fallbacks. Please contact support.
+                We were unable to load the content for this page from both our database and local fallbacks. Please contact support. This may be due to a misconfigured database connection.
               </AlertDescription>
             </Alert>
         </div>

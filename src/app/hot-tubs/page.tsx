@@ -34,7 +34,7 @@ export default async function HotTubsPage() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Content Unavailable</AlertTitle>
               <AlertDescription>
-                 We were unable to load the content for this page. Please try again later.
+                 We were unable to load the content for this page. Please try again later. This may be due to a misconfigured database connection.
               </AlertDescription>
             </Alert>
         </div>
