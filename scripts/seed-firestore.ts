@@ -1,4 +1,7 @@
 // A script to seed the Firestore database with initial page content.
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
 import { adminDb } from '../src/lib/firebase';
 import { designStudioContent } from '../src/lib/content/design-studio';
 import { homeContent } from '../src/lib/content/home';
