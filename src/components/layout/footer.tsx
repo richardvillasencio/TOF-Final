@@ -8,6 +8,7 @@ import { Facebook, Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react'
 import Image from 'next/image';
 import { useEditableContent } from '@/hooks/use-editable-content';
 import { headerContent as initialHeaderContent } from '@/lib/content/header';
+import { Skeleton } from '../ui/skeleton';
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
@@ -16,7 +17,7 @@ const socialLinks = [
 ];
 
 export function Footer() {
-    const { content } = useEditableContent({
+    const { content, loading } = useEditableContent({
     collectionName: 'globals',
     docId: 'header',
     initialContent: initialHeaderContent,
@@ -29,13 +30,17 @@ export function Footer() {
           {/* About Section */}
           <div className="space-y-4">
             <Link href="/">
-               <Image
+               {loading || !content.logoImageUrl ? (
+                <Skeleton className="h-[43px] w-[200px]" />
+              ) : (
+                <Image
                     src={content.logoImageUrl}
                     alt="Company Logo"
                     width={200}
                     height={43}
                     className="object-contain"
                 />
+              )}
             </Link>
             <p className="text-sm">
               Your premier destination for relaxation and recreation. We offer top-quality hot tubs, swim spas, and more to enhance your lifestyle.
