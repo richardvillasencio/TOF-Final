@@ -3,8 +3,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
@@ -12,6 +12,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { UploadCloud, AlertCircle } from 'lucide-react';
 import { storage } from '@/lib/firebase/client';
 import { cn } from '@/lib/utils';
+import { buttonVariants } from './ui/button';
+
 
 interface ImageUploaderProps {
   label: string;
@@ -27,47 +29,36 @@ export function ImageUploader({
   storagePath,
 }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
     setError(null);
-    setProgress(0);
-
+    
     const tempUrl = URL.createObjectURL(file);
     setLocalPreview(tempUrl);
+    
+    try {
+        const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
+        
+        // Use uploadBytes for a simpler, promise-based upload
+        const snapshot = await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
 
-    const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(fileRef, file);
+        onUploadComplete(downloadURL);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const currentProgress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(currentProgress);
-      },
-      (error) => {
+    } catch (error) {
         console.error('Upload failed:', error);
         setError('Upload failed. Please try again.');
+    } finally {
         setUploading(false);
         setLocalPreview(null);
         URL.revokeObjectURL(tempUrl);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          onUploadComplete(downloadURL);
-          setUploading(false);
-          setLocalPreview(null);
-          URL.revokeObjectURL(tempUrl);
-        });
-      }
-    );
+    }
   };
   
   const displayUrl = localPreview || currentImageUrl;
@@ -87,13 +78,13 @@ export function ImageUploader({
         </div>
       )}
       <div className="flex flex-col gap-4">
-        <label
+         <label
           htmlFor={`image-upload-${label}`}
           className={cn(
-              "relative w-fit",
-              buttonVariants({ variant: 'outline' }),
-              "flex cursor-pointer items-center"
-            )}
+            'relative w-fit',
+            buttonVariants({ variant: 'outline' }),
+            'flex cursor-pointer items-center'
+          )}
         >
           <UploadCloud className="mr-2 h-4 w-4" />
           Change Image
@@ -109,7 +100,7 @@ export function ImageUploader({
         
         {uploading && (
           <div className="w-full space-y-2">
-            <Progress value={progress} className="h-2" />
+            <Progress value={100} className="h-2 animate-pulse" />
             <p className="text-xs text-muted-foreground">Uploading...</p>
           </div>
         )}
@@ -125,3 +116,4 @@ export function ImageUploader({
     </div>
   );
 }
+
