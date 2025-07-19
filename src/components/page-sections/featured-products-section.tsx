@@ -1,3 +1,4 @@
+
 // src/components/page-sections/featured-products-section.tsx
 'use client';
 
@@ -153,14 +154,15 @@ export function FeaturedProductsSection({ docPath }: { docPath: string }) {
           ))}
         </div>
       </div>
-      <EditDialog
-        isOpen={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        content={content}
-        setContent={setContent}
-        onSave={() => saveContent(content)}
-        docPath={docPath}
-      />
+      {isAuth && isEditDialogOpen && (
+        <EditDialog
+          isOpen={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+          currentContent={content}
+          onSave={saveContent}
+          docPath={docPath}
+        />
+      )}
     </section>
   );
 }
@@ -169,22 +171,23 @@ export function FeaturedProductsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  content: FeaturedProductsSectionContent;
-  setContent: (content: FeaturedProductsSectionContent) => void;
-  onSave: () => void;
+  currentContent: FeaturedProductsSectionContent;
+  onSave: (newContent: FeaturedProductsSectionContent) => void;
   docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
+function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
+  const [editedContent, setEditedContent] = useState(currentContent);
+
   const handleSave = () => {
-    onSave();
+    onSave(editedContent);
     onOpenChange(false);
   };
   
   const handleProductChange = (index: number, field: keyof Product, value: string) => {
-    const newProducts = [...content.products];
+    const newProducts = [...editedContent.products];
     newProducts[index] = { ...newProducts[index], [field]: value };
-    setContent({ ...content, products: newProducts });
+    setEditedContent({ ...editedContent, products: newProducts });
   };
 
   return (
@@ -201,16 +204,16 @@ function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath
             <Label htmlFor="main-title">Section Title</Label>
             <Input
               id="main-title"
-              value={content.title}
+              value={editedContent.title}
               onChange={(e) =>
-                setContent({ ...content, title: e.target.value })
+                setEditedContent({ ...editedContent, title: e.target.value })
               }
             />
           </div>
           <hr />
           <h3 className="text-lg font-medium">Products</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {content.products.map((product, index) => (
+            {editedContent.products.map((product, index) => (
               <div key={index} className="rounded-md border p-4 space-y-4">
                  <ImageUploader
                     label="Product Image"

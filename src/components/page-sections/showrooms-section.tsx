@@ -1,3 +1,4 @@
+
 // src/components/page-sections/showrooms-section.tsx
 'use client';
 
@@ -84,14 +85,15 @@ export function ShowroomsSection({ docPath }: { docPath: string }) {
           </Button>
         </div>
       </div>
-      <EditDialog
-        isOpen={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        content={content}
-        setContent={setContent}
-        onSave={() => saveContent(content)}
-        docPath={docPath}
-      />
+      {isAuth && isEditDialogOpen && (
+        <EditDialog
+          isOpen={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+          currentContent={content}
+          onSave={saveContent}
+          docPath={docPath}
+        />
+      )}
     </section>
   );
 }
@@ -100,15 +102,16 @@ export function ShowroomsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    content: ShowroomsSectionContent;
-    setContent: (content: ShowroomsSectionContent) => void;
-    onSave: () => void;
+    currentContent: ShowroomsSectionContent;
+    onSave: (newContent: ShowroomsSectionContent) => void;
     docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
+function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
+    const [editedContent, setEditedContent] = useState(currentContent);
+
     const handleSave = () => {
-        onSave();
+        onSave(editedContent);
         onOpenChange(false);
     }
     
@@ -124,27 +127,27 @@ function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath
                 <div className="space-y-4 py-4">
                      <ImageUploader
                         label="Background Image"
-                        currentImageUrl={content.backgroundImage}
-                        onUploadComplete={(url) => setContent(prev => ({...prev, backgroundImage: url}))}
+                        currentImageUrl={editedContent.backgroundImage}
+                        onUploadComplete={(url) => setEditedContent(prev => ({...prev, backgroundImage: url}))}
                         storagePath={docPath}
                     />
                     <div>
                         <Label>Title</Label>
-                        <Input value={content.title} onChange={e => setContent(prev => ({...prev, title: e.target.value}))} />
+                        <Input value={editedContent.title} onChange={e => setEditedContent(prev => ({...prev, title: e.target.value}))} />
                     </div>
                      <div>
                         <Label>Subtitle</Label>
-                        <Input value={content.subtitle} onChange={e => setContent(prev => ({...prev, subtitle: e.target.value}))} />
+                        <Input value={editedContent.subtitle} onChange={e => setEditedContent(prev => ({...prev, subtitle: e.target.value}))} />
                     </div>
                     <hr />
                     <h3 className="font-medium">Button</h3>
                     <div>
                         <Label>Button Text</Label>
-                        <Input value={content.button.text} onChange={e => setContent(prev => ({...prev, button: {...prev.button, text: e.target.value}}))} />
+                        <Input value={editedContent.button.text} onChange={e => setEditedContent(prev => ({...prev, button: {...prev.button, text: e.target.value}}))} />
                     </div>
                      <div>
                         <Label>Button Link URL</Label>
-                        <Input value={content.button.href} onChange={e => setContent(prev => ({...prev, button: {...prev.button, href: e.target.value}}))} />
+                        <Input value={editedContent.button.href} onChange={e => setEditedContent(prev => ({...prev, button: {...prev.button, href: e.target.value}}))} />
                     </div>
                 </div>
                 <DialogFooter>

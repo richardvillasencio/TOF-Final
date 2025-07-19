@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase/client'; // Import client firestore
 
 /**
@@ -37,24 +37,17 @@ export function useEditableContent<T extends object>({
     }
 
     const docRef = getDocRef();
-    if (!docRef) return; // Should be covered by the check above, but for safety
+    if (!docRef) return; 
 
     const unsubscribe = onSnapshot(
       docRef,
       (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
-          // Merge Firestore data with initial content to ensure all fields are present
           setContent(prev => ({ ...initialContent, ...data }));
         } else {
-          // Document does not exist, so create it with the initial content
           console.log(`Document at ${docPath} does not exist. Seeding with initial content.`);
           setDoc(docRef, initialContent, { merge: true })
-            .then(() => {
-              // The listener will automatically pick up the new document,
-              // but we can set content here to avoid a flicker.
-              setContent(initialContent);
-            })
             .catch(error => {
               console.error(`Failed to seed initial content for ${docPath}:`, error);
             });
@@ -69,8 +62,7 @@ export function useEditableContent<T extends object>({
     );
 
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [docPath, isAuth]);
+  }, [docPath, isAuth, getDocRef, initialContent]);
 
   const saveContent = useCallback(async (newContent: T) => {
     if (!isAuth) {
