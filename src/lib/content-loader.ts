@@ -3,44 +3,69 @@ import { adminDb } from '@/lib/firebase';
 import type { HeroSectionProps } from '@/components/page-sections/hero-section';
 import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
 import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
+import type { FeaturedProductsSectionProps } from '@/components/page-sections/featured-products-section';
+import type { ShowroomsSectionProps } from '@/components/page-sections/showrooms-section';
 import { unstable_cache } from 'next/cache';
 
-// Union type for all possible component configurations
-export type ComponentConfig = HeroSectionProps | WhyChooseUsSectionProps | TestimonialsSectionProps;
+// A generic "PageSection" type that can represent any of our section components.
+// It includes the component name, its props, and a unique ID for reordering.
+export type PageSection = {
+  id: string;
+  component: string;
+  props: Record<string, any>;
+};
+
+// A map to dynamically import the fallback content.
+const staticContentFallbacks: Record<string, () => Promise<{ default: PageSection[] }>> = {
+  'home': () => import('@/lib/content/home').then(m => ({ default: m.homeContent })),
+  'design-studio': () => import('@/lib/content/design-studio').then(m => ({ default: m.designStudioContent })),
+};
+
 
 /**
- * Fetches and returns the content for a specific page from Firestore.
- * Caches the result to minimize database reads.
- * @param page - The name of the page (e.g., 'design-studio') to fetch content for.
- * @returns A promise that resolves to an array of component configurations, or null if content cannot be fetched.
+ * Fetches and returns the content for a specific page.
+ * It first tries to fetch from Firestore. If Firestore is unavailable or has no content
+ * for that page, it falls back to a local static content file.
+ * Caches the result to minimize database reads and file system access.
  */
 export const loadPageContent = unstable_cache(
-  async (page: string): Promise<ComponentConfig[] | null> => {
-    console.log(`Fetching content for page: ${page}`);
-    if (!adminDb) {
-      console.error("Firestore is not initialized. Cannot fetch page content.");
-      return null;
-    }
-    
-    try {
-      const contentCollection = adminDb.collection('pages').doc(page).collection('sections');
-      const snapshot = await contentCollection.orderBy('order').get();
+  async (page: string): Promise<PageSection[] | null> => {
+    // 1. Try to fetch from Firestore first
+    if (adminDb) {
+      try {
+        console.log(`Fetching content for page: ${page} from Firestore`);
+        const contentCollection = adminDb.collection('pages').doc(page).collection('sections');
+        const snapshot = await contentCollection.orderBy('order').get();
 
-      if (snapshot.empty) {
-        console.warn(`No content sections found for page: ${page}`);
-        return [];
+        if (!snapshot.empty) {
+          const content = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          } as PageSection));
+          return content;
+        }
+        console.warn(`No content found in Firestore for page: ${page}. Trying fallback.`);
+      } catch (error) {
+        console.error(`Error fetching from Firestore for page '${page}'. Trying fallback.`, error);
       }
+    } else {
+      console.warn("Firestore is not initialized. Trying fallback.");
+    }
 
-      const content = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      } as ComponentConfig));
-
-      return content;
+    // 2. If Firestore fails or is empty, fall back to static content file
+    try {
+        const fallbackLoader = staticContentFallbacks[page];
+        if (fallbackLoader) {
+            console.log(`Loading fallback content for page: ${page}`);
+            const contentModule = await fallbackLoader();
+            return contentModule.default;
+        } else {
+            console.error(`No static fallback content found for page: ${page}`);
+            return null;
+        }
     } catch (error) {
-      console.error(`Error fetching content for page '${page}':`, error);
-      // In a real app, you might want more robust error handling or logging
-      return null;
+        console.error(`Error loading fallback content for page '${page}':`, error);
+        return null;
     }
   },
   ['page-content'], // Cache key prefix

@@ -1,39 +1,39 @@
-import { loadPageContent, type ComponentConfig } from '@/lib/content-loader';
+import { loadPageContent, type PageSection } from '@/lib/content-loader';
 import { HeroSection } from '@/components/page-sections/hero-section';
 import { WhyChooseUsSection } from '@/components/page-sections/why-choose-us-section';
 import { TestimonialsSection } from '@/components/page-sections/testimonials-section';
 import { notFound } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
+import type { ComponentProps } from 'react';
 
-// Map component names from the config to the actual components
-const componentMap = {
+const componentMap: Record<string, React.ComponentType<any>> = {
   HeroSection,
   WhyChooseUsSection,
   TestimonialsSection,
 };
 
-function renderComponent(config: ComponentConfig, index: number) {
+function renderComponent(config: PageSection, index: number) {
   const Component = componentMap[config.component];
   if (!Component) {
-    // Optionally handle cases where a component name in the config is not found
     return null;
   }
-  // @ts-expect-error - We trust the config to provide the correct props for the component
-  return <Component key={`${config.component}-${index}`} {...config} />;
+  // Pass the entire props object from the config
+  return <Component key={`${config.component}-${index}`} {...config.props} id={config.id} />;
 }
 
 export default async function DesignStudioPage() {
   const pageContent = await loadPageContent('design-studio');
 
-  if (!pageContent) {
+  if (!pageContent || pageContent.length === 0) {
+    // This will now only show if both Firestore and fallback fail, which is unlikely.
     return (
         <div className="container mx-auto px-4 py-16">
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error Loading Content</AlertTitle>
+              <AlertTitle>Content Unavailable</AlertTitle>
               <AlertDescription>
-                Could not load page content from the database. This could be due to missing Firebase credentials on the server or a network issue. Please check your configuration.
+                We were unable to load the content for this page from both our database and local fallbacks. Please contact support.
               </AlertDescription>
             </Alert>
         </div>

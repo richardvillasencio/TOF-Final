@@ -1,20 +1,19 @@
-import type { ComponentProps } from 'react';
-import { Award, ThumbsUp, Wrench } from 'lucide-react';
-import type { HeroSection } from '@/components/page-sections/hero-section';
-import type { FeaturedProductsSection } from '@/components/page-sections/featured-products-section';
-import type { WhyChooseUsSection } from '@/components/page-sections/why-choose-us-section';
-import type { TestimonialsSection } from '@/components/page-sections/testimonials-section';
-import type { ShowroomsSection } from '@/components/page-sections/showrooms-section';
+import type { HeroSectionProps } from '@/components/page-sections/hero-section';
+import type { FeaturedProductsSectionProps } from '@/components/page-sections/featured-products-section';
+import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
+import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
+import type { ShowroomsSectionProps } from '@/components/page-sections/showrooms-section';
 
-export type ComponentConfig = 
-  | { component: 'HeroSection'; props: ComponentProps<typeof HeroSection> }
-  | { component: 'FeaturedProductsSection'; props: ComponentProps<typeof FeaturedProductsSection> }
-  | { component: 'WhyChooseUsSection'; props: ComponentProps<typeof WhyChooseUsSection> }
-  | { component: 'TestimonialsSection'; props: ComponentProps<typeof TestimonialsSection> }
-  | { component: 'ShowroomsSection'; props: ComponentProps<typeof ShowroomsSection> };
+export type PageSection = 
+  | { component: 'HeroSection'; props: Omit<HeroSectionProps, 'id'>; id: string }
+  | { component: 'FeaturedProductsSection'; props: FeaturedProductsSectionProps; id: string }
+  | { component: 'WhyChooseUsSection'; props: Omit<WhyChooseUsSectionProps, 'id'>; id: string }
+  | { component: 'TestimonialsSection'; props: Omit<TestimonialsSectionProps, 'id'>; id: string }
+  | { component: 'ShowroomsSection'; props: ShowroomsSectionProps; id: string };
 
-export const homepageSections: ComponentConfig[] = [
+export const homeContent: PageSection[] = [
   {
+    id: 'hero',
     component: 'HeroSection',
     props: {
       backgroundImage: 'https://placehold.co/1920x1080.png',
@@ -34,6 +33,7 @@ export const homepageSections: ComponentConfig[] = [
     }
   },
   {
+    id: 'featured-products',
     component: 'FeaturedProductsSection',
     props: {
       title: 'Popular Hot Tubs & Spas',
@@ -74,23 +74,24 @@ export const homepageSections: ComponentConfig[] = [
     }
   },
   {
+    id: 'why-choose-us',
     component: 'WhyChooseUsSection',
     props: {
       title: 'Unmatched Quality & Service',
       subtitle: 'We are dedicated to providing you with the best products and support in the industry.',
       features: [
         {
-          Icon: Award,
+          icon: 'Award',
           title: 'Quality Products',
           description: 'We carry only the most reputable brands, ensuring longevity and performance.',
         },
         {
-          Icon: Wrench,
+          icon: 'Wrench',
           title: 'Expert Service & Repair',
           description: 'Our certified technicians are here to help with any maintenance or repair needs.',
         },
         {
-          Icon: ThumbsUp,
+          icon: 'ThumbsUp',
           title: 'Customer Satisfaction',
           description: 'Your happiness is our priority. We\'re with you every step of the way.',
         },
@@ -98,6 +99,7 @@ export const homepageSections: ComponentConfig[] = [
     }
   },
   {
+    id: 'testimonials',
     component: 'TestimonialsSection',
     props: {
       title: 'What Our Customers Say',
@@ -121,6 +123,7 @@ export const homepageSections: ComponentConfig[] = [
     }
   },
   {
+    id: 'showrooms',
     component: 'ShowroomsSection',
     props: {
       backgroundImage: 'https://placehold.co/1920x800.png',
