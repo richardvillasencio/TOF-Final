@@ -347,6 +347,15 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
     setContent(prev => ({ ...prev, [key]: value }));
   };
 
+  const updateLogoUrl = (url: string) => {
+    setContent(prev => ({ ...prev, logoImageUrl: url }));
+  }
+
+  const updateMascotUrl = (url: string) => {
+    setContent(prev => ({ ...prev, mascotImageUrl: url }));
+  }
+
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
@@ -377,13 +386,13 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
             <ImageUploader 
                 label="Logo"
                 currentImageUrl={content.logoImageUrl}
-                onUploadComplete={(url) => handleContentChange('logoImageUrl', url)}
+                onUploadComplete={updateLogoUrl}
                 storagePath="globals/header"
             />
             <ImageUploader
                 label="Mascot"
                 currentImageUrl={content.mascotImageUrl}
-                onUploadComplete={(url) => handleContentChange('mascotImageUrl', url)}
+                onUploadComplete={updateMascotUrl}
                 storagePath="globals/header"
             />
           </div>
