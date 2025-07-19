@@ -41,10 +41,11 @@ import { ImageUploader } from '../image-uploader';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from '@/components/ui/sortable-item';
+import { Skeleton } from '../ui/skeleton';
 
 
 export function Header() {
-  const { content, isAuth, updateContent } = useEditableContent({
+  const { content, loading, isAuth, updateContent } = useEditableContent({
     collectionName: 'globals',
     docId: 'header',
     initialContent: initialHeaderContent,
@@ -69,6 +70,9 @@ export function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Tubs of Fun Home">
+              {loading || !content.logoImageUrl ? (
+                <Skeleton className="h-[43px] w-[200px]" />
+              ) : (
                 <Image
                     src={content.logoImageUrl}
                     alt="Company Logo"
@@ -77,6 +81,7 @@ export function Header() {
                     className="object-contain"
                     priority
                 />
+              )}
             </Link>
           </div>
           <div className="hidden lg:flex flex-col items-end text-sm">
