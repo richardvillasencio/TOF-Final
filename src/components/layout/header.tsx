@@ -56,7 +56,6 @@ export function Header() {
              width={80}
              height={100}
              className="hidden lg:block"
-             style={{ height: 'auto' }}
            />
 
           <div className="lg:hidden flex items-center gap-2">
