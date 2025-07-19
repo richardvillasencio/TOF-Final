@@ -20,6 +20,7 @@ export const topNavLinks: NavLink[] = [
     ]
   },
   { href: '/', label: 'Home' },
+  { href: '/design-studio', label: 'Design Studio' },
 ];
 
 export const mainNavLinks: NavLink[] = [
