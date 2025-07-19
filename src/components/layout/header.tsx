@@ -302,6 +302,8 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
   const [editedContent, setEditedContent] = useState(currentContent);
 
   useEffect(() => {
+    // When the dialog is opened, sync its internal state with the current prop from the parent.
+    // This ensures that we always start editing with the latest data.
     if (isOpen) {
       setEditedContent(currentContent);
     }
@@ -312,16 +314,23 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
     onOpenChange(false);
   };
   
+  const handleContentChange = <K extends keyof typeof initialHeaderContent>(
+    key: K,
+    value: (typeof initialHeaderContent)[K]
+  ) => {
+    setEditedContent(prev => ({ ...prev, [key]: value }));
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
+      <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>Edit Header Content</DialogTitle>
           <DialogDescription>
             Update contact information, logos, and navigation links.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4 flex-grow">
           {/* Left Column: General Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">General Information</h3>
@@ -329,21 +338,21 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
               <Label>Phone Number</Label>
               <Input
                 value={editedContent.phoneNumber}
-                onChange={e => setEditedContent(prev => ({...prev, phoneNumber: e.target.value}))}
+                onChange={e => handleContentChange('phoneNumber', e.target.value)}
               />
             </div>
              <div>
               <Label>Address</Label>
               <Input
                 value={editedContent.address}
-                onChange={e => setEditedContent(prev => ({...prev, address: e.target.value}))}
+                onChange={e => handleContentChange('address', e.target.value)}
               />
             </div>
             <div>
               <Label>Company Logo</Label>
               <ImageUploader 
                 currentImageUrl={editedContent.logoImageUrl}
-                onUploadComplete={url => setEditedContent(prev => ({...prev, logoImageUrl: url}))}
+                onUploadComplete={url => handleContentChange('logoImageUrl', url)}
                 storagePath="globals/header"
               />
             </div>
@@ -351,7 +360,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
               <Label>Mascot Image</Label>
               <ImageUploader 
                 currentImageUrl={editedContent.mascotImageUrl}
-                onUploadComplete={url => setEditedContent(prev => ({...prev, mascotImageUrl: url}))}
+                onUploadComplete={url => handleContentChange('mascotImageUrl', url)}
                 storagePath="globals/header"
               />
             </div>
@@ -362,17 +371,17 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
              <h3 className="text-lg font-medium">Top Navigation</h3>
              <EditableNavMenu 
                 links={editedContent.topNavLinks}
-                onLinksChange={newLinks => setEditedContent(prev => ({...prev, topNavLinks: newLinks}))}
+                onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
              />
              <hr className="my-4"/>
              <h3 className="text-lg font-medium">Main Navigation</h3>
               <EditableNavMenu 
                 links={editedContent.mainNavLinks}
-                onLinksChange={newLinks => setEditedContent(prev => ({...prev, mainNavLinks: newLinks}))}
+                onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
              />
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="pt-4 border-t">
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
