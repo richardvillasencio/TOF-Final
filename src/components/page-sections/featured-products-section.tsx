@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -84,7 +84,7 @@ const initialContent: FeaturedProductsSectionContent = {
 
 // --- Main Component ---
 export function FeaturedProductsSection({ docPath }: { docPath: string }) {
-  const { content, setContent, loading, isAuth, updateContent } =
+  const { content, setContent, loading, isAuth, saveContent } =
     useEditableContent<FeaturedProductsSectionContent>({
       docPath: docPath,
       initialContent: initialContent,
@@ -156,8 +156,9 @@ export function FeaturedProductsSection({ docPath }: { docPath: string }) {
       <EditDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
+        content={content}
+        setContent={setContent}
+        onSave={() => saveContent(content)}
         docPath={docPath}
       />
     </section>
@@ -168,30 +169,22 @@ export function FeaturedProductsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  currentContent: FeaturedProductsSectionContent;
-  onSave: (newContent: Partial<FeaturedProductsSectionContent>) => void;
+  content: FeaturedProductsSectionContent;
+  setContent: (content: FeaturedProductsSectionContent) => void;
+  onSave: () => void;
   docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
-  const [editedContent, setEditedContent] = useState(currentContent);
-
-  // Sync state when dialog opens
-  useEffect(() => {
-    if (isOpen) {
-      setEditedContent(currentContent);
-    }
-  }, [isOpen, currentContent]);
-
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
   const handleSave = () => {
-    onSave(editedContent);
+    onSave();
     onOpenChange(false);
   };
   
   const handleProductChange = (index: number, field: keyof Product, value: string) => {
-    const newProducts = [...editedContent.products];
+    const newProducts = [...content.products];
     newProducts[index] = { ...newProducts[index], [field]: value };
-    setEditedContent(prev => ({ ...prev, products: newProducts }));
+    setContent({ ...content, products: newProducts });
   };
 
   return (
@@ -208,18 +201,19 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
             <Label htmlFor="main-title">Section Title</Label>
             <Input
               id="main-title"
-              value={editedContent.title}
+              value={content.title}
               onChange={(e) =>
-                setEditedContent({ ...editedContent, title: e.target.value })
+                setContent({ ...content, title: e.target.value })
               }
             />
           </div>
           <hr />
           <h3 className="text-lg font-medium">Products</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {editedContent.products.map((product, index) => (
+            {content.products.map((product, index) => (
               <div key={index} className="rounded-md border p-4 space-y-4">
-                 <ImageUploader 
+                 <ImageUploader
+                    label="Product Image"
                     currentImageUrl={product.image}
                     onUploadComplete={url => handleProductChange(index, 'image', url)}
                     storagePath={`${docPath}/product-${index}`}

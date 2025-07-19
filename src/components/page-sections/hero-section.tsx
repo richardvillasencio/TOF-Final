@@ -1,7 +1,7 @@
 // src/components/page-sections/hero-section.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
@@ -51,7 +51,7 @@ const initialContent: HeroSectionProps = {
 
 // --- Main Component ---
 export function HeroSection({ docPath }: { docPath: string }) {
-  const { content, loading, isAuth, updateContent } = useEditableContent<HeroSectionProps>({
+  const { content, setContent, loading, isAuth, saveContent } = useEditableContent<HeroSectionProps>({
     docPath,
     initialContent: initialContent,
   });
@@ -100,13 +100,16 @@ export function HeroSection({ docPath }: { docPath: string }) {
           </Button>
         </div>
       </div>
-      <EditDialog
-        isOpen={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
-        docPath={docPath}
-      />
+      {isEditDialogOpen && (
+        <EditDialog
+          isOpen={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+          content={content}
+          setContent={setContent}
+          onSave={() => saveContent(content)}
+          docPath={docPath}
+        />
+      )}
     </section>
   );
 }
@@ -115,23 +118,15 @@ export function HeroSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    currentContent: HeroSectionProps;
-    onSave: (newContent: Partial<HeroSectionProps>) => void;
+    content: HeroSectionProps;
+    setContent: (content: HeroSectionProps) => void;
+    onSave: () => void;
     docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
-  const [editedContent, setEditedContent] = useState(currentContent);
-
-  // Sync state when dialog opens
-  useEffect(() => {
-    if (isOpen) {
-      setEditedContent(currentContent);
-    }
-  }, [isOpen, currentContent]);
-
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
   const handleFieldChange = (field: keyof HeroSectionProps, value: any) => {
-    setEditedContent(prev => ({ ...prev, [field]: value }));
+    setContent({ ...content, [field]: value });
   };
 
   const handleButtonChange = (
@@ -139,20 +134,20 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
     field: keyof ButtonLink,
     value: string
   ) => {
-    setEditedContent(prev => ({
-      ...prev,
+    setContent({
+      ...content,
       buttons: {
-        ...prev.buttons,
+        ...content.buttons,
         [buttonType]: {
-          ...prev.buttons[buttonType],
+          ...content.buttons[buttonType],
           [field]: value,
         },
       },
-    }));
+    });
   };
 
   const handleSave = () => {
-    onSave(editedContent);
+    onSave();
     onOpenChange(false);
   };
 
@@ -167,7 +162,8 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
         </DialogHeader>
         <div className="space-y-4 py-4 max-h-[70vh] overflow-y-auto pr-2">
             <ImageUploader
-                currentImageUrl={editedContent.backgroundImage}
+                label="Background Image"
+                currentImageUrl={content.backgroundImage}
                 onUploadComplete={(url) => handleFieldChange('backgroundImage', url)}
                 storagePath={docPath}
             />
@@ -175,7 +171,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              value={editedContent.title}
+              value={content.title}
               onChange={(e) => handleFieldChange('title', e.target.value)}
             />
           </div>
@@ -183,7 +179,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
             <Label htmlFor="subtitle">Subtitle</Label>
             <Input
               id="subtitle"
-              value={editedContent.subtitle}
+              value={content.subtitle}
               onChange={(e) => handleFieldChange('subtitle', e.target.value)}
             />
           </div>
@@ -192,7 +188,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
           <div>
             <Label>Text</Label>
             <Input
-              value={editedContent.buttons.primary.text}
+              value={content.buttons.primary.text}
               onChange={(e) =>
                 handleButtonChange('primary', 'text', e.target.value)
               }
@@ -201,7 +197,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
           <div>
             <Label>Link URL</Label>
             <Input
-              value={editedContent.buttons.primary.href}
+              value={content.buttons.primary.href}
               onChange={(e) =>
                 handleButtonChange('primary', 'href', e.target.value)
               }
@@ -212,7 +208,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
           <div>
             <Label>Text</Label>
             <Input
-              value={editedContent.buttons.secondary.text}
+              value={content.buttons.secondary.text}
               onChange={(e) =>
                 handleButtonChange('secondary', 'text', e.target.value)
               }
@@ -221,7 +217,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
           <div>
             <Label>Link URL</Label>
             <Input
-              value={editedContent.buttons.secondary.href}
+              value={content.buttons.secondary.href}
               onChange={(e) =>
                 handleButtonChange('secondary', 'href', e.target.value)
               }

@@ -171,10 +171,10 @@ export function CustomizableFeatureGrid({ id }: { id: string }) {
       <EditDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={(newContent) => {
-          setContent(newContent);
-          saveContent(newContent);
+        content={content}
+        setContent={setContent}
+        onSave={() => {
+          saveContent(content);
           setIsEditDialogOpen(false);
         }}
         docPath={docPath}
@@ -188,30 +188,22 @@ export function CustomizableFeatureGrid({ id }: { id: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    currentContent: FeatureGridContent;
-    onSave: (newContent: FeatureGridContent) => void;
+    content: FeatureGridContent;
+    setContent: (newContent: FeatureGridContent) => void;
+    onSave: () => void;
     docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
-    const [editedContent, setEditedContent] = useState(currentContent);
-
-    // Sync state when dialog opens
-    useState(() => {
-        if(isOpen) {
-            setEditedContent(currentContent)
-        }
-    });
-
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
     const handleFieldChange = (field: keyof FeatureGridContent, value: any) => {
-        setEditedContent(prev => ({...prev, [field]: value}));
+        setContent({...content, [field]: value});
     };
     
     const handleFeatureChange = (id: string, field: 'title' | 'description', value: string) => {
-        setEditedContent(prev => ({
-            ...prev,
-            features: prev.features.map(f => f.id === id ? {...f, [field]: value} : f)
-        }));
+        setContent({
+            ...content,
+            features: content.features.map(f => f.id === id ? {...f, [field]: value} : f)
+        });
     };
 
     const handleAddNewFeature = () => {
@@ -221,23 +213,23 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
             title: 'New Feature',
             description: 'Describe this new feature.'
         };
-        setEditedContent(prev => ({
-            ...prev,
-            features: [...prev.features, newFeature],
-            layout: [...prev.layout, newId]
-        }))
+        setContent({
+            ...content,
+            features: [...content.features, newFeature],
+            layout: [...content.layout, newId]
+        })
     }
 
     const handleDeleteFeature = (idToDelete: string) => {
-        setEditedContent(prev => ({
-            ...prev,
-            features: prev.features.filter(f => f.id !== idToDelete),
-            layout: prev.layout.filter(layoutId => layoutId !== idToDelete)
-        }));
+        setContent({
+            ...content,
+            features: content.features.filter(f => f.id !== idToDelete),
+            layout: content.layout.filter(layoutId => layoutId !== idToDelete)
+        });
     }
 
     const handleSave = () => {
-        onSave(editedContent);
+        onSave();
     };
 
     return (
@@ -255,12 +247,13 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
                         <Label htmlFor="main-title">Section Title</Label>
                         <Input 
                             id="main-title" 
-                            value={editedContent.title}
+                            value={content.title}
                             onChange={e => handleFieldChange('title', e.target.value)}
                         />
                     </div>
                      <ImageUploader 
-                        currentImageUrl={editedContent.imageUrl}
+                        label="Feature Image"
+                        currentImageUrl={content.imageUrl}
                         onUploadComplete={url => handleFieldChange('imageUrl', url)}
                         storagePath={docPath}
                     />
@@ -270,7 +263,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
                     {/* Features List */}
                     <div className="space-y-4">
                         <h3 className="text-lg font-medium">Features</h3>
-                        {editedContent.features.map(feature => (
+                        {content.features.map(feature => (
                             <div key={feature.id} className="flex items-start gap-4 rounded-md border p-4">
                                <GripVertical className="h-5 w-5 mt-2 text-muted-foreground flex-shrink-0" />
                                 <div className="flex-grow space-y-2">

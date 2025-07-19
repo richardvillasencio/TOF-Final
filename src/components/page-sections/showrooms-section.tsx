@@ -1,7 +1,7 @@
 // src/components/page-sections/showrooms-section.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Pencil } from 'lucide-react';
@@ -46,7 +46,7 @@ const initialContent: ShowroomsSectionContent = {
 
 // --- Main Component ---
 export function ShowroomsSection({ docPath }: { docPath: string }) {
-  const { content, loading, isAuth, updateContent } = useEditableContent<ShowroomsSectionContent>({
+  const { content, setContent, loading, isAuth, saveContent } = useEditableContent<ShowroomsSectionContent>({
     docPath: docPath,
     initialContent: initialContent,
   });
@@ -87,8 +87,9 @@ export function ShowroomsSection({ docPath }: { docPath: string }) {
       <EditDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
+        content={content}
+        setContent={setContent}
+        onSave={() => saveContent(content)}
         docPath={docPath}
       />
     </section>
@@ -99,20 +100,15 @@ export function ShowroomsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    currentContent: ShowroomsSectionContent;
-    onSave: (newContent: Partial<ShowroomsSectionContent>) => void;
+    content: ShowroomsSectionContent;
+    setContent: (content: ShowroomsSectionContent) => void;
+    onSave: () => void;
     docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
-    const [editedContent, setEditedContent] = useState(currentContent);
-
-    useEffect(() => {
-        if(isOpen) setEditedContent(currentContent)
-    }, [isOpen, currentContent]);
-
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave, docPath }: EditDialogProps) {
     const handleSave = () => {
-        onSave(editedContent);
+        onSave();
         onOpenChange(false);
     }
     
@@ -127,33 +123,32 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: E
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                      <ImageUploader
-                        currentImageUrl={editedContent.backgroundImage}
-                        onUploadComplete={(url) => setEditedContent(prev => ({...prev, backgroundImage: url}))}
+                        label="Background Image"
+                        currentImageUrl={content.backgroundImage}
+                        onUploadComplete={(url) => setContent(prev => ({...prev, backgroundImage: url}))}
                         storagePath={docPath}
                     />
                     <div>
                         <Label>Title</Label>
-                        <Input value={editedContent.title} onChange={e => setEditedContent(prev => ({...prev, title: e.target.value}))} />
+                        <Input value={content.title} onChange={e => setContent(prev => ({...prev, title: e.target.value}))} />
                     </div>
                      <div>
                         <Label>Subtitle</Label>
-                        <Input value={editedContent.subtitle} onChange={e => setEditedContent(prev => ({...prev, subtitle: e.target.value}))} />
+                        <Input value={content.subtitle} onChange={e => setContent(prev => ({...prev, subtitle: e.target.value}))} />
                     </div>
                     <hr />
                     <h3 className="font-medium">Button</h3>
                     <div>
                         <Label>Button Text</Label>
-                        <Input value={editedContent.button.text} onChange={e => setEditedContent(prev => ({...prev, button: {...prev.button, text: e.target.value}}))} />
+                        <Input value={content.button.text} onChange={e => setContent(prev => ({...prev, button: {...prev.button, text: e.target.value}}))} />
                     </div>
                      <div>
                         <Label>Button Link URL</Label>
-                        <Input value={editedContent.button.href} onChange={e => setEditedContent(prev => ({...prev, button: {...prev.button, href: e.target.value}}))} />
+                        <Input value={content.button.href} onChange={e => setContent(prev => ({...prev, button: {...prev.button, href: e.target.value}}))} />
                     </div>
                 </div>
                 <DialogFooter>
-                    <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                    </DialogClose>
+                    <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
                     <Button onClick={handleSave}>Save Changes</Button>
                 </DialogFooter>
             </DialogContent>
