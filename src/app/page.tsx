@@ -1,4 +1,3 @@
-
 // src/app/page.tsx
 'use client';
 
@@ -22,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import { GripVertical, LayoutList, Check } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { firestore } from '@/lib/firebase/client'; // Import client firestore
+import { firestore } from '@/lib/firebase/client';
 
 // Import all possible section components
 import { HeroSection } from '@/components/page-sections/hero-section';

@@ -8,6 +8,7 @@ import { homeContent } from '../lib/content/home';
 import { aboutContent } from '../lib/content/about';
 import { contactContent } from '../lib/content/contact';
 import { hotTubsContent } from '../lib/content/hot-tubs';
+import { headerContent } from '../lib/content/header';
 import type { PageSection as GenericPageSection } from '../lib/content-loader';
 
 // A map of page slugs to their content arrays.
@@ -26,6 +27,16 @@ async function seedDatabase() {
   }
 
   console.log('Starting to seed database...');
+
+  // Seed global content (like the header)
+  try {
+    const headerRef = adminDb.collection('globals').doc('header');
+    await headerRef.set(headerContent);
+    console.log("Successfully seeded global header content.");
+  } catch (error) {
+    console.error("Error seeding global header content:", error);
+  }
+
 
   for (const [pageSlug, sections] of Object.entries(pagesToSeed)) {
     console.log(`\nSeeding content for page: '${pageSlug}'`);

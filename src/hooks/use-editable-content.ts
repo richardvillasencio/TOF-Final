@@ -25,7 +25,7 @@ export function useEditableContent<T>({
   // For this prototype, we'll assume the user is always authenticated.
   const isAuth = true; 
 
-  const contentRef = doc(firestore, collectionName, docId);
+  const docRef = doc(firestore, collectionName, docId);
 
   useEffect(() => {
     if (!isAuth) {
@@ -34,14 +34,14 @@ export function useEditableContent<T>({
     }
 
     const unsubscribe = onSnapshot(
-      contentRef,
+      docRef,
       (docSnap) => {
         if (docSnap.exists()) {
           setContent(docSnap.data() as T);
         } else {
           // If no content exists in Firestore, save the initial content.
           // This is useful for seeding content when a new section is added.
-          setDoc(contentRef, initialContent).catch(error => {
+          setDoc(docRef, initialContent, { merge: true }).catch(error => {
               console.error("Failed to seed initial content:", error);
           });
           setContent(initialContent);
@@ -68,12 +68,12 @@ export function useEditableContent<T>({
       return;
     }
     try {
-      await setDoc(contentRef, newContent, { merge: true });
+      await setDoc(docRef, newContent, { merge: true });
       // The onSnapshot listener will automatically update the local state.
     } catch (error) {
       console.error('Error saving content:', error);
     }
-  }, [contentRef, isAuth]);
+  }, [docRef, isAuth]);
 
   return {
     content,
