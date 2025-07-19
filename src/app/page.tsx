@@ -41,7 +41,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" data-studio-id="home-page-container" data-studio-id-mode="reorder">
       {pageContent.map((sectionConfig, index) => renderComponent(sectionConfig, index))}
     </div>
   );

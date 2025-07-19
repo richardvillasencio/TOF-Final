@@ -2,13 +2,18 @@
 import { adminDb } from '../src/lib/firebase';
 import { designStudioContent } from '../src/lib/content/design-studio';
 import { homeContent } from '../src/lib/content/home';
-import type { PageSection as DesignStudioPageSection } from '../src/lib/content/design-studio';
-import type { PageSection as HomePageSection } from '../src/lib/content/home';
+import { aboutContent } from '../src/lib/content/about';
+import { contactContent } from '../src/lib/content/contact';
+import { hotTubsContent } from '../src/lib/content/hot-tubs';
+import type { PageSection as GenericPageSection } from '../src/lib/content-loader';
 
 // A map of page slugs to their content arrays.
-const pagesToSeed: Record<string, (DesignStudioPageSection | HomePageSection)[]> = {
+const pagesToSeed: Record<string, GenericPageSection[]> = {
   'design-studio': designStudioContent,
   'home': homeContent,
+  'about': aboutContent,
+  'contact': contactContent,
+  'hot-tubs': hotTubsContent,
 };
 
 async function seedDatabase() {

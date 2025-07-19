@@ -12,9 +12,12 @@ export type PageSection = {
 };
 
 // A map to dynamically import the fallback content.
-const staticContentFallbacks: Record<string, () => Promise<{ default: PageSection[] }>> = {
+const staticContentFallbacks: Record<string, () => Promise<{ default: any }>> = {
   'home': () => import('@/lib/content/home').then(m => ({ default: m.homeContent })),
   'design-studio': () => import('@/lib/content/design-studio').then(m => ({ default: m.designStudioContent })),
+  'about': () => import('@/lib/content/about').then(m => ({ default: m.aboutContent })),
+  'contact': () => import('@/lib/content/contact').then(m => ({ default: m.contactContent })),
+  'hot-tubs': () => import('@/lib/content/hot-tubs').then(m => ({ default: m.hotTubsContent })),
 };
 
 
