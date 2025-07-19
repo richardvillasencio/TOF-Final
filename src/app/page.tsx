@@ -33,7 +33,7 @@ export default async function Home() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Content Unavailable</AlertTitle>
               <AlertDescription>
-                 We were unable to load the content for this page. Please try again later. This may be due to a misconfigured database connection.
+                 We were unable to load the content for this page. Please try again later. This may be due to a misconfigured database connection or missing content. Try running 'npm run seed' to populate the database.
               </AlertDescription>
             </Alert>
         </div>

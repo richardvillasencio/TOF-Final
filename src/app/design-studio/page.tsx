@@ -18,7 +18,6 @@ function renderComponent(config: PageSection, index: number) {
   if (!Component) {
     return null;
   }
-  // Pass the entire props object from the config
   return <Component key={`${config.component}-${index}`} {...config.props} id={config.id} />;
 }
 
@@ -26,14 +25,13 @@ export default async function DesignStudioPage() {
   const pageContent = await loadPageContent('design-studio');
 
   if (!pageContent || pageContent.length === 0) {
-    // This will now only show if both Firestore and fallback fail, which is unlikely.
     return (
         <div className="container mx-auto px-4 py-16">
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Content Unavailable</AlertTitle>
               <AlertDescription>
-                We were unable to load the content for this page from both our database and local fallbacks. Please contact support. This may be due to a misconfigured database connection.
+                We were unable to load the content for this page. Please try again later. This may be due to a misconfigured database connection or missing content. Try running 'npm run seed' to populate the database.
               </AlertDescription>
             </Alert>
         </div>
