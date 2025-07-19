@@ -18,8 +18,7 @@ const socialLinks = [
 
 export function Footer() {
     const { content, loading } = useEditableContent({
-    collectionName: 'globals',
-    docId: 'header',
+    docPath: 'globals/header',
     initialContent: initialHeaderContent,
   });
 
