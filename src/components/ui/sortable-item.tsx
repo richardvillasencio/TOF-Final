@@ -33,15 +33,9 @@ export function SortableItem(props: {
       ref={setNodeRef}
       style={style}
       className={cn('relative', props.className)}
+      {...attributes}
+      {...listeners}
     >
-      <button
-        {...attributes}
-        {...listeners}
-        className="absolute top-2 right-2 z-10 cursor-grab rounded-full bg-background/50 p-2 text-foreground backdrop-blur-sm transition-opacity hover:bg-background/80 active:cursor-grabbing"
-        aria-label="Drag to reorder"
-      >
-        <GripVertical className="h-5 w-5" />
-      </button>
       {props.children}
     </div>
   );

@@ -2,66 +2,74 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 /**
  * A custom hook to manage editable content for a component,
- * fetching from and persisting to Firestore.
- *
- * Note: This hook is a placeholder for a real implementation with user authentication.
- * For this prototype, it simulates an authenticated user.
- * In a real app, you would replace `isAuth` with a check against a real auth provider.
+ * fetching from and persisting to Firestore in real-time.
  */
 export function useEditableContent<T>({
-  docPath,
+  collectionName,
+  docId,
   initialContent,
 }: {
-  docPath: string;
+  collectionName: string;
+  docId: string;
   initialContent: T;
 }) {
   const [content, setContent] = useState<T>(initialContent);
   const [loading, setLoading] = useState(true);
   
-  // Placeholder for real authentication. In this prototype, we'll assume the user is always authenticated.
-  // In a real app, you would integrate your actual authentication provider here.
+  // In a real app, this would come from an auth provider.
+  // For this prototype, we'll assume the user is always authenticated.
   const isAuth = true; 
 
   const db = getFirestore();
-  const contentRef = doc(db, docPath);
+  const contentRef = doc(db, collectionName, docId);
 
   useEffect(() => {
-    const fetchContent = async () => {
-      if (!isAuth) {
-        setLoading(false);
-        return; // Don't fetch if not authenticated
-      }
-      try {
-        const docSnap = await getDoc(contentRef);
+    if (!isAuth) {
+      setLoading(false);
+      return; // Don't fetch if not authenticated
+    }
+
+    const unsubscribe = onSnapshot(
+      contentRef,
+      (docSnap) => {
         if (docSnap.exists()) {
           setContent(docSnap.data() as T);
         } else {
           // If no content exists in Firestore, save the initial content.
-          await setDoc(contentRef, initialContent);
+          // This is useful for seeding content when a new section is added.
+          setDoc(contentRef, initialContent).catch(error => {
+              console.error("Failed to seed initial content:", error);
+          });
           setContent(initialContent);
         }
-      } catch (error) {
-        console.error('Error fetching content:', error);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error('Error fetching content snapshot:', error);
         setLoading(false);
       }
-    };
+    );
 
-    fetchContent();
-  }, [docPath, isAuth, contentRef, initialContent]);
+    // Cleanup the listener on component unmount
+    return () => unsubscribe();
+  }, [collectionName, docId, isAuth]);
 
-  const saveContent = useCallback(async (newContent: T) => {
+  /**
+   * Updates the Firestore document with new content.
+   * This performs a merge, so you can pass a partial object.
+   */
+  const updateContent = useCallback(async (newContent: Partial<T>) => {
     if (!isAuth) {
       console.warn('User is not authenticated. Cannot save content.');
       return;
     }
     try {
       await setDoc(contentRef, newContent, { merge: true });
-      setContent(newContent); // Ensure local state is in sync
+      // The onSnapshot listener will automatically update the local state.
     } catch (error) {
       console.error('Error saving content:', error);
     }
@@ -70,8 +78,8 @@ export function useEditableContent<T>({
   return {
     content,
     setContent,
-    saveContent,
     loading,
     isAuth,
+    updateContent,
   };
 }

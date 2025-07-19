@@ -1,17 +1,20 @@
-import type { HeroSectionProps } from '@/components/page-sections/hero-section';
-import type { FeaturedProductsSectionProps } from '@/components/page-sections/featured-products-section';
-import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
-import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
-import type { ShowroomsSectionProps } from '@/components/page-sections/showrooms-section';
+// This file defines the initial, fallback content for the home page.
+// It's used to seed the database and as a fallback if Firestore is unavailable.
 
-export type PageSection = 
-  | { component: 'HeroSection'; props: Omit<HeroSectionProps, 'id'>; id: string }
-  | { component: 'FeaturedProductsSection'; props: FeaturedProductsSectionProps; id: string }
-  | { component: 'WhyChooseUsSection'; props: Omit<WhyChooseUsSectionProps, 'id'>; id: string }
-  | { component: 'TestimonialsSection'; props: Omit<TestimonialsSectionProps, 'id'>; id: string }
-  | { component: 'ShowroomsSection'; props: ShowroomsSectionProps; id: string };
+type ButtonLink = {
+  href: string;
+  text: string;
+};
 
-export const homeContent: PageSection[] = [
+// Define a type for a single section's data
+type SectionData = {
+  id: string; // This MUST match the component file name in page-sections (e.g., 'hero', 'featured-products')
+  component: string; // The name of the React component to render
+  props: Record<string, any>;
+};
+
+// Array of section data for the home page
+export const homeContent: SectionData[] = [
   {
     id: 'hero',
     component: 'HeroSection',
@@ -30,7 +33,7 @@ export const homeContent: PageSection[] = [
           text: 'Discover Swim Spas',
         },
       },
-    }
+    },
   },
   {
     id: 'featured-products',
@@ -71,7 +74,7 @@ export const homeContent: PageSection[] = [
           price: 'View models'
         },
       ],
-    }
+    },
   },
   {
     id: 'why-choose-us',
@@ -93,10 +96,10 @@ export const homeContent: PageSection[] = [
         {
           icon: 'ThumbsUp',
           title: 'Customer Satisfaction',
-          description: 'Your happiness is our priority. We\'re with you every step of the way.',
+          description: "Your happiness is our priority. We're with you every step of the way.",
         },
       ],
-    }
+    },
   },
   {
     id: 'testimonials',
@@ -120,7 +123,7 @@ export const homeContent: PageSection[] = [
           location: "Fargo, ND"
         },
       ],
-    }
+    },
   },
   {
     id: 'showrooms',
@@ -134,6 +137,6 @@ export const homeContent: PageSection[] = [
         href: '/contact',
         text: 'Find a Location',
       },
-    }
+    },
   },
 ];
