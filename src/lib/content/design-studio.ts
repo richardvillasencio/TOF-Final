@@ -1,11 +1,14 @@
 import type { HeroSectionProps } from '@/components/page-sections/hero-section';
 import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
 import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
+// We don't need a specific prop type for CustomizableFeatureGrid as it manages its own content.
+// We'll just define it as a component that takes an `id`.
 
 export type PageSection = 
   | { component: 'HeroSection'; props: Omit<HeroSectionProps, 'id'>, id: string }
   | { component: 'WhyChooseUsSection'; props: Omit<WhyChooseUsSectionProps, 'id'>, id: string }
-  | { component: 'TestimonialsSection'; props: Omit<TestimonialsSectionProps, 'id'>, id: string };
+  | { component: 'TestimonialsSection'; props: Omit<TestimonialsSectionProps, 'id'>, id: string }
+  | { component: 'CustomizableFeatureGrid'; props: {}, id: string };
 
 export const designStudioContent: PageSection[] = [
     {
@@ -27,6 +30,11 @@ export const designStudioContent: PageSection[] = [
           },
         },
       }
+    },
+    {
+      id: 'custom-grid-1',
+      component: 'CustomizableFeatureGrid',
+      props: {},
     },
     {
       id: 'why-choose-us',
@@ -78,4 +86,3 @@ export const designStudioContent: PageSection[] = [
       }
     },
   ];
-  

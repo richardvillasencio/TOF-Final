@@ -2,6 +2,7 @@ import { loadPageContent, type PageSection } from '@/lib/content-loader';
 import { HeroSection } from '@/components/page-sections/hero-section';
 import { WhyChooseUsSection } from '@/components/page-sections/why-choose-us-section';
 import { TestimonialsSection } from '@/components/page-sections/testimonials-section';
+import { CustomizableFeatureGrid } from '@/components/page-sections/customizable-feature-grid';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 
@@ -9,6 +10,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   HeroSection,
   WhyChooseUsSection,
   TestimonialsSection,
+  CustomizableFeatureGrid,
 };
 
 function renderComponent(config: PageSection) {
