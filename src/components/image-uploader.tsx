@@ -28,13 +28,11 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  const displayUrl = previewUrl || currentImageUrl;
+  const [previewUrl, setPreviewUrl] = useState<string | null>(currentImageUrl);
 
   useEffect(() => {
-    // If the canonical URL from the database changes, clear the local preview
-    setPreviewUrl(null);
+    // When the canonical URL from the database changes, update the preview.
+    setPreviewUrl(currentImageUrl);
   }, [currentImageUrl]);
   
   const handleFileChange = async (
@@ -46,11 +44,11 @@ export function ImageUploader({
     setUploading(true);
     setError(null);
     setProgress(0);
+    // Create a local URL for immediate preview. This is temporary.
     setPreviewUrl(URL.createObjectURL(file));
 
-
     try {
-      // Simulate progress for better UX
+      // Simulate progress for better UX as upload can be fast
       const progressInterval = setInterval(() => {
         setProgress((prev) => (prev >= 90 ? 90 : prev + 10));
       }, 200);
@@ -62,7 +60,6 @@ export function ImageUploader({
       clearInterval(progressInterval);
       setProgress(100);
       onUploadComplete(downloadURL); 
-      setPreviewUrl(null); // Clear preview after successful upload
     } catch (err) {
       console.error('Upload failed:', err);
       setError('Upload failed. Please try again.');
@@ -74,14 +71,14 @@ export function ImageUploader({
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {displayUrl && !uploading && (
+      {previewUrl && (
         <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
           <Image
-            src={displayUrl}
+            src={previewUrl}
             alt="Image preview"
             fill
             className="object-contain"
-            key={displayUrl} // Force re-render on change
+            key={previewUrl} // Force re-render on change
           />
         </div>
       )}
@@ -101,14 +98,16 @@ export function ImageUploader({
           </div>
         </Button>
       </div>
+
       {uploading && (
-        <div className="w-full">
+        <div className="w-full space-y-2">
           <Progress value={progress} className="h-2" />
-          <p className="mt-1 text-xs text-muted-foreground">Uploading...</p>
+          <p className="text-xs text-muted-foreground">Uploading...</p>
         </div>
       )}
+      
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="mt-4">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Upload Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
