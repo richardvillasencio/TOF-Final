@@ -13,7 +13,7 @@ export function useEditableContent<T>({
   docPath,
   initialContent,
 }: {
-  docPath: string; // Changed from collectionName and docId
+  docPath: string;
   initialContent: T;
 }) {
   const [content, setContent] = useState<T>(initialContent);
@@ -23,12 +23,24 @@ export function useEditableContent<T>({
   // For this prototype, we'll assume the user is always authenticated.
   const isAuth = true; 
 
-  const docRef = doc(firestore, docPath);
+  // useCallback to memoize the docRef creation
+  const getDocRef = useCallback(() => {
+    // Ensure docPath is not empty to prevent Firebase errors
+    if (!docPath) return null;
+    return doc(firestore, docPath);
+  }, [docPath]);
 
   useEffect(() => {
     if (!isAuth) {
       setLoading(false);
       return; // Don't fetch if not authenticated
+    }
+
+    const docRef = getDocRef();
+    if (!docRef) {
+      setLoading(false);
+      console.error("useEditableContent: docPath is empty.");
+      return;
     }
 
     const unsubscribe = onSnapshot(
@@ -39,14 +51,11 @@ export function useEditableContent<T>({
           // Merge with initial content to ensure all keys are present
           setContent(prev => ({ ...initialContent, ...data }));
         } else {
-          // If no content exists in Firestore, check if we should create it.
-          // This check avoids re-seeding on every component mount if data is just not there.
-          getDoc(docRef).then(snap => {
-            if (!snap.exists()) {
-                setDoc(docRef, initialContent, { merge: true }).catch(error => {
-                    console.error(`Failed to seed initial content for ${docPath}:`, error);
-                });
-            }
+          // If no content exists in Firestore, create it.
+          // This check ensures we only seed once.
+          console.log(`Document at ${docPath} does not exist. Seeding with initial content.`);
+          setDoc(docRef, initialContent, { merge: true }).catch(error => {
+              console.error(`Failed to seed initial content for ${docPath}:`, error);
           });
           setContent(initialContent);
         }
@@ -54,6 +63,7 @@ export function useEditableContent<T>({
       },
       (error) => {
         console.error(`Error fetching content snapshot for ${docPath}:`, error);
+        setContent(initialContent); // Fallback to initial content on error
         setLoading(false);
       }
     );
@@ -61,7 +71,7 @@ export function useEditableContent<T>({
     // Cleanup the listener on component unmount
     return () => unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [docPath, isAuth]);
+  }, [docPath, isAuth, getDocRef]); // getDocRef is memoized
 
   /**
    * Updates the Firestore document with new content.
@@ -72,13 +82,18 @@ export function useEditableContent<T>({
       console.warn('User is not authenticated. Cannot save content.');
       return;
     }
+    const docRef = getDocRef();
+    if (!docRef) {
+        console.error("useEditableContent: docPath is empty, cannot update.");
+        return;
+    }
     try {
       await setDoc(docRef, newContent, { merge: true });
       // The onSnapshot listener will automatically update the local state.
     } catch (error) {
       console.error('Error saving content:', error);
     }
-  }, [docRef, isAuth]);
+  }, [getDocRef, isAuth]);
 
   return {
     content,
