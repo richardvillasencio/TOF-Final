@@ -33,7 +33,6 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import { TubsOfFunLogo } from '@/components/ui/logo';
 import { ThemeToggle } from '../theme-toggle';
 import { useEditableContent } from '@/hooks/use-editable-content';
 import { type NavLink, headerContent as initialHeaderContent } from '@/lib/content/header';
@@ -70,7 +69,14 @@ export function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Tubs of Fun Home">
-              <TubsOfFunLogo />
+                <Image
+                    src={content.logoImageUrl}
+                    alt="Company Logo"
+                    width={200}
+                    height={43}
+                    className="object-contain"
+                    priority
+                />
             </Link>
           </div>
           <div className="hidden lg:flex flex-col items-end text-sm">
@@ -209,8 +215,7 @@ const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], main
       <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
         <SheetHeader className="p-4 border-b">
           <div className="flex justify-between items-center">
-            <TubsOfFunLogo />
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+             <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
               <X className="h-6 w-6" />
               <span className="sr-only">Close menu</span>
             </Button>
@@ -308,7 +313,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
         <DialogHeader>
           <DialogTitle>Edit Header Content</DialogTitle>
           <DialogDescription>
-            Update contact information, mascot image, and navigation links.
+            Update contact information, logos, and navigation links.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1">
@@ -329,11 +334,22 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
                 onChange={e => setEditedContent(prev => ({...prev, address: e.target.value}))}
               />
             </div>
-            <ImageUploader 
-              currentImageUrl={editedContent.mascotImageUrl}
-              onUploadComplete={url => setEditedContent(prev => ({...prev, mascotImageUrl: url}))}
-              storagePath="globals/header"
-            />
+            <div>
+              <Label>Company Logo</Label>
+              <ImageUploader 
+                currentImageUrl={editedContent.logoImageUrl}
+                onUploadComplete={url => setEditedContent(prev => ({...prev, logoImageUrl: url}))}
+                storagePath="globals/header"
+              />
+            </div>
+             <div>
+              <Label>Mascot Image</Label>
+              <ImageUploader 
+                currentImageUrl={editedContent.mascotImageUrl}
+                onUploadComplete={url => setEditedContent(prev => ({...prev, mascotImageUrl: url}))}
+                storagePath="globals/header"
+              />
+            </div>
           </div>
 
           {/* Right Column: Navigation */}
@@ -439,11 +455,13 @@ function EditableNavMenu({ links, onLinksChange, depth = 0 }: EditableNavMenuPro
                                         </AlertDialogContent>
                                     </AlertDialog>
                                 </div>
-                                <EditableNavMenu 
-                                    links={link.subLinks || []}
-                                    onLinksChange={(newSublinks) => handleSublinksChange(link.id, newSublinks)}
-                                    depth={depth + 1}
-                                />
+                                {depth < 2 && (
+                                    <EditableNavMenu 
+                                        links={link.subLinks || []}
+                                        onLinksChange={(newSublinks) => handleSublinksChange(link.id, newSublinks)}
+                                        depth={depth + 1}
+                                    />
+                                )}
                             </div>
                         </SortableItem>
                     ))}

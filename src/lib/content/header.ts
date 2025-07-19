@@ -9,6 +9,7 @@ export type NavLink = {
 };
 
 export type HeaderContent = {
+  logoImageUrl: string;
   phoneNumber: string;
   address: string;
   mascotImageUrl: string;
@@ -17,9 +18,10 @@ export type HeaderContent = {
 }
 
 export const headerContent: HeaderContent = {
+  logoImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/globals%2Fheader%2Ftubs-of-fun-logo.svg?alt=media&token=4802ff93-b673-4e33-9154-2f3b60408f65',
   phoneNumber: '(701) 234-0705',
   address: '601 Main Ave W. West Fargo, ND 58708',
-  mascotImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpw_imh3fc.webp?alt=media&token=49a0cdfb-d711-4eea-a4b5-3713bc4da3be',
+  mascotImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/globals%2Fheader%2Ftubby-mascot.svg?alt=media&token=d189c894-1a6e-4424-a74b-014906536647',
   topNavLinks: [
     { 
       id: 'top-1',

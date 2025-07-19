@@ -1,8 +1,13 @@
+// src/components/layout/footer.tsx
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Facebook, Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react';
-import { TubsOfFunLogo } from '@/components/ui/logo';
+import Image from 'next/image';
+import { useEditableContent } from '@/hooks/use-editable-content';
+import { headerContent as initialHeaderContent } from '@/lib/content/header';
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
@@ -11,6 +16,12 @@ const socialLinks = [
 ];
 
 export function Footer() {
+    const { content } = useEditableContent({
+    collectionName: 'globals',
+    docId: 'header',
+    initialContent: initialHeaderContent,
+  });
+
   return (
     <footer className="bg-muted text-muted-foreground">
       <div className="container mx-auto px-4 py-12">
@@ -18,7 +29,13 @@ export function Footer() {
           {/* About Section */}
           <div className="space-y-4">
             <Link href="/">
-               <TubsOfFunLogo />
+               <Image
+                    src={content.logoImageUrl}
+                    alt="Company Logo"
+                    width={200}
+                    height={43}
+                    className="object-contain"
+                />
             </Link>
             <p className="text-sm">
               Your premier destination for relaxation and recreation. We offer top-quality hot tubs, swim spas, and more to enhance your lifestyle.
