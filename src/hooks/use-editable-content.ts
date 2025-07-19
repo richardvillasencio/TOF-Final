@@ -37,10 +37,11 @@ export function useEditableContent<T>({
       docRef,
       (docSnap) => {
         if (docSnap.exists()) {
-          setContent(docSnap.data() as T);
+          const data = docSnap.data();
+          // Merge with initial content to ensure all keys are present
+          setContent(prev => ({ ...prev, ...data }));
         } else {
           // If no content exists in Firestore, save the initial content.
-          // This is useful for seeding content when a new section is added.
           setDoc(docRef, initialContent, { merge: true }).catch(error => {
               console.error("Failed to seed initial content:", error);
           });
@@ -56,6 +57,7 @@ export function useEditableContent<T>({
 
     // Cleanup the listener on component unmount
     return () => unsubscribe();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collectionName, docId, isAuth]);
 
   /**

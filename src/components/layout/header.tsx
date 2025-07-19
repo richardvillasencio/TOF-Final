@@ -6,6 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin, Pencil, Trash2, GripVertical, PlusCircle } from 'lucide-react';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/firebase/client';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
@@ -34,8 +36,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import { ThemeToggle } from '../theme-toggle';
-import { useEditableContent } from '@/hooks/use-editable-content';
-import { type NavLink, headerContent as initialHeaderContent } from '@/lib/content/header';
+import { type NavLink, type HeaderContent, headerContent as initialHeaderContent } from '@/lib/content/header';
 import { cn } from '@/lib/utils';
 import { ImageUploader } from '../image-uploader';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
@@ -45,13 +46,37 @@ import { Skeleton } from '../ui/skeleton';
 
 
 export function Header() {
-  const { content, loading, isAuth, updateContent } = useEditableContent({
-    collectionName: 'globals',
-    docId: 'header',
-    initialContent: initialHeaderContent,
-  });
-
+  const [content, setContent] = useState<HeaderContent>(initialHeaderContent);
+  const [loading, setLoading] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  
+  // In a real app, this would come from an auth provider.
+  const isAuth = true; 
+
+  useEffect(() => {
+    if (!isAuth) {
+        setLoading(false);
+        return;
+    }
+    const docRef = doc(firestore, 'globals', 'header');
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+            setContent(docSnap.data() as HeaderContent);
+        }
+        setLoading(false);
+    }, (error) => {
+        console.error("Error fetching header content:", error);
+        setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [isAuth]);
+
+  const updateContent = async (newContent: Partial<HeaderContent>) => {
+    if (!isAuth) return;
+    const docRef = doc(firestore, 'globals', 'header');
+    await setDoc(docRef, newContent, { merge: true });
+  }
 
   return (
     <header className="relative bg-gradient-to-r from-[rgb(81,158,172)] to-[rgb(231,121,49)] text-white sticky top-0 z-50">
@@ -122,12 +147,14 @@ export function Header() {
           <DesktopNav links={content.mainNavLinks} />
         </div>
       </div>
-      <EditHeaderDialog
-        isOpen={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
-      />
+      {isEditDialogOpen && (
+        <EditHeaderDialog
+            isOpen={isEditDialogOpen}
+            onOpenChange={setIsEditDialogOpen}
+            currentContent={content}
+            onSave={updateContent}
+        />
+      )}
     </header>
   );
 }
@@ -294,8 +321,8 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 interface EditHeaderDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  currentContent: typeof initialHeaderContent;
-  onSave: (newContent: Partial<typeof initialHeaderContent>) => void;
+  currentContent: HeaderContent;
+  onSave: (newContent: Partial<HeaderContent>) => void;
 }
 
 function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: EditHeaderDialogProps) {
@@ -312,9 +339,9 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
     onOpenChange(false);
   };
   
-  const handleContentChange = <K extends keyof typeof initialHeaderContent>(
+  const handleContentChange = <K extends keyof HeaderContent>(
     key: K,
-    value: (typeof initialHeaderContent)[K]
+    value: HeaderContent[K]
   ) => {
     setEditedContent(prev => ({ ...prev, [key]: value }));
   };
