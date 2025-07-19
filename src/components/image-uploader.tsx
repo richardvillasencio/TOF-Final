@@ -45,7 +45,8 @@ export function ImageUploader({
     setError(null);
     setProgress(0);
     // Create a local URL for immediate preview. This is temporary.
-    setPreviewUrl(URL.createObjectURL(file));
+    const localUrl = URL.createObjectURL(file);
+    setPreviewUrl(localUrl);
 
     try {
       // Simulate progress for better UX as upload can be fast
@@ -65,6 +66,9 @@ export function ImageUploader({
       setError('Upload failed. Please try again.');
     } finally {
       setUploading(false);
+      if(localUrl) {
+          URL.revokeObjectURL(localUrl);
+      }
     }
   };
   
@@ -82,29 +86,32 @@ export function ImageUploader({
           />
         </div>
       )}
-      <div className="flex items-center gap-4">
-        <Button asChild variant="outline" className="relative">
-          <div>
+      <div className="flex flex-col gap-4">
+        <Button asChild variant="outline" className="relative w-fit">
+          <label
+            htmlFor={`image-upload-${label}`}
+            className="flex cursor-pointer items-center"
+          >
             <UploadCloud className="mr-2 h-4 w-4" />
             Change Image
             <Input
               id={`image-upload-${label}`}
               type="file"
               accept="image/*"
-              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+              className="sr-only"
               onChange={handleFileChange}
               disabled={uploading}
             />
-          </div>
+          </label>
         </Button>
-      </div>
 
-      {uploading && (
-        <div className="w-full space-y-2">
-          <Progress value={progress} className="h-2" />
-          <p className="text-xs text-muted-foreground">Uploading...</p>
-        </div>
-      )}
+        {uploading && (
+          <div className="w-full space-y-2">
+            <Progress value={progress} className="h-2" />
+            <p className="text-xs text-muted-foreground">Uploading...</p>
+          </div>
+        )}
+      </div>
       
       {error && (
         <Alert variant="destructive" className="mt-4">
