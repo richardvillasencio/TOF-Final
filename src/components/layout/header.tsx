@@ -302,9 +302,6 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
   const [editedContent, setEditedContent] = useState(currentContent);
 
   useEffect(() => {
-    // When the dialog is opened, or when the currentContent prop changes
-    // (e.g., after a save), reset the internal state to match the latest content.
-    // This ensures the dialog is always editing the most up-to-date information.
     if (isOpen) {
       setEditedContent(currentContent);
     }
