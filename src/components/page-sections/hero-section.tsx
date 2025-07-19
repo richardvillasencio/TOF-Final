@@ -7,6 +7,8 @@ type ButtonLink = {
 };
 
 export type HeroSectionProps = {
+  id: string; // The document ID from Firestore
+  component: 'HeroSection';
   backgroundImage: string;
   backgroundHint: string;
   title: string;
@@ -17,15 +19,26 @@ export type HeroSectionProps = {
   };
 };
 
-export function HeroSection({ backgroundImage, backgroundHint, title, subtitle, buttons }: HeroSectionProps) {
+export function HeroSection({ id, backgroundImage, backgroundHint, title, subtitle, buttons }: HeroSectionProps) {
   return (
-    <section className="relative h-[60vh] md:h-[70vh] bg-cover bg-center" style={{ backgroundImage: `url('${backgroundImage}')` }} data-ai-hint={backgroundHint}>
+    <section 
+      data-studio-id={id}
+      className="relative h-[60vh] md:h-[70vh] bg-cover bg-center" 
+      style={{ backgroundImage: `url('${backgroundImage}')` }} 
+      data-ai-hint={backgroundHint}
+    >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white p-4">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-lg">
+        <h1 
+          data-studio-id={`${id}/title`}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-lg"
+        >
           {title}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg md:text-xl text-gray-200 drop-shadow-md">
+        <p 
+          data-studio-id={`${id}/subtitle`}
+          className="mt-4 max-w-2xl text-lg md:text-xl text-gray-200 drop-shadow-md"
+        >
           {subtitle}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">

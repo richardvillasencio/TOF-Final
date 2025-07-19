@@ -8,15 +8,17 @@ type Review = {
 };
 
 export type TestimonialsSectionProps = {
+  id: string; // The document ID from Firestore
+  component: 'TestimonialsSection';
   title: string;
   reviews: Review[];
 };
 
-export function TestimonialsSection({ title, reviews }: TestimonialsSectionProps) {
+export function TestimonialsSection({ id, title, reviews }: TestimonialsSectionProps) {
   return (
-    <section className="py-16 sm:py-24 bg-muted">
+    <section data-studio-id={id} className="py-16 sm:py-24 bg-muted">
        <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
+        <h2 data-studio-id={`${id}/title`} className="text-3xl md:text-4xl font-bold text-center mb-12">{title}</h2>
         <Carousel
           opts={{
             align: "start",
@@ -26,13 +28,13 @@ export function TestimonialsSection({ title, reviews }: TestimonialsSectionProps
         >
           <CarouselContent>
             {reviews.map((testimonial, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2" data-studio-id={`${id}/reviews/${index}`}>
                 <div className="p-1">
                   <Card className="h-full">
                     <CardContent className="flex flex-col justify-center p-6 text-center h-full">
-                      <p className="text-lg italic text-muted-foreground mb-4">"{testimonial.quote}"</p>
-                      <p className="font-bold text-primary">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                      <p data-studio-id={`${id}/reviews/${index}/quote`} className="text-lg italic text-muted-foreground mb-4">"{testimonial.quote}"</p>
+                      <p data-studio-id={`${id}/reviews/${index}/name`} className="font-bold text-primary">{testimonial.name}</p>
+                      <p data-studio-id={`${id}/reviews/${index}/location`} className="text-sm text-muted-foreground">{testimonial.location}</p>
                     </CardContent>
                   </Card>
                 </div>

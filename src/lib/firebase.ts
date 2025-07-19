@@ -1,11 +1,9 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getStorage } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import admin from 'firebase-admin';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
+// Client-side Firebase configuration
+const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -14,8 +12,35 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
+// Initialize Firebase for the client
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const storage = getStorage(app);
 
-export { app, storage };
+// Server-side Firebase Admin SDK configuration
+let adminApp: admin.app.App;
+let adminDb: admin.firestore.Firestore | undefined = undefined;
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+    try {
+        if (!admin.apps.length) {
+            const serviceAccount: admin.ServiceAccount = JSON.parse(
+                process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
+            );
+            adminApp = admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+                storageBucket: firebaseConfig.storageBucket,
+            });
+        } else {
+            adminApp = admin.app();
+        }
+        adminDb = adminApp.firestore();
+    } catch (error) {
+        console.error("Firebase Admin SDK initialization failed:", error);
+    }
+} else {
+    console.warn("FIREBASE_SERVICE_ACCOUNT_KEY is not set. Server-side Firebase features will be disabled.");
+}
+
+
+export { app, storage, adminDb };
