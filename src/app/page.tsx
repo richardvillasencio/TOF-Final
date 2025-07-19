@@ -53,9 +53,6 @@ function EditablePageLayout() {
   // In a real app, this would come from an auth provider like Clerk or Firebase Auth
   const isAuth = true; 
 
-  const db = getFirestore();
-  const layoutDocRef = doc(db, 'layouts', 'homePage');
-
   // Fetch the layout from Firestore on component mount
   useEffect(() => {
     const fetchLayout = async () => {
@@ -64,6 +61,8 @@ function EditablePageLayout() {
         return;
       }
       try {
+        const db = getFirestore();
+        const layoutDocRef = doc(db, 'layouts', 'homePage');
         const docSnap = await getDoc(layoutDocRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
@@ -101,6 +100,8 @@ function EditablePageLayout() {
   const handleSaveOrder = async () => {
     setIsSaving(true);
     try {
+      const db = getFirestore();
+      const layoutDocRef = doc(db, 'layouts', 'homePage');
       await setDoc(layoutDocRef, { order: sectionOrder });
       setIsReorderMode(false);
     } catch (err) {
