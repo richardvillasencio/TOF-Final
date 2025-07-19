@@ -314,14 +314,14 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
   
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh]">
+      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>Edit Header Content</DialogTitle>
           <DialogDescription>
             Update contact information, logos, and navigation links.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4">
           {/* Left Column: General Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">General Information</h3>
