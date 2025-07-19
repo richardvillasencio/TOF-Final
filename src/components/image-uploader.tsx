@@ -28,6 +28,14 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const displayUrl = previewUrl || currentImageUrl;
+
+  useEffect(() => {
+    // If the canonical URL from the database changes, clear the local preview
+    setPreviewUrl(null);
+  }, [currentImageUrl]);
   
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -38,10 +46,12 @@ export function ImageUploader({
     setUploading(true);
     setError(null);
     setProgress(0);
+    setPreviewUrl(URL.createObjectURL(file));
+
 
     try {
       // Simulate progress for better UX
-      const interval = setInterval(() => {
+      const progressInterval = setInterval(() => {
         setProgress((prev) => (prev >= 90 ? 90 : prev + 10));
       }, 200);
 
@@ -49,9 +59,10 @@ export function ImageUploader({
       const uploadTask = await uploadBytes(fileRef, file);
       const downloadURL = await getDownloadURL(uploadTask.ref);
 
-      clearInterval(interval);
+      clearInterval(progressInterval);
       setProgress(100);
-      onUploadComplete(downloadURL); // This updates the parent state
+      onUploadComplete(downloadURL); 
+      setPreviewUrl(null); // Clear preview after successful upload
     } catch (err) {
       console.error('Upload failed:', err);
       setError('Upload failed. Please try again.');
@@ -63,14 +74,14 @@ export function ImageUploader({
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {currentImageUrl && !uploading && (
+      {displayUrl && !uploading && (
         <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
           <Image
-            src={currentImageUrl}
+            src={displayUrl}
             alt="Image preview"
             fill
             className="object-contain"
-            key={currentImageUrl} // Add key to force re-render on change
+            key={displayUrl} // Force re-render on change
           />
         </div>
       )}

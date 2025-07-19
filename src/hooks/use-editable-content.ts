@@ -1,3 +1,4 @@
+
 // src/hooks/use-editable-content.ts
 'use client';
 
@@ -29,36 +30,40 @@ export function useEditableContent<T extends object>({
   }, [docPath]);
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth || !docPath) {
       setLoading(false);
+      if (!docPath) console.error("useEditableContent: docPath is empty.");
       return;
     }
 
     const docRef = getDocRef();
-    if (!docRef) {
-      setLoading(false);
-      console.error("useEditableContent: docPath is empty.");
-      return;
-    }
+    if (!docRef) return; // Should be covered by the check above, but for safety
 
     const unsubscribe = onSnapshot(
       docRef,
       (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
+          // Merge Firestore data with initial content to ensure all fields are present
           setContent(prev => ({ ...initialContent, ...data }));
         } else {
+          // Document does not exist, so create it with the initial content
           console.log(`Document at ${docPath} does not exist. Seeding with initial content.`);
-          setDoc(docRef, initialContent, { merge: true }).catch(error => {
+          setDoc(docRef, initialContent, { merge: true })
+            .then(() => {
+              // The listener will automatically pick up the new document,
+              // but we can set content here to avoid a flicker.
+              setContent(initialContent);
+            })
+            .catch(error => {
               console.error(`Failed to seed initial content for ${docPath}:`, error);
-          });
-          setContent(initialContent);
+            });
         }
         setLoading(false);
       },
       (error) => {
         console.error(`Error fetching content snapshot for ${docPath}:`, error);
-        setContent(initialContent);
+        setContent(initialContent); // Fallback to initial content on error
         setLoading(false);
       }
     );

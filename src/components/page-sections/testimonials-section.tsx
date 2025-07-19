@@ -2,7 +2,7 @@
 // src/components/page-sections/testimonials-section.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
