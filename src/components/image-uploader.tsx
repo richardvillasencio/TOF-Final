@@ -3,20 +3,26 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { UploadCloud, AlertCircle } from 'lucide-react';
-import { storage } from '@/lib/firebase/client'; // Import client storage
+import { storage } from '@/lib/firebase/client';
+import { cn } from '@/lib/utils';
 
 interface ImageUploaderProps {
   label: string;
   currentImageUrl: string;
   onUploadComplete: (url: string) => void;
-  storagePath: string; // e.g., 'page-sections/feature-grids'
+  storagePath: string;
 }
 
 export function ImageUploader({
@@ -31,47 +37,46 @@ export function ImageUploader({
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentImageUrl);
 
   useEffect(() => {
-    // When the canonical URL from the database changes, update the preview.
     setPreviewUrl(currentImageUrl);
   }, [currentImageUrl]);
-  
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
     setError(null);
     setProgress(0);
-    // Create a local URL for immediate preview. This is temporary.
     const localUrl = URL.createObjectURL(file);
     setPreviewUrl(localUrl);
 
-    try {
-      // Simulate progress for better UX as upload can be fast
-      const progressInterval = setInterval(() => {
-        setProgress((prev) => (prev >= 90 ? 90 : prev + 10));
-      }, 200);
+    const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
+    const uploadTask = uploadBytesResumable(fileRef, file);
 
-      const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
-      const uploadTask = await uploadBytes(fileRef, file);
-      const downloadURL = await getDownloadURL(uploadTask.ref);
-
-      clearInterval(progressInterval);
-      setProgress(100);
-      onUploadComplete(downloadURL); 
-    } catch (err) {
-      console.error('Upload failed:', err);
-      setError('Upload failed. Please try again.');
-    } finally {
-      setUploading(false);
-      if(localUrl) {
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        console.error('Upload failed:', error);
+        setError('Upload failed. Please try again.');
+        setUploading(false);
+        setPreviewUrl(currentImageUrl);
+        URL.revokeObjectURL(localUrl);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          onUploadComplete(downloadURL);
+          setUploading(false);
           URL.revokeObjectURL(localUrl);
+        });
       }
-    }
+    );
   };
-  
+
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
@@ -82,7 +87,7 @@ export function ImageUploader({
             alt="Image preview"
             fill
             className="object-contain"
-            key={previewUrl} // Force re-render on change
+            key={previewUrl}
           />
         </div>
       )}
@@ -112,7 +117,7 @@ export function ImageUploader({
           </div>
         )}
       </div>
-      
+
       {error && (
         <Alert variant="destructive" className="mt-4">
           <AlertCircle className="h-4 w-4" />
