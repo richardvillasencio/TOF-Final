@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { Button, buttonVariants } from '@/components/ui/button';
