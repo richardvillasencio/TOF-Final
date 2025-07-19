@@ -1,10 +1,6 @@
+
 import 'server-only';
 import { adminDb } from '@/lib/firebase';
-import type { HeroSectionProps } from '@/components/page-sections/hero-section';
-import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
-import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
-import type { FeaturedProductsSectionProps } from '@/components/page-sections/featured-products-section';
-import type { ShowroomsSectionProps } from '@/components/page-sections/showrooms-section';
 import { unstable_cache } from 'next/cache';
 
 // A generic "PageSection" type that can represent any of our section components.
@@ -42,14 +38,15 @@ export const loadPageContent = unstable_cache(
             id: doc.id,
             ...doc.data(),
           } as PageSection));
+          console.log(`Successfully fetched ${content.length} sections for page: ${page} from Firestore.`);
           return content;
         }
         console.warn(`No content found in Firestore for page: ${page}. Trying fallback.`);
       } catch (error) {
-        console.error(`Error fetching from Firestore for page '${page}'. Trying fallback.`, error);
+        console.error(`Error fetching from Firestore for page '${page}'. This might be a permissions issue or a problem with your service account key. Trying fallback.`, error);
       }
     } else {
-      console.warn("Firestore is not initialized. Trying fallback.");
+      console.warn("Firestore Admin DB is not initialized. This is expected if FIREBASE_SERVICE_ACCOUNT_KEY is not set. Trying fallback.");
     }
 
     // 2. If Firestore fails or is empty, fall back to static content file
