@@ -1,3 +1,4 @@
+
 // src/components/page-sections/testimonials-section.tsx
 'use client';
 
@@ -63,7 +64,7 @@ const initialContent: TestimonialsSectionContent = {
 
 // --- Main Component ---
 export function TestimonialsSection({ docPath }: { docPath: string }) {
-  const { content, loading, isAuth, updateContent } = useEditableContent<TestimonialsSectionContent>({
+  const { content, setContent, loading, isAuth, saveContent } = useEditableContent<TestimonialsSectionContent>({
     docPath: docPath,
     initialContent: initialContent,
   });
@@ -127,8 +128,9 @@ export function TestimonialsSection({ docPath }: { docPath: string }) {
        <EditDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
+        content={content}
+        setContent={setContent}
+        onSave={() => saveContent(content)}
       />
     </section>
   );
@@ -139,36 +141,32 @@ export function TestimonialsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  currentContent: TestimonialsSectionContent;
-  onSave: (newContent: Partial<TestimonialsSectionContent>) => void;
+  content: TestimonialsSectionContent;
+  setContent: (content: TestimonialsSectionContent) => void;
+  onSave: () => void;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave }: EditDialogProps) {
-    const [editedContent, setEditedContent] = useState(currentContent);
-
-    useEffect(() => {
-        if(isOpen) setEditedContent(currentContent)
-    }, [isOpen, currentContent]);
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave }: EditDialogProps) {
 
     const handleSave = () => {
-        onSave(editedContent);
+        onSave();
         onOpenChange(false);
     }
 
     const handleReviewChange = (index: number, field: keyof Review, value: string) => {
-        const newReviews = [...editedContent.reviews];
+        const newReviews = [...content.reviews];
         newReviews[index] = {...newReviews[index], [field]: value};
-        setEditedContent(prev => ({...prev, reviews: newReviews}));
+        setContent(prev => ({...prev, reviews: newReviews}));
     }
     
     const handleAddReview = () => {
-        const newReviews = [...editedContent.reviews, { quote: 'New Quote', name: 'New Name', location: 'New Location'}];
-        setEditedContent(prev => ({...prev, reviews: newReviews}));
+        const newReviews = [...content.reviews, { quote: 'New Quote', name: 'New Name', location: 'New Location'}];
+        setContent(prev => ({...prev, reviews: newReviews}));
     }
 
     const handleDeleteReview = (index: number) => {
-        const newReviews = editedContent.reviews.filter((_, i) => i !== index);
-        setEditedContent(prev => ({...prev, reviews: newReviews}));
+        const newReviews = content.reviews.filter((_, i) => i !== index);
+        setContent(prev => ({...prev, reviews: newReviews}));
     }
 
     return (
@@ -183,11 +181,11 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave }: EditDialog
                 <div className="space-y-4 py-4">
                     <div>
                         <Label>Section Title</Label>
-                        <Input value={editedContent.title} onChange={e => setEditedContent(prev => ({...prev, title: e.target.value}))}/>
+                        <Input value={content.title} onChange={e => setContent(prev => ({...prev, title: e.target.value}))}/>
                     </div>
                     <hr/>
                     <div className="space-y-4">
-                        {editedContent.reviews.map((review, index) => (
+                        {content.reviews.map((review, index) => (
                             <div key={index} className="border p-4 rounded-md space-y-2 relative">
                                 <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => handleDeleteReview(index)}>
                                     <Trash2 className="h-4 w-4 text-destructive"/>

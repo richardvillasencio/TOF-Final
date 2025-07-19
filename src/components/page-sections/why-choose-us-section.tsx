@@ -1,7 +1,8 @@
+
 // src/components/page-sections/why-choose-us-section.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { LucideProps } from 'lucide-react';
 import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 import * as LucideIcons from 'lucide-react';
@@ -60,7 +61,7 @@ const initialContent: WhyChooseUsSectionContent = {
 
 // --- Main Component ---
 export function WhyChooseUsSection({ docPath }: { docPath: string }) {
-  const { content, loading, isAuth, updateContent } = useEditableContent<WhyChooseUsSectionContent>({
+  const { content, setContent, loading, isAuth, saveContent } = useEditableContent<WhyChooseUsSectionContent>({
     docPath: docPath,
     initialContent: initialContent,
   });
@@ -112,8 +113,9 @@ export function WhyChooseUsSection({ docPath }: { docPath: string }) {
        <EditDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        currentContent={content}
-        onSave={updateContent}
+        content={content}
+        setContent={setContent}
+        onSave={() => saveContent(content)}
       />
     </section>
   );
@@ -123,36 +125,32 @@ export function WhyChooseUsSection({ docPath }: { docPath: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    currentContent: WhyChooseUsSectionContent;
-    onSave: (newContent: Partial<WhyChooseUsSectionContent>) => void;
+    content: WhyChooseUsSectionContent;
+    setContent: (newContent: WhyChooseUsSectionContent) => void;
+    onSave: () => void;
 }
   
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave }: EditDialogProps) {
-    const [editedContent, setEditedContent] = useState(currentContent);
-
-    useEffect(() => {
-        if(isOpen) setEditedContent(currentContent)
-    }, [isOpen, currentContent]);
+function EditDialog({ isOpen, onOpenChange, content, setContent, onSave }: EditDialogProps) {
 
     const handleSave = () => {
-        onSave(editedContent);
+        onSave();
         onOpenChange(false);
     }
     
     const handleFeatureChange = (index: number, field: keyof Feature, value: string) => {
-        const newFeatures = [...editedContent.features];
+        const newFeatures = [...content.features];
         newFeatures[index] = {...newFeatures[index], [field]: value};
-        setEditedContent(prev => ({...prev, features: newFeatures}));
+        setContent(prev => ({...prev, features: newFeatures}));
     }
 
     const handleAddFeature = () => {
-        const newFeatures = [...editedContent.features, { icon: 'Star', title: 'New Feature', description: 'New description'}];
-        setEditedContent(prev => ({...prev, features: newFeatures}));
+        const newFeatures = [...content.features, { icon: 'Star', title: 'New Feature', description: 'New description'}];
+        setContent(prev => ({...prev, features: newFeatures}));
     }
 
     const handleDeleteFeature = (index: number) => {
-        const newFeatures = editedContent.features.filter((_, i) => i !== index);
-        setEditedContent(prev => ({...prev, features: newFeatures}));
+        const newFeatures = content.features.filter((_, i) => i !== index);
+        setContent(prev => ({...prev, features: newFeatures}));
     }
 
     return (
@@ -164,16 +162,16 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave }: EditDialog
                  <div className="space-y-4 py-4">
                     <div>
                         <Label>Title</Label>
-                        <Input value={editedContent.title} onChange={e => setEditedContent(prev => ({...prev, title: e.target.value}))}/>
+                        <Input value={content.title} onChange={e => setContent(prev => ({...prev, title: e.target.value}))}/>
                     </div>
                      <div>
                         <Label>Subtitle</Label>
-                        <Textarea value={editedContent.subtitle} onChange={e => setEditedContent(prev => ({...prev, subtitle: e.target.value}))}/>
+                        <Textarea value={content.subtitle} onChange={e => setContent(prev => ({...prev, subtitle: e.target.value}))}/>
                     </div>
                     <hr/>
                     <div className="space-y-4">
                         <h3 className="font-medium">Features</h3>
-                        {editedContent.features.map((feature, index) => (
+                        {content.features.map((feature, index) => (
                             <div key={index} className="border p-4 rounded-md space-y-2 relative">
                                  <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => handleDeleteFeature(index)}>
                                     <Trash2 className="h-4 w-4 text-destructive"/>

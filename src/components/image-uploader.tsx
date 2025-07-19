@@ -1,3 +1,6 @@
+
+'use client';
+
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -25,14 +28,7 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [localPreview, setLocalPreview] = useState<string | null>(null);
-
-  useEffect(() => {
-    // When the currentImageUrl prop changes from the outside,
-    // clear any local preview.
-    setLocalPreview(null);
-  }, [currentImageUrl]);
-
+  
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -43,39 +39,38 @@ export function ImageUploader({
     setError(null);
     setProgress(0);
 
-    // Show a local preview immediately
-    const reader = new FileReader();
-    reader.onload = (e) => setLocalPreview(e.target?.result as string);
-    reader.readAsDataURL(file);
-
     try {
+      // Simulate progress for better UX
+      const interval = setInterval(() => {
+        setProgress((prev) => (prev >= 90 ? 90 : prev + 10));
+      }, 200);
+
       const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
       const uploadTask = await uploadBytes(fileRef, file);
       const downloadURL = await getDownloadURL(uploadTask.ref);
 
-      onUploadComplete(downloadURL); // This updates the parent state
+      clearInterval(interval);
       setProgress(100);
+      onUploadComplete(downloadURL); // This updates the parent state
     } catch (err) {
       console.error('Upload failed:', err);
       setError('Upload failed. Please try again.');
-      setLocalPreview(null); // Revert local preview on error
     } finally {
       setUploading(false);
     }
   };
   
-  const displayUrl = localPreview || currentImageUrl;
-
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {displayUrl && (
+      {currentImageUrl && !uploading && (
         <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
           <Image
-            src={displayUrl}
+            src={currentImageUrl}
             alt="Image preview"
             fill
             className="object-contain"
+            key={currentImageUrl} // Add key to force re-render on change
           />
         </div>
       )}
@@ -94,13 +89,13 @@ export function ImageUploader({
             />
           </div>
         </Button>
-        {uploading && (
-          <div className="w-full">
-            <Progress value={progress} className="h-2" />
-            <p className="mt-1 text-xs text-muted-foreground">Uploading...</p>
-          </div>
-        )}
       </div>
+      {uploading && (
+        <div className="w-full">
+          <Progress value={progress} className="h-2" />
+          <p className="mt-1 text-xs text-muted-foreground">Uploading...</p>
+        </div>
+      )}
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
