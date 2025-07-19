@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -25,8 +25,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Pencil } from 'lucide-react';
 import { useEditableContent } from '@/hooks/use-editable-content';
-import { homeContent } from '@/lib/content/home';
 import { ImageUploader } from '@/components/image-uploader';
+import { Skeleton } from '../ui/skeleton';
 
 // --- Types ---
 type Product = {
@@ -44,28 +44,66 @@ type FeaturedProductsSectionContent = {
 };
 
 // --- Initial Data ---
-const getInitialContent = (): FeaturedProductsSectionContent => {
-    const sectionData = homeContent.find(s => s.id === 'featured-products');
-    // Type assertion to ensure props match the expected structure
-    return sectionData?.props as FeaturedProductsSectionContent || {
-      title: 'Popular Hot Tubs & Spas',
-      products: [],
-    };
-  };
+const initialContent: FeaturedProductsSectionContent = {
+    title: 'Popular Hot Tubs & Spas',
+    products: [
+        {
+          name: 'M-Series M9',
+          brand: 'Bullfrog Spas',
+          image: 'https://placehold.co/600x400.png',
+          dataAiHint: 'luxury hot tub',
+          href: '/hot-tubs/bullfrog-spas/m-series',
+          price: 'Call for Price'
+        },
+        {
+          name: 'Star Series Spa',
+          brand: 'QCA Spas',
+          image: 'https://placehold.co/600x400.png',
+          dataAiHint: 'outdoor spa',
+          href: '/hot-tubs/qca-spas/star',
+          price: 'Call for Price'
+        },
+        {
+          name: 'Aquarius Swim Spa',
+          brand: 'Swim Spa Collection',
+          image: 'https://placehold.co/600x400.png',
+          dataAiHint: 'swim spa',
+          href: '/swim-spas/collection',
+          price: 'Call for Price'
+        },
+        {
+          name: 'Cal Flame Grill',
+          brand: 'Grills',
+          image: 'https://placehold.co/600x400.png',
+          dataAiHint: 'bbq grill',
+          href: '/grills/calflame',
+          price: 'View models'
+        },
+      ],
+};
 
 // --- Main Component ---
-export function FeaturedProductsSection({ id }: { id: string }) {
+export function FeaturedProductsSection({ docPath }: { docPath: string }) {
   const { content, setContent, loading, isAuth, updateContent } =
     useEditableContent<FeaturedProductsSectionContent>({
-      collectionName: 'sectionContent',
-      docId: id,
-      initialContent: getInitialContent(),
+      docPath: docPath,
+      initialContent: initialContent,
     });
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+        <div className="container mx-auto px-4 py-16 sm:py-24">
+             <Skeleton className="h-10 w-1/2 mx-auto mb-12" />
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <Skeleton className="h-80" />
+                <Skeleton className="h-80" />
+                <Skeleton className="h-80" />
+                <Skeleton className="h-80" />
+             </div>
+        </div>
+    );
   }
 
   return (
@@ -120,7 +158,7 @@ export function FeaturedProductsSection({ id }: { id: string }) {
         onOpenChange={setIsEditDialogOpen}
         currentContent={content}
         onSave={updateContent}
-        docId={id}
+        docPath={docPath}
       />
     </section>
   );
@@ -132,10 +170,10 @@ interface EditDialogProps {
   onOpenChange: (isOpen: boolean) => void;
   currentContent: FeaturedProductsSectionContent;
   onSave: (newContent: Partial<FeaturedProductsSectionContent>) => void;
-  docId: string;
+  docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: EditDialogProps) {
+function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
   const [editedContent, setEditedContent] = useState(currentContent);
 
   // Sync state when dialog opens
@@ -184,7 +222,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: Edi
                  <ImageUploader 
                     currentImageUrl={product.image}
                     onUploadComplete={url => handleProductChange(index, 'image', url)}
-                    storagePath={`sectionContent/${docId}`}
+                    storagePath={`${docPath}/product-${index}`}
                 />
                 <div>
                   <Label>Name</Label>

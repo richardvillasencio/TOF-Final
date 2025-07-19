@@ -32,7 +32,7 @@ import { ShowroomsSection } from '@/components/page-sections/showrooms-section';
 import { homeContent } from '@/lib/content/home';
 
 // A map to look up components by their name
-const allSections: Record<string, React.ComponentType<{ id: string }>> = {
+const allSections: Record<string, React.ComponentType<{ docPath: string }>> = {
   HeroSection,
   FeaturedProductsSection,
   WhyChooseUsSection,
@@ -45,7 +45,7 @@ const initialSectionOrder = homeContent.map(section => section.id);
 
 // The main layout component that manages fetching and reordering
 function EditablePageLayout() {
-  const [sectionOrder, setSectionOrder] = useState<string[]>(initialSectionOrder);
+  const [sectionOrder, setSectionOrder] = useState<string[]>([]);
   const [isReorderMode, setIsReorderMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -58,6 +58,7 @@ function EditablePageLayout() {
   useEffect(() => {
     const fetchLayout = async () => {
       if (!isAuth) {
+        setSectionOrder(initialSectionOrder);
         setLoading(false);
         return;
       }
@@ -68,14 +69,18 @@ function EditablePageLayout() {
           const data = docSnap.data();
           if (data.order && Array.isArray(data.order) && data.order.length > 0) {
             setSectionOrder(data.order);
+          } else {
+             setSectionOrder(initialSectionOrder);
           }
         } else {
           // If no layout exists, create one with the initial order
           await setDoc(layoutDocRef, { order: initialSectionOrder });
+          setSectionOrder(initialSectionOrder);
         }
       } catch (err) {
         console.error('Error fetching layout:', err);
         setError('Could not load page layout. Displaying default order.');
+        setSectionOrder(initialSectionOrder);
       } finally {
         setLoading(false);
       }
@@ -156,8 +161,13 @@ function EditablePageLayout() {
         <SortableContext items={sectionOrder} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col">
             {sectionOrder.map((sectionId) => {
-              const Component = allSections[sectionId];
+              const componentInfo = homeContent.find(c => c.id === sectionId);
+              if (!componentInfo) return null;
+
+              const Component = allSections[componentInfo.component];
               if (!Component) return null;
+
+              const docPath = `sectionContent/${sectionId}`;
 
               if (isReorderMode) {
                 // In reorder mode, wrap with SortableItem
@@ -168,14 +178,14 @@ function EditablePageLayout() {
                         <GripVertical className="h-6 w-6" />
                       </div>
                       <div className="opacity-60 pointer-events-none">
-                        <Component id={sectionId} />
+                        <Component docPath={docPath} />
                       </div>
                     </div>
                   </SortableItem>
                 );
               }
               // Normal rendering
-              return <Component key={sectionId} id={sectionId} />;
+              return <Component key={sectionId} docPath={docPath} />;
             })}
           </div>
         </SortableContext>

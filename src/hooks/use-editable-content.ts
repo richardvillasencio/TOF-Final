@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase/client'; // Import client firestore
 
 /**
@@ -10,12 +10,10 @@ import { firestore } from '@/lib/firebase/client'; // Import client firestore
  * fetching from and persisting to Firestore in real-time.
  */
 export function useEditableContent<T>({
-  collectionName,
-  docId,
+  docPath,
   initialContent,
 }: {
-  collectionName: string;
-  docId: string;
+  docPath: string; // Changed from collectionName and docId
   initialContent: T;
 }) {
   const [content, setContent] = useState<T>(initialContent);
@@ -25,7 +23,7 @@ export function useEditableContent<T>({
   // For this prototype, we'll assume the user is always authenticated.
   const isAuth = true; 
 
-  const docRef = doc(firestore, collectionName, docId);
+  const docRef = doc(firestore, docPath);
 
   useEffect(() => {
     if (!isAuth) {
@@ -39,18 +37,23 @@ export function useEditableContent<T>({
         if (docSnap.exists()) {
           const data = docSnap.data();
           // Merge with initial content to ensure all keys are present
-          setContent(prev => ({ ...prev, ...data }));
+          setContent(prev => ({ ...initialContent, ...data }));
         } else {
-          // If no content exists in Firestore, save the initial content.
-          setDoc(docRef, initialContent, { merge: true }).catch(error => {
-              console.error("Failed to seed initial content:", error);
+          // If no content exists in Firestore, check if we should create it.
+          // This check avoids re-seeding on every component mount if data is just not there.
+          getDoc(docRef).then(snap => {
+            if (!snap.exists()) {
+                setDoc(docRef, initialContent, { merge: true }).catch(error => {
+                    console.error(`Failed to seed initial content for ${docPath}:`, error);
+                });
+            }
           });
           setContent(initialContent);
         }
         setLoading(false);
       },
       (error) => {
-        console.error('Error fetching content snapshot:', error);
+        console.error(`Error fetching content snapshot for ${docPath}:`, error);
         setLoading(false);
       }
     );
@@ -58,7 +61,7 @@ export function useEditableContent<T>({
     // Cleanup the listener on component unmount
     return () => unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collectionName, docId, isAuth]);
+  }, [docPath, isAuth]);
 
   /**
    * Updates the Firestore document with new content.

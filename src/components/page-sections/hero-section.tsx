@@ -17,7 +17,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useEditableContent } from '@/hooks/use-editable-content';
-import { homeContent } from '@/lib/content/home';
 import { Skeleton } from '../ui/skeleton';
 import { ImageUploader } from '../image-uploader';
 
@@ -27,7 +26,7 @@ type ButtonLink = {
   text: string;
 };
 
-type HeroSectionContent = {
+export type HeroSectionProps = {
   backgroundImage: string;
   backgroundHint: string;
   title: string;
@@ -39,10 +38,7 @@ type HeroSectionContent = {
 };
 
 // --- Initial Data ---
-const getInitialContent = (): HeroSectionContent => {
-  const sectionData = homeContent.find(s => s.id === 'hero');
-  // Type assertion to ensure props match the expected structure
-  return sectionData?.props as HeroSectionContent || {
+const initialContent: HeroSectionProps = {
     backgroundImage: 'https://placehold.co/1920x1080.png',
     backgroundHint: 'relaxing poolside',
     title: 'Your Oasis of Relaxation Awaits',
@@ -51,15 +47,13 @@ const getInitialContent = (): HeroSectionContent => {
       primary: { href: '/hot-tubs', text: 'Explore Hot Tubs' },
       secondary: { href: '/swim-spas', text: 'Discover Swim Spas' },
     },
-  };
 };
 
 // --- Main Component ---
-export function HeroSection({ id }: { id: string }) {
-  const { content, loading, isAuth, updateContent } = useEditableContent<HeroSectionContent>({
-    collectionName: 'sectionContent',
-    docId: id,
-    initialContent: getInitialContent(),
+export function HeroSection({ docPath }: { docPath: string }) {
+  const { content, loading, isAuth, updateContent } = useEditableContent<HeroSectionProps>({
+    docPath,
+    initialContent: initialContent,
   });
   
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -111,7 +105,7 @@ export function HeroSection({ id }: { id: string }) {
         onOpenChange={setIsEditDialogOpen}
         currentContent={content}
         onSave={updateContent}
-        docId={id}
+        docPath={docPath}
       />
     </section>
   );
@@ -121,12 +115,12 @@ export function HeroSection({ id }: { id: string }) {
 interface EditDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    currentContent: HeroSectionContent;
-    onSave: (newContent: Partial<HeroSectionContent>) => void;
-    docId: string;
+    currentContent: HeroSectionProps;
+    onSave: (newContent: Partial<HeroSectionProps>) => void;
+    docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: EditDialogProps) {
+function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
   const [editedContent, setEditedContent] = useState(currentContent);
 
   // Sync state when dialog opens
@@ -136,7 +130,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: Edi
     }
   }, [isOpen, currentContent]);
 
-  const handleFieldChange = (field: keyof HeroSectionContent, value: any) => {
+  const handleFieldChange = (field: keyof HeroSectionProps, value: any) => {
     setEditedContent(prev => ({ ...prev, [field]: value }));
   };
 
@@ -175,7 +169,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: Edi
             <ImageUploader
                 currentImageUrl={editedContent.backgroundImage}
                 onUploadComplete={(url) => handleFieldChange('backgroundImage', url)}
-                storagePath={`sectionContent/${docId}`}
+                storagePath={docPath}
             />
           <div>
             <Label htmlFor="title">Title</Label>

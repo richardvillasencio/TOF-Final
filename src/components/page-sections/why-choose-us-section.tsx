@@ -20,7 +20,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useEditableContent } from '@/hooks/use-editable-content';
-import { homeContent } from '@/lib/content/home';
 import { Skeleton } from '../ui/skeleton';
 
 // --- Types ---
@@ -37,21 +36,33 @@ type WhyChooseUsSectionContent = {
 };
 
 // --- Initial Data ---
-const getInitialContent = (): WhyChooseUsSectionContent => {
-    const sectionData = homeContent.find(s => s.id === 'why-choose-us');
-    return sectionData?.props as WhyChooseUsSectionContent || {
-      title: 'Unmatched Quality & Service',
-      subtitle: 'We are dedicated to providing you with the best products and support in the industry.',
-      features: [],
-    };
-  };
+const initialContent: WhyChooseUsSectionContent = {
+    title: 'Unmatched Quality & Service',
+    subtitle: 'We are dedicated to providing you with the best products and support in the industry.',
+    features: [
+        {
+          icon: 'Award',
+          title: 'Quality Products',
+          description: 'We carry only the most reputable brands, ensuring longevity and performance.',
+        },
+        {
+          icon: 'Wrench',
+          title: 'Expert Service & Repair',
+          description: 'Our certified technicians are here to help with any maintenance or repair needs.',
+        },
+        {
+          icon: 'ThumbsUp',
+          title: 'Customer Satisfaction',
+          description: "Your happiness is our priority. We're with you every step of the way.",
+        },
+      ],
+};
 
 // --- Main Component ---
-export function WhyChooseUsSection({ id }: { id: string }) {
+export function WhyChooseUsSection({ docPath }: { docPath: string }) {
   const { content, loading, isAuth, updateContent } = useEditableContent<WhyChooseUsSectionContent>({
-    collectionName: 'sectionContent',
-    docId: id,
-    initialContent: getInitialContent(),
+    docPath: docPath,
+    initialContent: initialContent,
   });
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);

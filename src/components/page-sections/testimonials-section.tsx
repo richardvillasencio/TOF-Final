@@ -25,7 +25,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useEditableContent } from '@/hooks/use-editable-content';
-import { homeContent } from '@/lib/content/home';
 import { Skeleton } from '../ui/skeleton';
 
 // --- Types ---
@@ -41,20 +40,32 @@ type TestimonialsSectionContent = {
 };
 
 // --- Initial Data ---
-const getInitialContent = (): TestimonialsSectionContent => {
-    const sectionData = homeContent.find(s => s.id === 'testimonials');
-    return sectionData?.props as TestimonialsSectionContent || {
-        title: 'What Our Customers Say',
-        reviews: [],
-    };
+const initialContent: TestimonialsSectionContent = {
+    title: 'What Our Customers Say',
+    reviews: [
+        {
+          quote: "The best customer service and selection! We love our new hot tub. The team was so helpful from start to finish.",
+          name: "The Johnson Family",
+          location: "Fargo, ND"
+        },
+        {
+          quote: "Our swim spa is a dream come true. Installation was seamless, and the quality is outstanding. Highly recommend!",
+          name: "Mark D.",
+          location: "Lakeville, MN"
+        },
+        {
+          quote: "I purchased a sauna and it has completely changed my wellness routine. The quality is top-notch.",
+          name: "Sarah P.",
+          location: "Fargo, ND"
+        },
+      ],
 };
 
 // --- Main Component ---
-export function TestimonialsSection({ id }: { id: string }) {
+export function TestimonialsSection({ docPath }: { docPath: string }) {
   const { content, loading, isAuth, updateContent } = useEditableContent<TestimonialsSectionContent>({
-    collectionName: 'sectionContent',
-    docId: id,
-    initialContent: getInitialContent(),
+    docPath: docPath,
+    initialContent: initialContent,
   });
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);

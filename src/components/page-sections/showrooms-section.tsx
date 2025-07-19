@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Pencil } from 'lucide-react';
 import { useEditableContent } from '@/hooks/use-editable-content';
-import { homeContent } from '@/lib/content/home';
 import {
   Dialog,
   DialogContent,
@@ -37,23 +36,19 @@ type ShowroomsSectionContent = {
 };
 
 // --- Initial Data ---
-const getInitialContent = (): ShowroomsSectionContent => {
-    const sectionData = homeContent.find(s => s.id === 'showrooms');
-    return sectionData?.props as ShowroomsSectionContent || {
-        backgroundImage: 'https://placehold.co/1920x800.png',
-        backgroundHint: 'showroom interior',
-        title: 'Visit Our Showrooms',
-        subtitle: 'Experience the quality firsthand. Our experts are ready to help you find the perfect addition to your home.',
-        button: { href: '/contact', text: 'Find a Location' },
-    };
+const initialContent: ShowroomsSectionContent = {
+    backgroundImage: 'https://placehold.co/1920x800.png',
+    backgroundHint: 'showroom interior',
+    title: 'Visit Our Showrooms',
+    subtitle: 'Experience the quality firsthand. Our experts are ready to help you find the perfect addition to your home.',
+    button: { href: '/contact', text: 'Find a Location' },
 };
 
 // --- Main Component ---
-export function ShowroomsSection({ id }: { id: string }) {
+export function ShowroomsSection({ docPath }: { docPath: string }) {
   const { content, loading, isAuth, updateContent } = useEditableContent<ShowroomsSectionContent>({
-    collectionName: 'sectionContent',
-    docId: id,
-    initialContent: getInitialContent(),
+    docPath: docPath,
+    initialContent: initialContent,
   });
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -94,7 +89,7 @@ export function ShowroomsSection({ id }: { id: string }) {
         onOpenChange={setIsEditDialogOpen}
         currentContent={content}
         onSave={updateContent}
-        docId={id}
+        docPath={docPath}
       />
     </section>
   );
@@ -106,10 +101,10 @@ interface EditDialogProps {
     onOpenChange: (isOpen: boolean) => void;
     currentContent: ShowroomsSectionContent;
     onSave: (newContent: Partial<ShowroomsSectionContent>) => void;
-    docId: string;
+    docPath: string;
 }
 
-function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: EditDialogProps) {
+function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docPath }: EditDialogProps) {
     const [editedContent, setEditedContent] = useState(currentContent);
 
     useEffect(() => {
@@ -134,7 +129,7 @@ function EditDialog({ isOpen, onOpenChange, currentContent, onSave, docId }: Edi
                      <ImageUploader
                         currentImageUrl={editedContent.backgroundImage}
                         onUploadComplete={(url) => setEditedContent(prev => ({...prev, backgroundImage: url}))}
-                        storagePath={`sectionContent/${docId}`}
+                        storagePath={docPath}
                     />
                     <div>
                         <Label>Title</Label>
