@@ -12,6 +12,7 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
+  MenubarSub,
   MenubarSubTrigger,
   MenubarSubContent,
   MenubarTrigger,
@@ -79,7 +80,7 @@ const DesktopNav = ({ links }: { links: NavLink[] }) => {
       <MenubarContent className="bg-background text-foreground">
         {subLinks.map((subLink) => (
           subLink.subLinks ? (
-            <MenubarMenu key={subLink.href}>
+            <MenubarSub key={subLink.href}>
                 <MenubarSubTrigger className={cn(
                     "flex justify-between w-full",
                     pathname.startsWith(subLink.href) && "bg-accent/10"
@@ -89,7 +90,7 @@ const DesktopNav = ({ links }: { links: NavLink[] }) => {
                 <MenubarSubContent className="bg-background text-foreground">
                   {renderSubLinks(subLink.subLinks)}
                 </MenubarSubContent>
-            </MenubarMenu>
+            </MenubarSub>
           ) : (
             <MenubarItem key={subLink.href} asChild>
                 <Link href={subLink.href} className={cn(pathname === subLink.href && "font-bold")}>
