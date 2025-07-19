@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin, Pencil, Trash2, GripVertical, PlusCircle } from 'lucide-react';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase/client';
 
 import { Button } from '@/components/ui/button';
@@ -60,14 +60,12 @@ export function Header() {
         return;
     }
     const docRef = doc(firestore, 'globals', 'header');
-    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+    const unsubscribe = onSnapshot(docRef, async (docSnap) => {
         if (docSnap.exists()) {
             const data = docSnap.data() as HeaderContent;
-            // Ensure all keys from initial content are present, even if not in Firestore
             setContent(prev => ({ ...initialHeaderContent, ...data }));
         } else {
-             // If document doesn't exist, create it with initial content
-            setDoc(docRef, initialHeaderContent);
+            await setDoc(docRef, initialHeaderContent);
             setContent(initialHeaderContent);
         }
         setLoading(false);
@@ -78,12 +76,6 @@ export function Header() {
 
     return () => unsubscribe();
   }, [isAuth]);
-
-  const updateContent = async (newContent: HeaderContent) => {
-    if (!isAuth) return;
-    const docRef = doc(firestore, 'globals', 'header');
-    await setDoc(docRef, newContent, { merge: true });
-  }
 
   return (
     <header className="relative bg-gradient-to-r from-[rgb(81,158,172)] to-[rgb(231,121,49)] text-white sticky top-0 z-50">
@@ -158,9 +150,6 @@ export function Header() {
         <EditHeaderDialog
             isOpen={isEditDialogOpen}
             onOpenChange={setIsEditDialogOpen}
-            content={content}
-            setContent={setContent}
-            onSave={() => updateContent(content)}
         />
       )}
     </header>
@@ -329,14 +318,33 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 interface EditHeaderDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  content: HeaderContent;
-  setContent: React.Dispatch<React.SetStateAction<HeaderContent>>;
-  onSave: () => void;
 }
 
-function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }: EditHeaderDialogProps) {
-  const handleSave = () => {
-    onSave();
+function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
+  const [content, setContent] = useState<HeaderContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+        const fetchContent = async () => {
+            setLoading(true);
+            const docRef = doc(firestore, 'globals', 'header');
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setContent(docSnap.data() as HeaderContent);
+            } else {
+                setContent(initialHeaderContent);
+            }
+            setLoading(false);
+        }
+        fetchContent();
+    }
+  }, [isOpen]);
+
+  const handleSave = async () => {
+    if (!content) return;
+    const docRef = doc(firestore, 'globals', 'header');
+    await setDoc(docRef, content, { merge: true });
     onOpenChange(false);
   };
   
@@ -344,17 +352,10 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
     key: K,
     value: HeaderContent[K]
   ) => {
-    setContent(prev => ({ ...prev, [key]: value }));
+    if (content) {
+        setContent(prev => ({ ...prev!, [key]: value }));
+    }
   };
-
-  const updateLogoUrl = (url: string) => {
-    handleContentChange('logoImageUrl', url);
-  }
-
-  const updateMascotUrl = (url: string) => {
-    handleContentChange('mascotImageUrl', url);
-  }
-
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -365,59 +366,67 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
             Update contact information, logos, and navigation links.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4 flex-grow">
-          {/* Left Column: General Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">General Information</h3>
-            <div>
-              <Label>Phone Number</Label>
-              <Input
-                value={content.phoneNumber}
-                onChange={e => handleContentChange('phoneNumber', e.target.value)}
-              />
+        {loading || !content ? (
+            <div className="flex-grow flex items-center justify-center">
+                <p>Loading...</p>
             </div>
-             <div>
-              <Label>Address</Label>
-              <Input
-                value={content.address}
-                onChange={e => handleContentChange('address', e.target.value)}
-              />
-            </div>
-            <ImageUploader 
-                label="Logo"
-                currentImageUrl={content.logoImageUrl}
-                onUploadComplete={updateLogoUrl}
-                storagePath="globals/header"
-            />
-            <ImageUploader
-                label="Mascot"
-                currentImageUrl={content.mascotImageUrl}
-                onUploadComplete={updateMascotUrl}
-                storagePath="globals/header"
-            />
-          </div>
+        ) : (
+            <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4 flex-grow">
+                {/* Left Column: General Info */}
+                <div className="space-y-4">
+                    <h3 className="text-lg font-medium">General Information</h3>
+                    <div>
+                    <Label>Phone Number</Label>
+                    <Input
+                        value={content.phoneNumber}
+                        onChange={e => handleContentChange('phoneNumber', e.target.value)}
+                    />
+                    </div>
+                    <div>
+                    <Label>Address</Label>
+                    <Input
+                        value={content.address}
+                        onChange={e => handleContentChange('address', e.target.value)}
+                    />
+                    </div>
+                    <ImageUploader 
+                        label="Logo"
+                        currentImageUrl={content.logoImageUrl}
+                        onUploadComplete={(url) => handleContentChange('logoImageUrl', url)}
+                        storagePath="globals/header"
+                    />
+                    <ImageUploader
+                        label="Mascot"
+                        currentImageUrl={content.mascotImageUrl}
+                        onUploadComplete={(url) => handleContentChange('mascotImageUrl', url)}
+                        storagePath="globals/header"
+                    />
+                </div>
 
-          {/* Right Column: Navigation */}
-          <div className="space-y-4">
-             <h3 className="text-lg font-medium">Top Navigation</h3>
-             <EditableNavMenu 
-                links={content.topNavLinks}
-                onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
-             />
-             <hr className="my-4"/>
-             <h3 className="text-lg font-medium">Main Navigation</h3>
-              <EditableNavMenu 
-                links={content.mainNavLinks}
-                onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
-             />
-          </div>
-        </div>
-        <DialogFooter className="pt-4 border-t">
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-          <Button onClick={handleSave}>Save Changes</Button>
-        </DialogFooter>
+                {/* Right Column: Navigation */}
+                <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Top Navigation</h3>
+                    <EditableNavMenu 
+                        links={content.topNavLinks}
+                        onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
+                    />
+                    <hr className="my-4"/>
+                    <h3 className="text-lg font-medium">Main Navigation</h3>
+                    <EditableNavMenu 
+                        links={content.mainNavLinks}
+                        onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
+                    />
+                </div>
+                </div>
+                <DialogFooter className="pt-4 border-t">
+                <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                </DialogClose>
+                <Button onClick={handleSave}>Save Changes</Button>
+                </DialogFooter>
+            </>
+        )}
       </DialogContent>
     </Dialog>
   )

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
@@ -12,8 +12,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { UploadCloud, AlertCircle } from 'lucide-react';
 import { storage } from '@/lib/firebase/client';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from './ui/button';
-
 
 interface ImageUploaderProps {
   label: string;
@@ -45,7 +43,6 @@ export function ImageUploader({
     try {
         const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
         
-        // Use uploadBytes for a simpler, promise-based upload
         const snapshot = await uploadBytes(fileRef, file);
         const downloadURL = await getDownloadURL(snapshot.ref);
 
@@ -57,7 +54,7 @@ export function ImageUploader({
     } finally {
         setUploading(false);
         setLocalPreview(null);
-        URL.revokeObjectURL(tempUrl);
+        URL.revokeObjectURL(tempUrl); // Clean up the object URL
     }
   };
   
@@ -81,9 +78,9 @@ export function ImageUploader({
          <label
           htmlFor={`image-upload-${label}`}
           className={cn(
-            'relative w-fit',
             buttonVariants({ variant: 'outline' }),
-            'flex cursor-pointer items-center'
+            'relative w-fit cursor-pointer flex items-center',
+            uploading && 'pointer-events-none opacity-50'
           )}
         >
           <UploadCloud className="mr-2 h-4 w-4" />
@@ -116,4 +113,3 @@ export function ImageUploader({
     </div>
   );
 }
-
