@@ -2,7 +2,7 @@
 // src/components/layout/header.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -51,7 +51,6 @@ export function Header() {
   const [loading, setLoading] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   
-  // In a real app, this would come from an auth provider.
   const isAuth = true; 
 
   useEffect(() => {
@@ -90,7 +89,6 @@ export function Header() {
         </Button>
       )}
       <div className="container mx-auto px-4">
-        {/* Top Section */}
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Tubs of Fun Home">
@@ -138,10 +136,8 @@ export function Header() {
           </div>
         </div>
 
-        {/* Separator */}
         <hr className="border-t border-white/50" />
 
-        {/* Bottom Navigation */}
         <div className="hidden lg:flex justify-center items-center py-2">
           <DesktopNav links={content.mainNavLinks} />
         </div>
@@ -341,14 +337,7 @@ function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
     }
   }, [isOpen]);
 
-  const handleSave = async () => {
-    if (!content) return;
-    const docRef = doc(firestore, 'globals', 'header');
-    await setDoc(docRef, content, { merge: true });
-    onOpenChange(false);
-  };
-  
-  const handleContentChange = <K extends keyof HeaderContent>(
+  const handleContentChange = useCallback(<K extends keyof HeaderContent>(
     key: K,
     value: HeaderContent[K]
   ) => {
@@ -356,7 +345,14 @@ function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
         if (!prev) return null;
         return { ...prev, [key]: value };
     });
-  };
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    if (!content) return;
+    const docRef = doc(firestore, 'globals', 'header');
+    await setDoc(docRef, content, { merge: true });
+    onOpenChange(false);
+  }, [content, onOpenChange]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

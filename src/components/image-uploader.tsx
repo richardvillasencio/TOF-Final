@@ -29,6 +29,7 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -36,6 +37,7 @@ export function ImageUploader({
 
     setUploading(true);
     setError(null);
+    setProgress(0);
     
     const tempUrl = URL.createObjectURL(file);
     setLocalPreview(tempUrl);
@@ -53,8 +55,9 @@ export function ImageUploader({
         setError('Upload failed. Please try again.');
     } finally {
         setUploading(false);
-        setLocalPreview(null);
+        setLocalPreview(null); // Clear local preview to show final URL from props
         URL.revokeObjectURL(tempUrl); // Clean up the object URL
+        setProgress(0);
     }
   };
   
@@ -95,7 +98,7 @@ export function ImageUploader({
           />
         </label>
         
-        {uploading && !localPreview && (
+        {uploading && (
           <div className="w-full space-y-2">
             <Progress value={100} className="h-2 animate-pulse" />
             <p className="text-xs text-muted-foreground">Uploading...</p>
