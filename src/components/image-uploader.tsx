@@ -1,13 +1,9 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -86,7 +82,7 @@ export function ImageUploader({
             alt="Image preview"
             fill
             className="object-contain"
-            key={displayUrl}
+            key={displayUrl} // Force re-render when URL changes
           />
         </div>
       )}

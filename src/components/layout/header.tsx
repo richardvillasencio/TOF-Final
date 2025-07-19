@@ -348,11 +348,11 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
   };
 
   const updateLogoUrl = (url: string) => {
-    setContent(prev => ({ ...prev, logoImageUrl: url }));
+    handleContentChange('logoImageUrl', url);
   }
 
   const updateMascotUrl = (url: string) => {
-    setContent(prev => ({ ...prev, mascotImageUrl: url }));
+    handleContentChange('mascotImageUrl', url);
   }
 
 
