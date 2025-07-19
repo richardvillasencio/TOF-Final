@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
@@ -12,12 +12,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { UploadCloud, AlertCircle } from 'lucide-react';
 import { storage } from '@/lib/firebase/client';
 import { cn } from '@/lib/utils';
+import { buttonVariants } from './ui/button';
 
 interface ImageUploaderProps {
   label: string;
   currentImageUrl: string;
   onUploadComplete: (url: string) => void;
-  storagePath: string;
+  storagePath: string; // e.g., "globals/header"
 }
 
 export function ImageUploader({
@@ -41,22 +42,24 @@ export function ImageUploader({
     setLocalPreview(tempUrl);
     
     try {
-        const fileRef = ref(storage, `${storagePath}/${Date.now()}_${file.name}`);
+        // Create a valid and unique storage path
+        const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+        const fileRef = ref(storage, `${storagePath}/${fileName}`);
         
         await uploadBytes(fileRef, file);
         const downloadURL = await getDownloadURL(fileRef);
 
         onUploadComplete(downloadURL);
 
-    } catch (error) {
-        console.error('Upload failed:', error);
-        setError('Upload failed. Please try again.');
+    } catch (err: any) {
+        console.error('Upload failed:', err);
+        setError(`Upload failed: ${err.message || 'Please try again.'}`);
     } finally {
         setUploading(false);
         if (tempUrl) {
             URL.revokeObjectURL(tempUrl);
         }
-        setLocalPreview(null);
+        setLocalPreview(null); // Clear local preview to show the final URL from props
     }
   };
   
@@ -65,15 +68,20 @@ export function ImageUploader({
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {displayUrl && (
+      {displayUrl ? (
         <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
           <Image
             src={displayUrl}
             alt="Image preview"
             fill
             className="object-contain"
-            key={displayUrl} // Force re-render when URL changes
+            key={displayUrl} 
+            unoptimized // Useful for ensuring the latest image is fetched
           />
+        </div>
+      ) : (
+        <div className="relative aspect-video w-full flex items-center justify-center rounded-md bg-muted text-muted-foreground">
+            No Image
         </div>
       )}
       <div className="flex flex-col gap-4">
@@ -90,7 +98,7 @@ export function ImageUploader({
           <Input
             id={`image-upload-${label}`}
             type="file"
-            accept="image/*"
+            accept="image/*,image/svg+xml"
             className="sr-only"
             onChange={handleFileChange}
             disabled={uploading}

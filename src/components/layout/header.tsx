@@ -142,7 +142,7 @@ export function Header() {
           <DesktopNav links={content.mainNavLinks} />
         </div>
       </div>
-      {isEditDialogOpen && (
+      {isAuth && isEditDialogOpen && (
         <EditHeaderDialog
             isOpen={isEditDialogOpen}
             onOpenChange={setIsEditDialogOpen}
