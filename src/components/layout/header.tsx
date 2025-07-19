@@ -61,7 +61,13 @@ export function Header() {
     const docRef = doc(firestore, 'globals', 'header');
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
-            setContent(prev => ({ ...prev, ...docSnap.data() as HeaderContent}));
+            const data = docSnap.data() as HeaderContent;
+            // Ensure all keys from initial content are present, even if not in Firestore
+            setContent(prev => ({ ...initialHeaderContent, ...data }));
+        } else {
+             // If document doesn't exist, create it with initial content
+            setDoc(docRef, initialHeaderContent);
+            setContent(initialHeaderContent);
         }
         setLoading(false);
     }, (error) => {
@@ -72,7 +78,7 @@ export function Header() {
     return () => unsubscribe();
   }, [isAuth]);
 
-  const updateContent = async (newContent: Partial<HeaderContent>) => {
+  const updateContent = async (newContent: HeaderContent) => {
     if (!isAuth) return;
     const docRef = doc(firestore, 'globals', 'header');
     await setDoc(docRef, newContent, { merge: true });
@@ -367,22 +373,18 @@ function EditHeaderDialog({ isOpen, onOpenChange, content, setContent, onSave }:
                 onChange={e => handleContentChange('address', e.target.value)}
               />
             </div>
-            <div>
-              <Label>Company Logo</Label>
-              <ImageUploader 
+            <ImageUploader 
+                label="Logo"
                 currentImageUrl={content.logoImageUrl}
                 onUploadComplete={url => handleContentChange('logoImageUrl', url)}
                 storagePath="globals/header"
-              />
-            </div>
-             <div>
-              <Label>Mascot Image</Label>
-              <ImageUploader 
+            />
+            <ImageUploader
+                label="Mascot"
                 currentImageUrl={content.mascotImageUrl}
                 onUploadComplete={url => handleContentChange('mascotImageUrl', url)}
                 storagePath="globals/header"
-              />
-            </div>
+            />
           </div>
 
           {/* Right Column: Navigation */}
