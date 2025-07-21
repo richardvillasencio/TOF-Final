@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Button } from '@/components/ui/button';
@@ -31,7 +31,7 @@ export function ImageUploader({
   const [error, setError] = useState<string | null>(null);
   const [localPreview, setLocalPreview] = useState<string | null>(null);
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -42,48 +42,53 @@ export function ImageUploader({
     setLocalPreview(tempUrl);
     
     try {
-        // Create a valid and unique storage path
-        const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-        const fileRef = ref(storage, `${storagePath}/${fileName}`);
-        
-        await uploadBytes(fileRef, file);
-        const downloadURL = await getDownloadURL(fileRef);
+      const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+      const fileRef = ref(storage, `${storagePath}/${fileName}`);
+      
+      // Correctly await the upload process
+      await uploadBytes(fileRef, file);
+      
+      const downloadURL = await getDownloadURL(fileRef);
 
-        onUploadComplete(downloadURL);
+      onUploadComplete(downloadURL);
 
     } catch (err: any) {
-        console.error('Upload failed:', err);
-        setError(`Upload failed: ${err.message || 'Please try again.'}`);
+      console.error('Upload failed:', err);
+      setError(`Upload failed: ${err.message || 'Please try again.'}`);
+      setLocalPreview(null); // Clear preview on error
     } finally {
-        setUploading(false);
-        if (tempUrl) {
-            URL.revokeObjectURL(tempUrl);
-        }
-        setLocalPreview(null); // Clear local preview to show the final URL from props
+      // This will run regardless of success or failure, preventing the uploader from getting stuck
+      setUploading(false);
+      if (tempUrl) {
+          URL.revokeObjectURL(tempUrl);
+      }
+      // Do not clear local preview here on success, wait for parent to pass new currentImageUrl
     }
-  };
+  }, [onUploadComplete, storagePath]);
   
+  // Display local preview during upload, otherwise use the parent's state
   const displayUrl = localPreview || currentImageUrl;
 
   return (
     <div className="space-y-4">
       <Label>{label}</Label>
-      {displayUrl ? (
-        <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
-          <Image
-            src={displayUrl}
-            alt="Image preview"
-            fill
-            className="object-contain"
-            key={displayUrl} 
-            unoptimized // Useful for ensuring the latest image is fetched
-          />
-        </div>
-      ) : (
-        <div className="relative aspect-video w-full flex items-center justify-center rounded-md bg-muted text-muted-foreground">
-            No Image
-        </div>
-      )}
+      <div className="relative aspect-video w-full overflow-hidden rounded-md bg-muted">
+        {displayUrl ? (
+            <Image
+                src={displayUrl}
+                alt="Image preview"
+                fill
+                className="object-contain"
+                key={displayUrl} 
+                unoptimized // Useful for ensuring the latest image is fetched
+            />
+        ) : (
+            <div className="flex items-center justify-center h-full w-full text-muted-foreground">
+                No Image
+            </div>
+        )}
+      </div>
+
       <div className="flex flex-col gap-4">
          <label
           htmlFor={`image-upload-${label}`}
