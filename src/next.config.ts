@@ -22,9 +22,9 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-  // This allows the Next.js development server to be accessed from the
-  // Firebase Studio preview iframe.
   experimental: {
+    // This allows the Next.js development server to be accessed from the
+    // Firebase Studio preview iframe.
     allowedMetadatas: ['https://*.cloudworkstations.dev']
   }
 };
