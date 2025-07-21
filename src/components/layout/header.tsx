@@ -62,6 +62,9 @@ export function Header() {
     const unsubscribe = onSnapshot(docRef, async (docSnap) => {
         if (docSnap.exists()) {
             const data = docSnap.data() as HeaderContent;
+            // Ensure nav links are always arrays even if they are missing from DB
+            data.topNavLinks = data.topNavLinks || [];
+            data.mainNavLinks = data.mainNavLinks || [];
             setContent(prev => ({ ...initialHeaderContent, ...data }));
         } else {
             await setDoc(docRef, initialHeaderContent);
@@ -117,7 +120,7 @@ export function Header() {
             </div>
           </div>
           <div className="hidden lg:flex items-center space-x-2">
-            <DesktopNav links={content.topNavLinks} />
+            <DesktopNav links={content.topNavLinks || []} />
             <ThemeToggle />
           </div>
           {content.mascotImageUrl && (
@@ -132,20 +135,21 @@ export function Header() {
 
           <div className="lg:hidden flex items-center gap-2">
             <ThemeToggle />
-            <MobileNav topNavLinks={content.topNavLinks} mainNavLinks={content.mainNavLinks} />
+            <MobileNav topNavLinks={content.topNavLinks || []} mainNavLinks={content.mainNavLinks || []} />
           </div>
         </div>
 
         <hr className="border-t border-white/50" />
 
         <div className="hidden lg:flex justify-center items-center py-2">
-          <DesktopNav links={content.mainNavLinks} />
+          <DesktopNav links={content.mainNavLinks || []} />
         </div>
       </div>
       {isAuth && (
         <EditHeaderDialog
             isOpen={isEditDialogOpen}
             onOpenChange={setIsEditDialogOpen}
+            currentContent={content}
         />
       )}
     </header>
@@ -158,7 +162,7 @@ const DesktopNav = ({ links }: { links: NavLink[] }) => {
   const renderSubLinks = (subLinks: NavLink[]) => (
     <MenubarContent className="bg-background text-foreground">
       {subLinks.map((subLink) =>
-        subLink.subLinks ? (
+        subLink.subLinks && subLink.subLinks.length > 0 ? (
           <MenubarSub key={subLink.href}>
             <MenubarSubTrigger
               className={cn(
@@ -208,16 +212,16 @@ const DesktopNav = ({ links }: { links: NavLink[] }) => {
                   'hover:bg-white/20 hover:text-white'
                 )}
               >
-                {link.subLinks ? (
+                {link.subLinks && link.subLinks.length > 0 ? (
                   <span>{link.label}</span>
                 ) : (
                   <Link href={link.href}>{link.label}</Link>
                 )}
 
-                {link.subLinks && <ChevronDown className="h-4 w-4 ml-1" />}
+                {link.subLinks && link.subLinks.length > 0 && <ChevronDown className="h-4 w-4 ml-1" />}
               </Button>
             </MenubarTrigger>
-            {link.subLinks && renderSubLinks(link.subLinks)}
+            {link.subLinks && link.subLinks.length > 0 && renderSubLinks(link.subLinks)}
           </MenubarMenu>
         )
       )}
@@ -263,7 +267,7 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 
   const renderLinks = (links: NavLink[], isSubmenu: boolean = false) => {
     return links.map((link) => {
-      if (link.subLinks) {
+      if (link.subLinks && link.subLinks.length > 0) {
         return (
           <Accordion type="single" collapsible key={link.href} className="w-full">
             <AccordionItem value={link.href} className="border-b-0">
@@ -314,28 +318,21 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 interface EditHeaderDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  currentContent: HeaderContent;
 }
 
-function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
+function EditHeaderDialog({ isOpen, onOpenChange, currentContent }: EditHeaderDialogProps) {
   const [content, setContent] = useState<HeaderContent | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
-        const fetchContent = async () => {
-            setLoading(true);
-            const docRef = doc(firestore, 'globals', 'header');
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                setContent(docSnap.data() as HeaderContent);
-            } else {
-                setContent(initialHeaderContent);
-            }
-            setLoading(false);
-        }
-        fetchContent();
+        setLoading(true);
+        // Use a deep copy of the current content to avoid direct mutation
+        setContent(JSON.parse(JSON.stringify(currentContent)));
+        setLoading(false);
     }
-  }, [isOpen]);
+  }, [isOpen, currentContent]);
 
   const handleContentChange = useCallback(<K extends keyof HeaderContent>(
     key: K,
@@ -405,13 +402,13 @@ function EditHeaderDialog({ isOpen, onOpenChange }: EditHeaderDialogProps) {
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium">Top Navigation</h3>
                     <EditableNavMenu 
-                        links={content.topNavLinks}
+                        links={content.topNavLinks || []}
                         onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
                     />
                     <hr className="my-4"/>
                     <h3 className="text-lg font-medium">Main Navigation</h3>
                     <EditableNavMenu 
-                        links={content.mainNavLinks}
+                        links={content.mainNavLinks || []}
                         onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
                     />
                 </div>
@@ -457,7 +454,7 @@ function EditableNavMenu({ links, onLinksChange, depth = 0 }: EditableNavMenuPro
     };
     
     const addLink = () => {
-        const newLink: NavLink = { id: crypto.randomUUID(), label: 'New Link', href: '/' };
+        const newLink: NavLink = { id: crypto.randomUUID(), label: 'New Link', href: '/', subLinks: [] };
         onLinksChange([...links, newLink]);
     };
 

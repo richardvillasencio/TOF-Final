@@ -35,17 +35,18 @@ export function ImageUploader({
     const file = event.target.files?.[0];
     if (!file) return;
 
-    setUploading(true);
     setError(null);
+    setUploading(true);
     
     const tempUrl = URL.createObjectURL(file);
     setLocalPreview(tempUrl);
     
     try {
+      // Create a unique file name to avoid overwrites
       const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
       const fileRef = ref(storage, `${storagePath}/${fileName}`);
       
-      // Correctly await the upload process
+      // Use await to ensure uploadBytes finishes before proceeding
       await uploadBytes(fileRef, file);
       
       const downloadURL = await getDownloadURL(fileRef);
@@ -55,18 +56,16 @@ export function ImageUploader({
     } catch (err: any) {
       console.error('Upload failed:', err);
       setError(`Upload failed: ${err.message || 'Please try again.'}`);
-      setLocalPreview(null); // Clear preview on error
     } finally {
-      // This will run regardless of success or failure, preventing the uploader from getting stuck
+      // This will run regardless of success or failure
       setUploading(false);
-      if (tempUrl) {
-          URL.revokeObjectURL(tempUrl);
-      }
-      // Do not clear local preview here on success, wait for parent to pass new currentImageUrl
+      // Revoke the temporary URL
+      URL.revokeObjectURL(tempUrl);
+      // Clear the local preview so the component uses the new `currentImageUrl` prop
+      setLocalPreview(null);
     }
   }, [onUploadComplete, storagePath]);
   
-  // Display local preview during upload, otherwise use the parent's state
   const displayUrl = localPreview || currentImageUrl;
 
   return (
@@ -91,7 +90,7 @@ export function ImageUploader({
 
       <div className="flex flex-col gap-4">
          <label
-          htmlFor={`image-upload-${label}`}
+          htmlFor={`image-upload-${label.replace(/\s+/g, '-')}`}
           className={cn(
             buttonVariants({ variant: 'outline' }),
             'relative w-fit cursor-pointer flex items-center',
@@ -101,7 +100,7 @@ export function ImageUploader({
           <UploadCloud className="mr-2 h-4 w-4" />
           Change Image
           <Input
-            id={`image-upload-${label}`}
+            id={`image-upload-${label.replace(/\s+/g, '-')}`}
             type="file"
             accept="image/*,image/svg+xml"
             className="sr-only"
