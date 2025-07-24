@@ -40,7 +40,7 @@ export function Header() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   return (
-    <header className="relative bg-primary text-white sticky top-0 z-50">
+    <header className="relative bg-gradient-to-r from-[#44a9c6] to-[#d68b5a] text-white sticky top-0 z-50">
        {isAuth && (
          <Button
            variant="outline"
