@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -29,9 +28,9 @@ const galleryImages = [
 
 export default function HomePage() {
   return (
-    <div className="bg-white text-black">
+    <div className="bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative h-[70vh] text-white flex items-center justify-center text-center">
+      <section className="relative h-[70vh] text-primary-foreground flex items-center justify-center text-center">
         <video
           autoPlay
           loop
@@ -53,14 +52,14 @@ export default function HomePage() {
       {/* About Us Section */}
       <section className="py-16">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-blue-900">ABOUT US</h2>
-          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+          <h2 className="text-3xl font-bold text-primary">ABOUT US</h2>
+          <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
         </div>
         <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8">
           <div className="text-center md:text-left">
-            <p className="uppercase text-blue-600 font-semibold">MEET THE FOUNDER & CEO</p>
-            <h3 className="text-4xl font-bold text-blue-900 my-2">Hi, I'm Troy!</h3>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="uppercase text-primary font-semibold">MEET THE FOUNDER & CEO</p>
+            <h3 className="text-4xl font-bold text-foreground my-2">Hi, I'm Troy!</h3>
+            <p className="text-muted-foreground leading-relaxed">
               Our business began in 1991, as a hot tub rental company. We grew that company into a hot tub superstore. Our founder and CEO Troy Derheim eventually sold Tubs of Fun! to focus on designing and building swimming pools, splash pads, and specialty aquatic therapy products. Now, by customer request, and a passion re-imagined, we are back! Fully committed to serving the great people of our community with quality products and unmatched service.
             </p>
             <Button variant="accent" className="mt-6">See More</Button>
@@ -72,10 +71,10 @@ export default function HomePage() {
       </section>
 
        {/* Services Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-blue-900">Our Services</h2>
-          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+          <h2 className="text-3xl font-bold text-primary">Our Services</h2>
+          <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             {services.map((service) => (
               <div key={service.name} className="group">
@@ -84,7 +83,7 @@ export default function HomePage() {
                     <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint} />
                   </CardContent>
                 </Card>
-                <p className="mt-2 font-semibold">{service.name}</p>
+                <p className="mt-2 font-semibold text-foreground">{service.name}</p>
               </div>
             ))}
           </div>
@@ -95,22 +94,22 @@ export default function HomePage() {
       {/* Testimonials Section */}
        <section className="py-16">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold text-blue-900">What they say about us...</h2>
+          <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
           <div className="mt-8 p-6 border rounded-lg shadow-lg">
              <div className="flex justify-center text-yellow-400 mb-4">
                 <Star /><Star /><Star /><Star /><Star />
             </div>
-            <p className="italic text-gray-600">&quot;This is a placeholder for the reviews widget. Customer testimonials will be displayed here.&quot;</p>
-            <p className="font-bold mt-4">- A Happy Customer</p>
+            <p className="italic text-muted-foreground">&quot;This is a placeholder for the reviews widget. Customer testimonials will be displayed here.&quot;</p>
+            <p className="font-bold mt-4 text-foreground">- A Happy Customer</p>
           </div>
         </div>
       </section>
       
       {/* Gallery Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-blue-900">Gallery</h2>
-          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+          <h2 className="text-3xl font-bold text-primary">Gallery</h2>
+          <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
             {galleryImages.map((image, index) => (
               <div key={index} className="overflow-hidden rounded-lg">

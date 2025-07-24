@@ -1,4 +1,3 @@
-
 // src/components/layout/footer.tsx
 'use client';
 
@@ -7,7 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Facebook, Instagram, Youtube, Phone } from 'lucide-react';
 import Image from 'next/image';
-import { headerContent } from '@/lib/content/header';
+import { useEditableContent } from '@/hooks/use-editable-content';
+import { type HeaderContent, headerContent as initialHeaderContent } from '@/lib/content/header';
+
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
@@ -16,6 +17,10 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { content: headerContent } = useEditableContent<HeaderContent>({
+    docPath: 'globals/header',
+    initialContent: initialHeaderContent,
+  });
 
   return (
     <footer className="bg-muted text-muted-foreground">
