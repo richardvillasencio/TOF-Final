@@ -1,200 +1,126 @@
-// src/app/page.tsx
-'use client';
 
-import { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragEndEvent,
-} from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { SortableItem } from '@/components/ui/sortable-item';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { GripVertical, LayoutList, Check } from 'lucide-react';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Skeleton } from '@/components/ui/skeleton';
-import { firestore } from '@/lib/firebase/client';
+import { Card, CardContent } from '@/components/ui/card';
+import { Phone, MapPin, Star } from 'lucide-react';
 
-// Import all possible section components
-import { HeroSection } from '@/components/page-sections/hero-section';
-import { FeaturedProductsSection } from '@/components/page-sections/featured-products-section';
-import { WhyChooseUsSection } from '@/components/page-sections/why-choose-us-section';
-import { TestimonialsSection } from '@/components/page-sections/testimonials-section';
-import { ShowroomsSection } from '@/components/page-sections/showrooms-section';
-import { homeContent } from '@/lib/content/home';
+const services = [
+  { name: 'HOT TUBS', image: 'https://placehold.co/300x200.png', dataAiHint: 'hot tub' },
+  { name: 'SAUNAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'sauna interior' },
+  { name: 'POOLS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swimming pool' },
+  { name: 'SWIM SPAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swim spa' },
+  { name: 'GAME ROOM ESSENTIALS', image: 'https://placehold.co/300x200.png', dataAiHint: 'game room' },
+  { name: 'GRILLS', image: 'https://placehold.co/300x200.png', dataAiHint: 'bbq grill' },
+  { name: 'SERVICE', image: 'https://placehold.co/300x200.png', dataAiHint: 'technician tools' },
+  { name: 'REPAIRS', image: 'https://placehold.co/300x200.png', dataAiHint: 'spa repair' },
+];
 
-// A map to look up components by their name
-const allSections: Record<string, React.ComponentType<{ docPath: string }>> = {
-  HeroSection,
-  FeaturedProductsSection,
-  WhyChooseUsSection,
-  TestimonialsSection,
-  ShowroomsSection,
-};
+const galleryImages = [
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'family hot tub' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'modern swim spa' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'luxury sauna' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'outdoor pool' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'hot tub night' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'backyard oasis' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'relaxing spa' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'poolside relaxation' },
+  { src: 'https://placehold.co/600x400.png', dataAiHint: 'couple spa' },
+];
 
-// Define the initial order of sections as a fallback
-const initialSectionOrder = homeContent.map(section => section.id);
-
-// The main layout component that manages fetching and reordering
-function EditablePageLayout() {
-  const [sectionOrder, setSectionOrder] = useState<string[]>([]);
-  const [isReorderMode, setIsReorderMode] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // In a real app, this would come from an auth provider like Clerk or Firebase Auth
-  const isAuth = true; 
-
-  // Fetch the layout from Firestore on component mount
-  useEffect(() => {
-    const fetchLayout = async () => {
-      if (!isAuth) {
-        setSectionOrder(initialSectionOrder);
-        setLoading(false);
-        return;
-      }
-      try {
-        const layoutDocRef = doc(firestore, 'layouts', 'homePage');
-        const docSnap = await getDoc(layoutDocRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.order && Array.isArray(data.order) && data.order.length > 0) {
-            setSectionOrder(data.order);
-          } else {
-             setSectionOrder(initialSectionOrder);
-          }
-        } else {
-          // If no layout exists, create one with the initial order
-          await setDoc(layoutDocRef, { order: initialSectionOrder });
-          setSectionOrder(initialSectionOrder);
-        }
-      } catch (err) {
-        console.error('Error fetching layout:', err);
-        setError('Could not load page layout. Displaying default order.');
-        setSectionOrder(initialSectionOrder);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLayout();
-  }, [isAuth]);
-
-  const sensors = useSensors(useSensor(PointerSensor));
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      setSectionOrder((items) => {
-        const oldIndex = items.indexOf(active.id as string);
-        const newIndex = items.indexOf(over.id as string);
-        return arrayMove(items, oldIndex, newIndex);
-      });
-    }
-  };
-
-  const handleSaveOrder = async () => {
-    setIsSaving(true);
-    try {
-      const layoutDocRef = doc(firestore, 'layouts', 'homePage');
-      await setDoc(layoutDocRef, { order: sectionOrder });
-      setIsReorderMode(false);
-    } catch (err) {
-      console.error('Error saving layout:', err);
-      setError('Failed to save the new layout. Please try again.');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        <Skeleton className="h-64 w-full" />
-        <Skeleton className="h-48 w-full" />
-        <Skeleton className="h-48 w-full" />
-      </div>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <div className="relative">
-      {isAuth && (
-        <div className="fixed bottom-5 right-5 z-50 flex gap-2">
-           {!isReorderMode ? (
-             <Button onClick={() => setIsReorderMode(true)} variant="secondary" size="lg" className="shadow-lg">
-                <LayoutList className="mr-2 h-5 w-5" />
-                Reorder Sections
-            </Button>
-           ) : (
-            <>
-              <Button onClick={handleSaveOrder} size="lg" className="shadow-lg" disabled={isSaving}>
-                <Check className="mr-2 h-5 w-5" />
-                {isSaving ? 'Saving...' : 'Save Order'}
-              </Button>
-               <Button onClick={() => setIsReorderMode(false)} variant="outline" size="lg" className="shadow-lg">
-                Cancel
-              </Button>
-            </>
-           )}
+    <div className="bg-white text-black">
+      {/* Hero Section */}
+      <section className="relative h-[70vh] text-white flex items-center justify-center text-center">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          poster="https://placehold.co/1920x1080.png"
+        >
+          <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+        <div className="relative z-20 p-4">
+          <h1 className="text-5xl md:text-8xl font-bold text-shadow-lg">FAMILY TIME MADE SIMPLE!!!</h1>
+          <p className="text-xl md:text-2xl mt-4 text-shadow">Let us help you transform your space into something special</p>
+          <p className="text-lg md:text-xl mt-2 text-shadow">Our friendly and knowledgeable staff are here to show you our amazing Hot tubs, Swim spas, Pools, Saunas, and more!</p>
         </div>
-      )}
-       {error && (
-            <div className="container mx-auto my-4">
-                <Alert variant="destructive">
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>{error}</AlertDescription>
-                </Alert>
-            </div>
-        )}
+      </section>
 
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={sectionOrder} strategy={verticalListSortingStrategy}>
-          <div className="flex flex-col">
-            {sectionOrder.map((sectionId) => {
-              const componentInfo = homeContent.find(c => c.id === sectionId);
-              if (!componentInfo) return null;
-
-              const Component = allSections[componentInfo.component];
-              if (!Component) return null;
-
-              const docPath = `sectionContent/${sectionId}`;
-
-              if (isReorderMode) {
-                // In reorder mode, wrap with SortableItem
-                return (
-                  <SortableItem key={sectionId} id={sectionId}>
-                    <div className="relative border-2 border-dashed border-primary my-2 p-4 rounded-lg">
-                      <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-2 z-10">
-                        <GripVertical className="h-6 w-6" />
-                      </div>
-                      <div className="opacity-60 pointer-events-none">
-                        <Component docPath={docPath} />
-                      </div>
-                    </div>
-                  </SortableItem>
-                );
-              }
-              // Normal rendering
-              return <Component key={sectionId} docPath={docPath} />;
-            })}
+      {/* About Us Section */}
+      <section className="py-16">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-900">ABOUT US</h2>
+          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+        </div>
+        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8">
+          <div className="text-center md:text-left">
+            <p className="uppercase text-blue-600 font-semibold">MEET THE FOUNDER & CEO</p>
+            <h3 className="text-4xl font-bold text-blue-900 my-2">Hi, I'm Troy!</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Our business began in 1991, as a hot tub rental company. We grew that company into a hot tub superstore. Our founder and CEO Troy Derheim eventually sold Tubs of Fun! to focus on designing and building swimming pools, splash pads, and specialty aquatic therapy products. Now, by customer request, and a passion re-imagined, we are back! Fully committed to serving the great people of our community with quality products and unmatched service.
+            </p>
+            <Button variant="accent" className="mt-6">See More</Button>
           </div>
-        </SortableContext>
-      </DndContext>
+          <div>
+            <Image src="https://placehold.co/600x400.png" alt="Founder Troy" width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
+          </div>
+        </div>
+      </section>
+
+       {/* Services Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-900">Our Services</h2>
+          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            {services.map((service) => (
+              <div key={service.name} className="group">
+                <Card className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint} />
+                  </CardContent>
+                </Card>
+                <p className="mt-2 font-semibold">{service.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Testimonials Section */}
+       <section className="py-16">
+        <div className="container mx-auto text-center">
+          <h2 className="text-4xl font-bold text-blue-900">What they say about us...</h2>
+          <div className="mt-8 p-6 border rounded-lg shadow-lg">
+             <div className="flex justify-center text-yellow-400 mb-4">
+                <Star /><Star /><Star /><Star /><Star />
+            </div>
+            <p className="italic text-gray-600">&quot;This is a placeholder for the reviews widget. Customer testimonials will be displayed here.&quot;</p>
+            <p className="font-bold mt-4">- A Happy Customer</p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Gallery Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-900">Gallery</h2>
+          <div className="w-16 h-1 bg-orange-500 mx-auto my-4"></div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+            {galleryImages.map((image, index) => (
+              <div key={index} className="overflow-hidden rounded-lg">
+                <Image src={image.src} alt={`Gallery image ${index + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={image.dataAiHint} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
-}
-
-
-export default function Home() {
-  return <EditablePageLayout />;
 }

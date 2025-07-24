@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -12,7 +13,12 @@ export default {
       fontFamily: {
         body: ['"PT Sans"', 'sans-serif'],
         headline: ['Poppins', 'sans-serif'],
+        display: ['"Abril Fatface"', 'cursive'],
         code: ['monospace'],
+      },
+       textShadow: {
+        DEFAULT: '0 2px 4px rgba(0,0,0,0.10)',
+        lg: '0 2px 10px rgba(0,0,0,0.25)',
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -95,5 +101,24 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        '.text-shadow': {
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        },
+        '.text-shadow-md': {
+          textShadow: '4px 4px 8px rgba(0, 0, 0, 0.5)',
+        },
+        '.text-shadow-lg': {
+          textShadow: '5px 5px 10px rgba(0, 0, 0, 0.5)',
+        },
+        '.text-shadow-none': {
+          textShadow: 'none',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 } satisfies Config;

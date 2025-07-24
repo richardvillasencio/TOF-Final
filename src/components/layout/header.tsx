@@ -2,16 +2,13 @@
 // src/components/layout/header.tsx
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, Phone, MapPin, Pencil, Trash2, GripVertical, PlusCircle } from 'lucide-react';
-import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase/client';
-
+import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menubar,
   MenubarContent,
@@ -23,81 +20,20 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-} from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
-import { ThemeToggle } from '../theme-toggle';
-import { type NavLink, type HeaderContent, headerContent as initialHeaderContent } from '@/lib/content/header';
+import { type NavLink, headerContent } from '@/lib/content/header';
 import { cn } from '@/lib/utils';
-import { ImageUploader } from '../image-uploader';
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
-import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { SortableItem } from '@/components/ui/sortable-item';
-import { Skeleton } from '../ui/skeleton';
 
 
 export function Header() {
-  const [content, setContent] = useState<HeaderContent>(initialHeaderContent);
-  const [loading, setLoading] = useState(true);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  
-  const isAuth = true; 
-
-  useEffect(() => {
-    if (!isAuth) {
-        setLoading(false);
-        return;
-    }
-    const docRef = doc(firestore, 'globals', 'header');
-    const unsubscribe = onSnapshot(docRef, async (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data() as HeaderContent;
-            // Ensure nav links are always arrays even if they are missing from DB
-            data.topNavLinks = data.topNavLinks || [];
-            data.mainNavLinks = data.mainNavLinks || [];
-            setContent(prev => ({ ...initialHeaderContent, ...data }));
-        } else {
-            await setDoc(docRef, initialHeaderContent);
-            setContent(initialHeaderContent);
-        }
-        setLoading(false);
-    }, (error) => {
-        console.error("Error fetching header content:", error);
-        setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [isAuth]);
+  const [content] = useState(headerContent);
 
   return (
-    <header className="relative bg-gradient-to-r from-[rgb(81,158,172)] to-[rgb(231,121,49)] text-white sticky top-0 z-50">
-      {isAuth && (
-        <Button
-          variant="outline"
-          size="icon"
-          className="absolute top-2 right-2 z-50 text-black"
-          onClick={() => setIsEditDialogOpen(true)}
-        >
-          <Pencil className="h-4 w-4" />
-        </Button>
-      )}
+    <header className="bg-primary text-white sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
-            <Link href="/" aria-label="Tubs of Fun Home">
-              {loading || !content.logoImageUrl ? (
-                <Skeleton className="h-[43px] w-[200px]" />
-              ) : (
+            <Link href="/" aria-label="TubClone Home">
                 <Image
                     src={content.logoImageUrl}
                     alt="Company Logo"
@@ -106,7 +42,6 @@ export function Header() {
                     className="object-contain"
                     priority
                 />
-              )}
             </Link>
           </div>
           <div className="hidden lg:flex flex-col items-end text-sm">
@@ -121,12 +56,11 @@ export function Header() {
           </div>
           <div className="hidden lg:flex items-center space-x-2">
             <DesktopNav links={content.topNavLinks || []} />
-            <ThemeToggle />
           </div>
           {content.mascotImageUrl && (
             <Image
               src={content.mascotImageUrl}
-              alt="Tubs of Fun Mascot"
+              alt="TubClone Mascot"
               width={80}
               height={100}
               className="hidden lg:block"
@@ -134,7 +68,6 @@ export function Header() {
           )}
 
           <div className="lg:hidden flex items-center gap-2">
-            <ThemeToggle />
             <MobileNav topNavLinks={content.topNavLinks || []} mainNavLinks={content.mainNavLinks || []} />
           </div>
         </div>
@@ -145,13 +78,6 @@ export function Header() {
           <DesktopNav links={content.mainNavLinks || []} />
         </div>
       </div>
-      {isAuth && (
-        <EditHeaderDialog
-            isOpen={isEditDialogOpen}
-            onOpenChange={setIsEditDialogOpen}
-            currentContent={content}
-        />
-      )}
     </header>
   );
 }
@@ -242,20 +168,14 @@ const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], main
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
-        <SheetHeader className="p-4 border-b">
-          <div className="flex justify-between items-center">
-             <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-              <X className="h-6 w-6" />
-              <span className="sr-only">Close menu</span>
-            </Button>
-          </div>
-          <SheetTitle className="sr-only">Main Menu</SheetTitle>
-          <SheetDescription className="sr-only">Website navigation links</SheetDescription>
-        </SheetHeader>
-        <div className="flex flex-col h-full">
-          <div className="flex-grow overflow-y-auto p-4">
-            <MobileNavLinks links={allNavLinks} onLinkClick={() => setIsOpen(false)} />
-          </div>
+        <div className="p-4 border-b">
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+            <X className="h-6 w-6" />
+            <span className="sr-only">Close menu</span>
+          </Button>
+        </div>
+        <div className="flex flex-col h-full overflow-y-auto p-4">
+          <MobileNavLinks links={allNavLinks} onLinkClick={() => setIsOpen(false)} />
         </div>
       </SheetContent>
     </Sheet>
@@ -312,212 +232,3 @@ const MobileNavLinks = ({ links, onLinkClick }: { links: NavLink[]; onLinkClick:
 
   return <div className="flex flex-col space-y-2">{renderLinks(links)}</div>;
 };
-
-
-// --- Editing Dialog ---
-interface EditHeaderDialogProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-  currentContent: HeaderContent;
-}
-
-function EditHeaderDialog({ isOpen, onOpenChange, currentContent }: EditHeaderDialogProps) {
-  const [content, setContent] = useState<HeaderContent | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (isOpen) {
-        setLoading(true);
-        // Use a deep copy of the current content to avoid direct mutation
-        setContent(JSON.parse(JSON.stringify(currentContent)));
-        setLoading(false);
-    }
-  }, [isOpen, currentContent]);
-
-  const handleContentChange = useCallback(<K extends keyof HeaderContent>(
-    key: K,
-    value: HeaderContent[K]
-  ) => {
-    setContent(prev => {
-        if (!prev) return null;
-        return { ...prev, [key]: value };
-    });
-  }, []);
-
-  const handleSave = useCallback(async () => {
-    if (!content) return;
-    const docRef = doc(firestore, 'globals', 'header');
-    await setDoc(docRef, content, { merge: true });
-    onOpenChange(false);
-  }, [content, onOpenChange]);
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl h-[90vh] flex flex-col">
-        <DialogHeader>
-          <DialogTitle>Edit Header Content</DialogTitle>
-          <DialogDescription>
-            Update contact information, logos, and navigation links.
-          </DialogDescription>
-        </DialogHeader>
-        {loading || !content ? (
-            <div className="flex-grow flex items-center justify-center">
-                <p>Loading...</p>
-            </div>
-        ) : (
-            <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-y-auto p-1 pr-4 flex-grow">
-                {/* Left Column: General Info */}
-                <div className="space-y-4">
-                    <h3 className="text-lg font-medium">General Information</h3>
-                    <div>
-                    <Label>Phone Number</Label>
-                    <Input
-                        value={content.phoneNumber}
-                        onChange={e => handleContentChange('phoneNumber', e.target.value)}
-                    />
-                    </div>
-                    <div>
-                    <Label>Address</Label>
-                    <Input
-                        value={content.address}
-                        onChange={e => handleContentChange('address', e.target.value)}
-                    />
-                    </div>
-                    <ImageUploader 
-                        label="Logo"
-                        currentImageUrl={content.logoImageUrl}
-                        onUploadComplete={(url) => handleContentChange('logoImageUrl', url)}
-                        storagePath="globals/header"
-                    />
-                    <ImageUploader
-                        label="Mascot"
-                        currentImageUrl={content.mascotImageUrl}
-                        onUploadComplete={(url) => handleContentChange('mascotImageUrl', url)}
-                        storagePath="globals/header"
-                    />
-                </div>
-
-                {/* Right Column: Navigation */}
-                <div className="space-y-4">
-                    <h3 className="text-lg font-medium">Top Navigation</h3>
-                    <EditableNavMenu 
-                        links={content.topNavLinks || []}
-                        onLinksChange={newLinks => handleContentChange('topNavLinks', newLinks)}
-                    />
-                    <hr className="my-4"/>
-                    <h3 className="text-lg font-medium">Main Navigation</h3>
-                    <EditableNavMenu 
-                        links={content.mainNavLinks || []}
-                        onLinksChange={newLinks => handleContentChange('mainNavLinks', newLinks)}
-                    />
-                </div>
-                </div>
-                <DialogFooter className="pt-4 border-t">
-                <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                </DialogClose>
-                <Button onClick={handleSave}>Save Changes</Button>
-                </DialogFooter>
-            </>
-        )}
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-// --- Editable Navigation Menu ---
-interface EditableNavMenuProps {
-    links: NavLink[];
-    onLinksChange: (links: NavLink[]) => void;
-    depth?: number;
-}
-
-function EditableNavMenu({ links, onLinksChange, depth = 0 }: EditableNavMenuProps) {
-    const sensors = useSensors(useSensor(PointerSensor));
-
-    const handleDragEnd = (event: DragEndEvent) => {
-        const { active, over } = event;
-        if (over && active.id !== over.id) {
-            const oldIndex = links.findIndex(link => link.id === active.id);
-            const newIndex = links.findIndex(link => link.id === over.id);
-            onLinksChange(arrayMove(links, oldIndex, newIndex));
-        }
-    };
-
-    const handleLinkChange = (id: string, field: 'label' | 'href', value: string) => {
-        onLinksChange(links.map(link => link.id === id ? { ...link, [field]: value } : link));
-    };
-
-    const handleSublinksChange = (id: string, subLinks: NavLink[]) => {
-        onLinksChange(links.map(link => link.id === id ? { ...link, subLinks } : link));
-    };
-    
-    const addLink = () => {
-        const newLink: NavLink = { id: crypto.randomUUID(), label: 'New Link', href: '/', subLinks: [] };
-        onLinksChange([...links, newLink]);
-    };
-
-    const deleteLink = (id: string) => {
-        onLinksChange(links.filter(link => link.id !== id));
-    };
-
-    return (
-        <div className={cn("space-y-2", depth > 0 && "pl-4 mt-2 border-l")}>
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={links} strategy={verticalListSortingStrategy}>
-                    {links.map(link => (
-                        <SortableItem key={link.id} id={link.id}>
-                            <div className="bg-muted p-3 rounded-md space-y-2">
-                                <div className="flex items-center gap-2">
-                                    <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0 cursor-grab" />
-                                    <div className="flex-grow grid grid-cols-2 gap-2">
-                                        <Input 
-                                            placeholder="Label" 
-                                            value={link.label}
-                                            onChange={e => handleLinkChange(link.id, 'label', e.target.value)}
-                                        />
-                                        <Input 
-                                            placeholder="URL (e.g., /about)" 
-                                            value={link.href}
-                                            onChange={e => handleLinkChange(link.id, 'href', e.target.value)}
-                                        />
-                                    </div>
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button variant="ghost" size="icon">
-                                                <Trash2 className="h-4 w-4 text-destructive" />
-                                            </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    This will delete the link and all its sub-links. This action cannot be undone.
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => deleteLink(link.id)}>Delete</AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                </div>
-                                {depth < 2 && (
-                                    <EditableNavMenu 
-                                        links={link.subLinks || []}
-                                        onLinksChange={(newSublinks) => handleSublinksChange(link.id, newSublinks)}
-                                        depth={depth + 1}
-                                    />
-                                )}
-                            </div>
-                        </SortableItem>
-                    ))}
-                </SortableContext>
-            </DndContext>
-            <Button variant="outline" size="sm" onClick={addLink}>
-                <PlusCircle className="mr-2 h-4 w-4" /> Add Link
-            </Button>
-        </div>
-    );
-}

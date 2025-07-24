@@ -1,14 +1,13 @@
+
 // src/components/layout/footer.tsx
 'use client';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Facebook, Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Youtube, Phone } from 'lucide-react';
 import Image from 'next/image';
-import { useEditableContent } from '@/hooks/use-editable-content';
-import { headerContent as initialHeaderContent } from '@/lib/content/header';
-import { Skeleton } from '../ui/skeleton';
+import { headerContent } from '@/lib/content/header';
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
@@ -17,10 +16,6 @@ const socialLinks = [
 ];
 
 export function Footer() {
-    const { content, loading } = useEditableContent({
-    docPath: 'globals/header',
-    initialContent: initialHeaderContent,
-  });
 
   return (
     <footer className="bg-muted text-muted-foreground">
@@ -29,17 +24,13 @@ export function Footer() {
           {/* About Section */}
           <div className="space-y-4">
             <Link href="/">
-               {loading || !content.logoImageUrl ? (
-                <Skeleton className="h-[43px] w-[200px]" />
-              ) : (
-                <Image
-                    src={content.logoImageUrl}
+               <Image
+                    src={headerContent.logoImageUrl}
                     alt="Company Logo"
                     width={200}
                     height={43}
                     className="object-contain"
                 />
-              )}
             </Link>
             <p className="text-sm">
               Your premier destination for relaxation and recreation. We offer top-quality hot tubs, swim spas, and more to enhance your lifestyle.
