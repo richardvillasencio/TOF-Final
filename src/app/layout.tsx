@@ -31,9 +31,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-screen">
+          <div className="relative z-10 flex flex-col min-h-screen bg-background">
             <Header />
-            <div className="relative z-10 flex-grow">
+            <div className="flex-grow">
               <main>{children}</main>
             </div>
             <Footer />
