@@ -22,7 +22,7 @@ export const headerContent: HeaderContent = {
   logoImageUrl: 'https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/67f93f9a71384b7dddafb553.png',
   phoneNumber: '(701) 234-0705',
   address: '601 Main Ave W, West Fargo, ND 58708',
-  mascotImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.appspot.com/o/images%2Ftubby.svg?alt=media&token=49a0cdfb-d711-4eea-a4b5-3713bc4da3be',
+  mascotImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpw_imh3fc.webp?alt=media&token=49a0cdfb-d711-4eea-a4b5-3713bc4da3be',
   veteranOwnedLogoUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/veteran.svg?alt=media&token=814412af-0346-46ad-b5e5-317421da2a8a',
   topNavLinks: [
     { 
