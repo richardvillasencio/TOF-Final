@@ -47,6 +47,11 @@ export default function HomePage() {
           <p className="text-xl md:text-2xl mt-4 text-shadow">Let us help you transform your space into something special</p>
           <p className="text-lg md:text-xl mt-2 text-shadow">Our friendly and knowledgeable staff are here to show you our amazing Hot tubs, Swim spas, Pools, Saunas, and more!</p>
         </div>
+        <div className="absolute bottom-0 left-0 w-full h-24 text-background z-20">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-full fill-current">
+                <path d="M0,50 Q240,0 480,50 T960,50 T1440,50 V120 H0 Z" />
+            </svg>
+        </div>
       </section>
 
       {/* About Us Section */}
