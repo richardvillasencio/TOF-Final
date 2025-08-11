@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -30,26 +31,29 @@ export default function HomePage() {
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative h-[70vh] text-primary-foreground flex items-center justify-center text-center">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
-          poster="https://placehold.co/1920x1080.png"
-        >
-          <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
-        <div className="relative z-20 p-4">
+      <section className="relative h-[70vh] flex items-center justify-center text-center overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full">
+            <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover z-0"
+            poster="https://placehold.co/1920x1080.png"
+            >
+            <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+        </div>
+
+        <div className="relative z-20 p-4 text-primary-foreground">
           <h1 className="text-5xl md:text-8xl font-bold text-shadow-lg">FAMILY TIME MADE SIMPLE!!!</h1>
           <p className="text-xl md:text-2xl mt-4 text-shadow">Let us help you transform your space into something special</p>
           <p className="text-lg md:text-xl mt-2 text-shadow">Our friendly and knowledgeable staff are here to show you our amazing Hot tubs, Swim spas, Pools, Saunas, and more!</p>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-24 text-background z-20">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-full fill-current">
-                <path d="M0,120 C150,80 280,40 480,60 C680,80 820,20 960,40 C1100,60 1280,100 1440,80 V120 H0 Z" />
+                <path d="M0,50 Q240,0 480,50 T960,50 T1440,50 V120 H0 Z" />
             </svg>
         </div>
       </section>
