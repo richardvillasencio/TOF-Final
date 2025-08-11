@@ -49,7 +49,7 @@ export default function HomePage() {
         </div>
         <div className="absolute bottom-0 left-0 w-full h-24 text-background z-20">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-full fill-current">
-                <path d="M0,50 Q240,0 480,50 T960,50 T1440,50 V120 H0 Z" />
+                <path d="M0,120 C150,80 280,40 480,60 C680,80 820,20 960,40 C1100,60 1280,100 1440,80 V120 H0 Z" />
             </svg>
         </div>
       </section>
