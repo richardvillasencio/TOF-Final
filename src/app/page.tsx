@@ -16,7 +16,7 @@ const services = [
 
 export default function HomePage() {
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-background text-foreground home-page">
       {/* Hero Section */}
       <section className="relative h-[95vh] text-primary-foreground flex items-center justify-center text-center">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
@@ -42,7 +42,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section className="pb-16">
+      <section className="pb-16 bg-background relative z-10">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-primary">
             ABOUT US
@@ -70,7 +70,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 bg-muted relative z-10">
         <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold text-primary">Our Services</h2>
             <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
@@ -91,7 +91,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16">
+      <section className="py-16 bg-background relative z-10">
         <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
 
@@ -114,7 +114,7 @@ export default function HomePage() {
       </section>
 
        {/* Gallery Section */}
-       <section className="py-16 bg-muted">
+       <section className="py-16 bg-muted relative z-10">
         <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold text-primary">Gallery</h2>
              <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
