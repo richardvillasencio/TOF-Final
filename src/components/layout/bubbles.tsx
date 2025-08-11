@@ -20,7 +20,7 @@ export const Bubbles = () => {
         <div key={i} className="bubble" style={{
           '--size': `${2 + Math.random() * 4}vw`,
           '--left-start': `${-10 + Math.random() * 120}vw`,
-          '--left-end': `${-10 + Math.random() * 120}vw`,
+          '--sway-amount': `${(Math.random() - 0.5) * 15}vw`,
           '--animation-delay': `-${Math.random() * 20}s`,
           '--animation-duration': `${15 + Math.random() * 15}s`,
         } as React.CSSProperties}></div>
