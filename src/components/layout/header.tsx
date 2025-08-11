@@ -1,3 +1,4 @@
+
 // src/components/layout/header.tsx
 'use client';
 
@@ -26,8 +27,28 @@ import { ThemeToggle } from '../theme-toggle';
 
 
 export function Header() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   return (
-    <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md overflow-hidden">
+    <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md">
+       {mounted && (
+        <div className="bubbles absolute inset-0 -z-10 pointer-events-none">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i} className="bubble" style={{
+              '--size': `${2 + Math.random() * 4}vw`,
+              '--left-start': `${-10 + Math.random() * 120}vw`,
+              '--left-end': `${-10 + Math.random() * 120}vw`,
+              '--animation-delay': `-${Math.random() * 20}s`,
+              '--animation-duration': `${15 + Math.random() * 15}s`,
+               '--sway-amount': `${(Math.random() - 0.5) * 5}vw`,
+            } as React.CSSProperties}></div>
+          ))}
+        </div>
+      )}
       {/* Top Bar */}
       <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
