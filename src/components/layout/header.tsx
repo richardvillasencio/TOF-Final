@@ -1,7 +1,7 @@
+
 // src/components/layout/header.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,13 +23,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { type NavLink, type HeaderContent, headerContent } from '@/lib/content/header';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '../theme-toggle';
+import { useState } from 'react';
 
 
 export function Header() {
   
   return (
-    <header className="bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md relative z-30 overflow-hidden">
-        {/* Bubble layer */}
+    <header className="bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md relative z-30">
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute left-10 bottom-6 w-14 h-14 rounded-full bg-white/20 blur-sm animate-bubble" style={{animationDuration: '6s', animationDelay: '0s'}}></div>
           <div className="absolute left-32 bottom-10 w-10 h-10 rounded-full bg-white/15 blur-sm animate-bubble" style={{animationDuration: '5s', animationDelay: '1s'}}></div>
