@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative h-[85vh] text-primary-foreground flex items-center justify-center text-center">
+      <section className="relative h-[95vh] text-primary-foreground flex items-center justify-center text-center">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
         </video>
@@ -36,7 +36,7 @@ export default function HomePage() {
         </div>
         <div className="absolute bottom-0 left-0 w-full h-24 text-background z-20">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-full fill-current">
-                <path d="M0,50 Q120,80 240,50 T480,70 T720,50 T960,70 T1200,50 T1440,70 V120 H0 Z" />
+                <path d="M0,50 Q240,0 480,50 T960,50 T1440,50 V120 H0 Z" />
             </svg>
         </div>
       </section>
