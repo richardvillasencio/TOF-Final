@@ -20,37 +20,31 @@ import {
 } from '@/components/ui/menubar';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-import { type NavLink, type HeaderContent, headerContent as initialHeaderContent } from '@/lib/content/header';
+import { type NavLink, type HeaderContent, headerContent } from '@/lib/content/header';
 import { cn } from '@/lib/utils';
-import { useEditableContent } from '@/hooks/use-editable-content';
 import { ThemeToggle } from '../theme-toggle';
 
 
 export function Header() {
-  const { content } = useEditableContent<HeaderContent>({
-    docPath: 'globals/header',
-    initialContent: initialHeaderContent
-  });
-
   return (
-    <header className="relative bg-gradient-to-r from-[#e77931] to-[#0077c8] text-white shadow-md">
+    <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md">
       {/* Top Bar */}
-      <div className="bg-gradient-to-r from-[#f36e0e] to-[#f5b124] py-2">
+      <div className="py-2">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
                  <div className="flex items-center gap-2">
                     <Phone size={16} />
-                    <span>{content.phoneNumber}</span>
+                    <span>{headerContent.phoneNumber}</span>
                 </div>
                 <div className="hidden md:flex items-center gap-2">
                     <MapPin size={16} />
-                    <span>{content.address}</span>
+                    <span>{headerContent.address}</span>
                 </div>
             </div>
             <div className="hidden lg:flex items-center space-x-4">
-                <DesktopNav links={content.topNavLinks || []} />
+                <DesktopNav links={headerContent.topNavLinks || []} />
                 <Link href="#">
-                    <Image src={content.mascotImageUrl} alt="Special Offer" width={40} height={40} />
+                    <Image src={headerContent.mascotImageUrl} alt="Special Offer" width={40} height={40} />
                 </Link>
             </div>
              <div className="lg:hidden">
@@ -63,7 +57,7 @@ export function Header() {
       <div className="container mx-auto px-4 flex justify-between items-center py-2">
           <Link href="/" aria-label="TubClone Home">
               <Image
-                  src={content.logoImageUrl}
+                  src={headerContent.logoImageUrl}
                   alt="Company Logo"
                   width={250}
                   height={50}
@@ -73,11 +67,11 @@ export function Header() {
           </Link>
           
           <div className="hidden lg:flex items-center space-x-2">
-            <DesktopNav links={content.mainNavLinks || []} isMain />
+            <DesktopNav links={headerContent.mainNavLinks || []} isMain />
           </div>
 
           <div className="lg:hidden flex items-center gap-2">
-            <MobileNav topNavLinks={content.topNavLinks || []} mainNavLinks={content.mainNavLinks || []} />
+            <MobileNav topNavLinks={headerContent.topNavLinks || []} mainNavLinks={headerContent.mainNavLinks || []} />
           </div>
       </div>
     </header>
