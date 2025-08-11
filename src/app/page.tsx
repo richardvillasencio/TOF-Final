@@ -42,7 +42,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-16 bg-background relative z-10">
+      <section className="py-16 bg-background">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-primary">
             ABOUT US
@@ -70,7 +70,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-muted relative z-10">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold text-primary">Our Services</h2>
             <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
@@ -91,7 +91,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-background relative z-10">
+      <section className="py-16 bg-background">
         <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
 
@@ -114,7 +114,7 @@ export default function HomePage() {
       </section>
 
        {/* Gallery Section */}
-       <section className="py-16 bg-muted relative z-10">
+       <section className="py-16 bg-muted">
         <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold text-primary">Gallery</h2>
              <div className="w-16 h-1 bg-accent mx-auto my-4"></div>

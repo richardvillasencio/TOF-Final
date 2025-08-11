@@ -112,7 +112,7 @@
     transform-origin: center;
   }
   
-  .hero-section ~ .bubbles {
+  .hero-section + .bubbles {
     display: none;
   }
 }

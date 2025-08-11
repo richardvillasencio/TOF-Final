@@ -15,7 +15,7 @@ export const Bubbles = () => {
   }
 
   return (
-    <div className="bubbles fixed inset-0 -z-10 pointer-events-none">
+    <div className="bubbles fixed inset-0 pointer-events-none">
       {Array.from({ length: 20 }).map((_, i) => (
         <div key={i} className="bubble" style={{
           '--size': `${2 + Math.random() * 4}vw`,
