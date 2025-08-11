@@ -26,24 +26,8 @@ import { ThemeToggle } from '../theme-toggle';
 
 
 export function Header() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        {mounted && Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className="bubble" style={{
-            '--size': `${1 + Math.random() * 3}rem`,
-            '--left-start': `${-10 + Math.random() * 120}%`,
-            '--animation-delay': `-${Math.random() * 20}s`,
-            '--animation-duration': `${10 + Math.random() * 10}s`,
-            '--sway-amount': `${-20 + Math.random() * 40}px`,
-          } as React.CSSProperties}></div>
-        ))}
-      </div>
       {/* Top Bar */}
       <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
