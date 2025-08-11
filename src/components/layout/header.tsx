@@ -27,9 +27,16 @@ import { ThemeToggle } from '../theme-toggle';
 
 export function Header() {
   return (
-    <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md">
+    <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md overflow-hidden">
+      <div className="water-splash">
+        <div className="splash-drop"></div>
+        <div className="splash-drop"></div>
+        <div className="splash-drop"></div>
+        <div className="splash-drop"></div>
+        <div className="splash-drop"></div>
+      </div>
       {/* Top Bar */}
-      <div className="py-2 border-b border-white/20">
+      <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
                  <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={80} height={80} />
@@ -57,7 +64,7 @@ export function Header() {
       </div>
 
       {/* Main Navigation */}
-      <div className="container mx-auto px-4 flex justify-between items-center py-2">
+      <div className="container mx-auto px-4 flex justify-between items-center py-2 relative z-10">
           <Link href="/" aria-label="TubClone Home">
               <Image
                   src={headerContent.logoImageUrl}
