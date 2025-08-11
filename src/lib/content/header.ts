@@ -18,29 +18,22 @@ export type HeaderContent = {
 }
 
 export const headerContent: HeaderContent = {
-  logoImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/globals%2Fheader%2Ftubs-of-fun-logo.svg?alt=media&token=4802ff93-b673-4e33-9154-2f3b60408f65',
+  logoImageUrl: 'https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/67f93f9a71384b7dddafb553.png',
   phoneNumber: '(701) 234-0705',
-  address: '601 Main Ave W. West Fargo, ND 58708',
-  mascotImageUrl: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/globals%2Fheader%2Ftubby-mascot.svg?alt=media&token=d189c894-1a6e-4424-a74b-014906536647',
+  address: '601 Main Ave W, West Fargo, ND 58708',
+  mascotImageUrl: 'https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/67533211d7b7d40b30b4935c.svg',
   topNavLinks: [
     { 
       id: 'top-1',
       href: '/contact', 
       label: 'Contact Us',
-      subLinks: [
-        { id: 'top-1-1', href: '/about', label: 'About Us' },
-      ]
     },
     { 
       id: 'top-2',
       href: '/about', 
       label: 'Our Company',
-      subLinks: [
-        { id: 'top-2-1', href: '/service-repair', label: 'Service/Repair' },
-      ]
     },
     { id: 'top-3', href: '/', label: 'Home' },
-    { id: 'top-4', href: '/design-studio', label: 'Design Studio' },
   ],
   mainNavLinks: [
     {
@@ -52,29 +45,11 @@ export const headerContent: HeaderContent = {
           id: 'main-1-1',
           href: '/hot-tubs/bullfrog-spas',
           label: 'Bullfrog Spas',
-          subLinks: [
-            { id: 'main-1-1-1', href: '/hot-tubs/bullfrog-spas/m-series', label: 'M Series' },
-          ],
         },
         {
           id: 'main-1-2',
           href: '/hot-tubs/qca-spas',
           label: 'QCA Spas',
-          subLinks: [
-            { id: 'main-1-2-1', href: '/hot-tubs/qca-spas/star', label: 'Star Series' },
-            { id: 'main-1-2-2', href: '/hot-tubs/qca-spas/majestic', label: 'Majestic Series' },
-            { id: 'main-1-2-3', href: '/hot-tubs/qca-spas/jewel', label: 'Jewel Series' },
-          ],
-        },
-        { id: 'main-1-3', href: '/spa-upgrades', label: 'Spa Alteration/Upgrades' },
-        {
-          id: 'main-1-4',
-          href: '/hot-tubs/models', label: 'All Models',
-          subLinks: [
-              { id: 'main-1-4-1', href: '/hot-tubs/models/ultra', label: 'Ultra' },
-              { id: 'main-1-4-2', href: '/hot-tubs/models/aquarius', label: 'Aquarius' },
-              { id: 'main-1-4-3', href: '/hot-tubs/models/pisces', label: 'Pisces' },
-          ]
         }
       ],
     },
@@ -83,26 +58,17 @@ export const headerContent: HeaderContent = {
       id: 'main-3',
       href: '/pools',
       label: 'POOL',
-      subLinks: [
-          { id: 'main-3-1', href: '/pools/endless-pools', label: 'Fastlane Pro / Endless Pool' }
-      ],
     },
     {
       id: 'main-4',
       href: '/swim-spas',
       label: 'SWIM SPAS',
-      subLinks: [
-        { id: 'main-4-1', href: '/swim-spas/collection', label: 'Swim Spa Collection' },
-      ],
     },
     { id: 'main-5', href: '/game-room', label: 'GAME ROOM ESSENTIALS' },
     { 
       id: 'main-6',
       href: '/grills',
       label: 'GRILLS',
-      subLinks: [
-          { id: 'main-6-1', href: '/grills/calflame', label: 'CalFlame Grills' }
-      ]
     },
   ],
 };

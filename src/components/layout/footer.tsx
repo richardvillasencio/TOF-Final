@@ -32,8 +32,8 @@ export function Footer() {
                <Image
                     src={headerContent.logoImageUrl}
                     alt="Company Logo"
-                    width={200}
-                    height={43}
+                    width={250}
+                    height={50}
                     className="object-contain"
                 />
             </Link>
@@ -69,8 +69,8 @@ export function Footer() {
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-foreground">Fargo, ND</h4>
-                <p className="text-sm">1234 Main St, Fargo, ND 58103</p>
-                <a href="tel:701-234-7727" className="text-sm flex items-center gap-2 mt-1 hover:text-primary transition-colors"><Phone size={14} /> (701) 234-7727</a>
+                <p className="text-sm">601 Main Ave W, West Fargo, ND 58708</p>
+                <a href="tel:701-234-0705" className="text-sm flex items-center gap-2 mt-1 hover:text-primary transition-colors"><Phone size={14} /> (701) 234-0705</a>
               </div>
               <div>
                 <h4 className="font-semibold text-foreground">Lakeville, MN</h4>

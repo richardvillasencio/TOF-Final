@@ -30,6 +30,7 @@ import { type NavLink, type HeaderContent, headerContent as initialHeaderContent
 import { cn } from '@/lib/utils';
 import { useEditableContent } from '@/hooks/use-editable-content';
 import { ImageUploader } from '../image-uploader';
+import { ThemeToggle } from '../theme-toggle';
 
 
 export function Header() {
@@ -40,7 +41,7 @@ export function Header() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   return (
-    <header className="relative bg-gradient-to-r from-[#44a9c6] to-[#d68b5a] text-white sticky top-0 z-50">
+    <header className="relative bg-gradient-to-r from-[#e77931] to-[#0077c8] text-white shadow-md">
        {isAuth && (
          <Button
            variant="outline"
@@ -52,54 +53,53 @@ export function Header() {
          </Button>
        )}
 
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          <div className="flex items-center gap-4">
-            <Link href="/" aria-label="TubClone Home">
-                <Image
-                    src={content.logoImageUrl}
-                    alt="Company Logo"
-                    width={200}
-                    height={43}
-                    className="object-contain"
-                    priority
-                />
-            </Link>
-          </div>
-          <div className="hidden lg:flex flex-col items-end text-sm">
-            <div className="flex items-center gap-2">
-              <Phone size={16} />
-              <span>{content.phoneNumber}</span>
+      {/* Top Bar */}
+      <div className="bg-gradient-to-r from-[#f36e0e] to-[#f5b124] py-2">
+        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+            <div className="flex items-center gap-4">
+                 <div className="flex items-center gap-2">
+                    <Phone size={16} />
+                    <span>{content.phoneNumber}</span>
+                </div>
+                <div className="hidden md:flex items-center gap-2">
+                    <MapPin size={16} />
+                    <span>{content.address}</span>
+                </div>
             </div>
-            <div className="flex items-center gap-2">
-              <MapPin size={16} />
-              <span>{content.address}</span>
+            <div className="hidden lg:flex items-center space-x-4">
+                <DesktopNav links={content.topNavLinks || []} />
+                <Link href="#">
+                    <Image src={content.mascotImageUrl} alt="Special Offer" width={40} height={40} />
+                </Link>
             </div>
-          </div>
+             <div className="lg:hidden">
+                <ThemeToggle />
+            </div>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <div className="container mx-auto px-4 flex justify-between items-center py-2">
+          <Link href="/" aria-label="TubClone Home">
+              <Image
+                  src={content.logoImageUrl}
+                  alt="Company Logo"
+                  width={250}
+                  height={50}
+                  className="object-contain"
+                  priority
+              />
+          </Link>
+          
           <div className="hidden lg:flex items-center space-x-2">
-            <DesktopNav links={content.topNavLinks || []} />
+            <DesktopNav links={content.mainNavLinks || []} isMain />
           </div>
-          {content.mascotImageUrl && (
-            <Image
-              src={content.mascotImageUrl}
-              alt="TubClone Mascot"
-              width={80}
-              height={100}
-              className="hidden lg:block"
-            />
-          )}
 
           <div className="lg:hidden flex items-center gap-2">
             <MobileNav topNavLinks={content.topNavLinks || []} mainNavLinks={content.mainNavLinks || []} />
           </div>
-        </div>
-
-        <hr className="border-t border-white/50" />
-
-        <div className="hidden lg:flex justify-center items-center py-2">
-          <DesktopNav links={content.mainNavLinks || []} />
-        </div>
       </div>
+
       <EditHeaderDialog
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
@@ -110,7 +110,7 @@ export function Header() {
   );
 }
 
-const DesktopNav = ({ links }: { links: NavLink[] }) => {
+const DesktopNav = ({ links, isMain }: { links: NavLink[], isMain?: boolean }) => {
   const pathname = usePathname();
 
   const renderSubLinks = (subLinks: NavLink[]) => (
@@ -144,22 +144,14 @@ const DesktopNav = ({ links }: { links: NavLink[] }) => {
   return (
     <Menubar className="border-none bg-transparent p-0">
       {links.map((link) =>
-        link.href === '/' ? (
-          <Button
-            key={link.id}
-            variant="ghost"
-            asChild
-            className="font-semibold text-white hover:bg-white/20 hover:text-white"
-          >
-            <Link href={link.href}>{link.label}</Link>
-          </Button>
-        ) : (
+        (
           <MenubarMenu key={link.id}>
             <MenubarTrigger asChild>
-              <Button
+               <Button
                 variant="ghost"
                 className={cn(
-                  'font-semibold text-white',
+                  'font-semibold text-white uppercase',
+                   isMain ? 'text-base' : 'text-sm',
                   pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
                     ? 'bg-white/20'
                     : '',
@@ -317,7 +309,7 @@ function EditHeaderDialog({ isOpen, onOpenChange, currentContent, onSave }: Edit
                             storagePath="globals/header"
                         />
                         <ImageUploader
-                            label="Mascot Image"
+                            label="Mascot/Offer Image"
                             currentImageUrl={content.mascotImageUrl}
                             onUploadComplete={url => handleContentChange('mascotImageUrl', url)}
                             storagePath="globals/header"
