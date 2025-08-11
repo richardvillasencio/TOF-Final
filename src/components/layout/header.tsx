@@ -40,6 +40,7 @@ export function Header() {
             '--left-start': `${-10 + Math.random() * 120}%`,
             '--animation-delay': `-${Math.random() * 20}s`,
             '--animation-duration': `${10 + Math.random() * 10}s`,
+            '--sway-amount': `${-20 + Math.random() * 40}px`,
           } as React.CSSProperties}></div>
         ))}
       </div>
