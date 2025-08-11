@@ -29,7 +29,7 @@ export function Header() {
   return (
     <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md">
       {/* Top Bar */}
-      <div className="py-2">
+      <div className="py-2 border-b border-white/20">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
                  <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={40} height={40} />
