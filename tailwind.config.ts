@@ -94,16 +94,50 @@ export default {
             height: '0',
           },
         },
+        'bubble': {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '0.7' },
+          '50%': { transform: 'translateY(-20px) scale(1.05)', opacity: '0.5' },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: '0.7' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in-right': {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'fade-in-left': {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'bubble': 'bubble 10s infinite ease-in-out',
+        'fade-in': 'fade-in 1s ease-out forwards',
+        'fade-in-up': 'fade-in-up 1s ease-out forwards',
+        'fade-in-right': 'fade-in-right 1s ease-out forwards',
+        'fade-in-left': 'fade-in-left 1s ease-out forwards',
       },
+      animationDelay: {
+        '2000': '2s',
+        '4000': '4s',
+        '300': '300ms',
+        '500': '500ms',
+        '700': '700ms',
+        '1000': '1s',
+      }
     },
   },
   plugins: [
     require('tailwindcss-animate'),
-    function ({ addUtilities }: { addUtilities: any }) {
+    function ({ addUtilities, theme }: { addUtilities: any, theme: any }) {
       const newUtilities = {
         '.text-shadow': {
           textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
@@ -117,8 +151,16 @@ export default {
         '.text-shadow-none': {
           textShadow: 'none',
         },
-      }
-      addUtilities(newUtilities)
+      };
+      addUtilities(newUtilities);
+
+      const animationDelay = theme('animationDelay');
+      const delayUtilities = Object.entries(animationDelay).map(([key, value]) => ({
+        [`.animation-delay-${key}`]: {
+          'animation-delay': value,
+        },
+      }));
+      addUtilities(delayUtilities);
     }
   ],
 } satisfies Config;
