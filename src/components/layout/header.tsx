@@ -43,7 +43,7 @@ export function Header() {
             </div>
             <div className="hidden lg:flex items-center space-x-4">
                 <DesktopNav links={headerContent.topNavLinks || []} />
-                <Link href="#">
+                 <Link href="/">
                     <Image src={headerContent.mascotImageUrl} alt="Special Offer" width={40} height={40} />
                 </Link>
             </div>
