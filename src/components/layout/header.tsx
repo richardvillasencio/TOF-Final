@@ -1,4 +1,3 @@
-
 // src/components/layout/header.tsx
 'use client';
 
@@ -29,7 +28,19 @@ import { ThemeToggle } from '../theme-toggle';
 export function Header() {
   
   return (
-    <header className="bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md relative z-30">
+    <header className="bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md relative z-30 overflow-hidden">
+        {/* Bubble layer */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute left-10 bottom-6 w-14 h-14 rounded-full bg-white/20 blur-sm animate-bubble" style={{animationDuration: '6s', animationDelay: '0s'}}></div>
+          <div className="absolute left-32 bottom-10 w-10 h-10 rounded-full bg-white/15 blur-sm animate-bubble" style={{animationDuration: '5s', animationDelay: '1s'}}></div>
+          <div className="absolute left-1/2 bottom-0 w-20 h-20 rounded-full bg-white/10 blur-md animate-bubble" style={{animationDuration: '7s', animationDelay: '2s'}}></div>
+          <div className="absolute right-28 bottom-6 w-12 h-12 rounded-full bg-white/12 blur-sm animate-bubble" style={{animationDuration: '5.5s', animationDelay: '3s'}}></div>
+          <div className="absolute right-10 bottom-14 w-8 h-8 rounded-full bg-white/18 blur-sm animate-bubble" style={{animationDuration: '4.5s', animationDelay: '1.5s'}}></div>
+          <div className="absolute left-2/3 bottom-8 w-24 h-24 rounded-full bg-gradient-to-tr from-white/20 to-white/8 blur-lg animate-bubble" style={{animationDuration: '8s', animationDelay: '0.5s'}}></div>
+          <div className="absolute left-8 bottom-36 w-4 h-4 rounded-full bg-white/60 animate-bubble" style={{animationDuration: '4s', animationDelay: '2s'}}></div>
+          <div className="absolute right-16 bottom-48 w-5 h-5 rounded-full bg-white/50 animate-bubble" style={{animationDuration: '4.8s', animationDelay: '2.5s'}}></div>
+        </div>
+
       {/* Top Bar */}
       <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">

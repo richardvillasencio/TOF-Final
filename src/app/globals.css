@@ -75,7 +75,7 @@
     @apply border-border;
   }
   body {
-    @apply text-foreground font-body;
+    @apply text-foreground font-body bg-background;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
@@ -83,36 +83,20 @@
 }
 
 @layer components {
-  @keyframes rise {
-    0% {
-      transform: translateY(100%) translateX(0) scale(0.5);
-      opacity: 0;
-    }
-    50% {
-      transform: translateY(50%) translateX(var(--sway-amount)) scale(0.8);
-      opacity: 0.7;
-    }
-    100% {
-      transform: translateY(-10%) translateX(0) scale(1);
-      opacity: 0;
-    }
+  /* Floating + popping keyframes */
+  @keyframes floatUpPop {
+    0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.95; }
+    70%  { transform: translateY(-50vh) translateX(10px) scale(1.05); opacity: 0.85; }
+    85%  { transform: translateY(-65vh) translateX(-10px) scale(1.1); opacity: 0.7; }
+    90%  { transform: translateY(-70vh) translateX(0) scale(1.3); opacity: 0.4; }
+    100% { transform: translateY(-75vh) scale(0); opacity: 0; }
   }
-
-  .bubble {
-    position: absolute;
-    bottom: 0;
-    border-radius: 50%;
-    border: 2px solid hsla(0, 0%, 100%, 0.3);
-    background-color: transparent;
-    box-shadow: 0 0 10px hsla(0, 0%, 100%, 0.2);
-    width: var(--size);
-    height: var(--size);
-    animation: rise var(--animation-duration) var(--animation-delay) linear infinite;
-    left: var(--left-start);
-    transform-origin: center;
+  .animate-bubble {
+    animation-name: floatUpPop;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
   }
-  
-  .hero-section + .bubbles {
-    display: none;
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bubble { animation: none !important; }
   }
 }

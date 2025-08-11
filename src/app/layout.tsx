@@ -5,7 +5,6 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
-import { Bubbles } from '@/components/layout/bubbles';
 
 export const metadata: Metadata = {
   title: 'TubClone - Your Oasis of Relaxation',
@@ -31,14 +30,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative z-10 flex flex-col min-h-screen bg-background">
+          <div className="flex flex-col min-h-screen">
             <Header />
             <div className="flex-grow">
               <main>{children}</main>
             </div>
             <Footer />
           </div>
-          <Bubbles />
           <Toaster />
         </ThemeProvider>
       </body>
