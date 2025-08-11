@@ -32,7 +32,7 @@ export function Header() {
       <div className="py-2 border-b border-white/20">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
-                 <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={100} height={100} />
+                 <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={80} height={80} />
                  <div className="flex items-center gap-2">
                     <Phone size={16} />
                     <span>{headerContent.phoneNumber}</span>
