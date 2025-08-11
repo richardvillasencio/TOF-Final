@@ -33,14 +33,16 @@ export function Header() {
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-4">
                  <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={80} height={80} />
-                 <div className="flex items-center gap-2">
-                    <Phone size={16} />
-                    <span>{headerContent.phoneNumber}</span>
-                </div>
-                <div className="hidden md:flex items-center gap-2">
-                    <MapPin size={16} />
-                    <span>{headerContent.address}</span>
-                </div>
+                 <div className='flex flex-col'>
+                    <div className="flex items-center gap-2">
+                        <Phone size={16} />
+                        <span>{headerContent.phoneNumber}</span>
+                    </div>
+                    <div className="hidden md:flex items-center gap-2">
+                        <MapPin size={16} />
+                        <span>{headerContent.address}</span>
+                    </div>
+                 </div>
             </div>
             <div className="hidden lg:flex items-center space-x-4">
                 <DesktopNav links={headerContent.topNavLinks || []} />
