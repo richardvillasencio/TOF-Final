@@ -117,6 +117,7 @@
     z-index: 1; /* Ensure hero content is above bubbles if they overlap */
   }
 
+  /* When a hero section exists, hide the bubbles that are its direct sibling */
   .hero-section ~ .bubbles {
     display: none;
   }
