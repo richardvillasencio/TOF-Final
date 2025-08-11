@@ -5,26 +5,12 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import { Bubbles } from '@/components/layout/bubbles';
 
 export const metadata: Metadata = {
   title: 'TubClone - Your Oasis of Relaxation',
   description: 'High-quality hot tubs, swim spas, pools, and more.',
 };
-
-const Bubbles = () => (
-  <div className="bubbles fixed inset-0 -z-10 pointer-events-none">
-    {Array.from({ length: 20 }).map((_, i) => (
-      <div key={i} className="bubble" style={{
-        '--size': `${2 + Math.random() * 4}vw`,
-        '--left-start': `${-10 + Math.random() * 120}vw`,
-        '--left-end': `${-10 + Math.random() * 120}vw`,
-        '--animation-delay': `-${Math.random() * 20}s`,
-        '--animation-duration': `${15 + Math.random() * 15}s`,
-      } as React.CSSProperties}></div>
-    ))}
-  </div>
-);
-
 
 export default function RootLayout({
   children,

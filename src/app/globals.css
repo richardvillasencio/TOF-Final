@@ -112,7 +112,12 @@
     transform-origin: center;
   }
 
-  .hero-section .bubbles {
+  .hero-section {
+    position: relative;
+    z-index: 1; /* Ensure hero content is above bubbles if they overlap */
+  }
+
+  .hero-section ~ .bubbles {
     display: none;
   }
 }
