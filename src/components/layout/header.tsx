@@ -33,7 +33,7 @@ export function Header() {
 
   return (
     <header className="relative bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md overflow-hidden">
-      <div className="header-bubbles absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {mounted && Array.from({ length: 20 }).map((_, i) => (
           <div key={i} className="bubble" style={{
             '--size': `${1 + Math.random() * 3}rem`,
