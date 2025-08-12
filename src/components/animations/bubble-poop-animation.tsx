@@ -117,7 +117,7 @@ export default function BubblePoopAnimation() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
       {/* Animated Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 opacity-20 animate-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 via-cyan-50/0 to-blue-100/0 opacity-20 animate-pulse"></div>
       
       {/* Floating Sparkles */}
       <div className="absolute inset-0">
@@ -150,7 +150,7 @@ export default function BubblePoopAnimation() {
         >
           <div className="relative w-full h-full">
             {/* Main bubble */}
-            <div className="w-full h-full bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 rounded-full shadow-lg opacity-80">
+            <div className="w-full h-full bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 rounded-full shadow-lg opacity-40">
               {/* Shine effect */}
               <div className="absolute top-2 left-2 w-1/3 h-1/3 bg-white opacity-60 rounded-full blur-sm"></div>
             </div>
