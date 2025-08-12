@@ -22,11 +22,6 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-  experimental: {
-    // This allows the Next.js development server to be accessed from the
-    // Firebase Studio preview iframe.
-    appDir: true,
-  },
 };
 
 export default nextConfig;
