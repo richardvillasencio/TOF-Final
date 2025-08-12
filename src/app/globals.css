@@ -100,13 +100,13 @@
     .animate-bubble { animation: none !important; }
   }
 
-  .swim-spa-banner-right {
+  .swim-spa-banner-left {
     background-color: #55b7e2; /* Light blue background */
     overflow: hidden;
   }
 
-  .swim-spa-banner-right::before,
-  .swim-spa-banner-right::after {
+  .swim-spa-banner-left::before,
+  .swim-spa-banner-left::after {
     content: '';
     position: absolute;
     width: 300px;
@@ -116,19 +116,19 @@
     z-index: 0;
   }
 
-  .swim-spa-banner-right::before {
+  .swim-spa-banner-left::before {
     top: -100px;
     left: -100px;
   }
 
-  .swim-spa-banner-right::after {
+  .swim-spa-banner-left::after {
     bottom: -120px;
     right: -80px;
     width: 400px;
     height: 400px;
   }
 
-  .swim-spa-banner-right > * {
+  .swim-spa-banner-left > * {
     position: relative;
     z-index: 1;
   }

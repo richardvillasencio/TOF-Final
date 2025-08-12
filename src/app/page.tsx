@@ -82,12 +82,7 @@ export default function HomePage() {
 
       {/* New Two-Column Section */}
       <section className="grid md:grid-cols-2">
-        <div className="relative h-96">
-            <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
-                <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/SwimPASBanner.mp4?alt=media&token=f8cb1b63-4f70-4347-b9f4-72fbff3eda0d" type="video/mp4" />
-            </video>
-        </div>
-        <div className="swim-spa-banner-right relative flex flex-col justify-center items-center text-center p-8 text-white">
+        <div className="swim-spa-banner-left relative flex flex-col justify-center items-center text-center p-8 text-white">
             <h2 className="text-3xl md:text-4xl font-bold text-shadow-lg">
                 We Don’t Just Sell Swim Spas
                 <br/>— We Master Them!
@@ -95,6 +90,11 @@ export default function HomePage() {
             <p className="mt-4 text-lg md:text-xl text-shadow">
                 Experience the ultimate in aquatic fitness.
             </p>
+        </div>
+        <div className="relative h-96">
+            <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
+                <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/SwimPASBanner.mp4?alt=media&token=f8cb1b63-4f70-4347-b9f4-72fbff3eda0d" type="video/mp4" />
+            </video>
         </div>
       </section>
 
