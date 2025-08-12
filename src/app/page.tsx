@@ -77,6 +77,28 @@ export default function HomePage() {
         </FadeInOnScroll>
       </section>
 
+      {/* Swim Spa Banner Section */}
+       <section className="bg-white">
+        <div className="w-full h-16" style={{ backgroundColor: '#002f5b' }}></div>
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <div className="swim-spa-banner-left relative text-white flex items-center justify-center p-8 text-center min-h-[300px]">
+            <div>
+              <h3 className="text-3xl md:text-4xl font-bold text-shadow-md">We Don’t Just Sell Swim Spas — We Master Them!</h3>
+              <p className="mt-4 text-lg md:text-xl">Experience the ultimate in aquatic fitness.</p>
+            </div>
+          </div>
+          <div className="relative min-h-[300px]">
+            <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover">
+              <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/6792842d0577524957e1c258.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div className="swim-spa-banner-right relative text-white flex flex-col items-center justify-center p-8 text-center min-h-[300px]">
+              <h3 className="text-4xl md:text-5xl font-bold text-shadow-md">Rebuild, Relax, Repeat</h3>
+              <p className="mt-2 text-2xl font-semibold">All in a SWIM SPA</p>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
