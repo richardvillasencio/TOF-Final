@@ -78,7 +78,7 @@ export default function HomePage() {
       </section>
 
       {/* Blue Divider */}
-      <section className="bg-blue-900 py-4"></section>
+      <section className="bg-blue-900 h-[100px]"></section>
       
       {/* Full-width Video Section */}
       <section className="w-full">
