@@ -79,6 +79,24 @@ export default function HomePage() {
 
       {/* Blue Divider */}
       <section className="bg-blue-900 py-4"></section>
+      
+      {/* New Two-Column Section */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
+          <div className="text-center p-8">
+            <h2 className="text-3xl font-bold mb-4">
+              We Don’t Just Sell Swim Spas
+              <br />— We Master Them!
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Experience the ultimate in aquatic fitness.
+            </p>
+          </div>
+          <div>
+            {/* This is the empty right column */}
+          </div>
+        </div>
+      </section>
 
       {/* Services Section */}
       <section className="py-16 bg-muted">
