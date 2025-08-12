@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, MapPin, Star } from 'lucide-react';
+import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://placehold.co/300x200.png', dataAiHint: 'hot tub' },
@@ -42,15 +43,16 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto text-center">
+      <section className="py-16 bg-background relative overflow-hidden">
+        <BubblePoopAnimation />
+        <div className="container mx-auto text-center relative z-10">
           <h2 className="text-3xl font-bold text-primary">
             ABOUT US
           </h2>
           <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
         </div>
 
-        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8">
+        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
             <div className="text-center md:text-left">
                 <p className="uppercase text-primary font-semibold">
                     MEET THE FOUNDER & CEO
