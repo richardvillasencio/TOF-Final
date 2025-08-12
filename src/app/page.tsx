@@ -64,7 +64,7 @@ export default function HomePage() {
                 <Button variant="accent" className="mt-6">See More</Button>
             </div>
             <div>
-                 <Image src="https://placehold.co/600x400.png" alt="Founder Troy" width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
+                 <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
             </div>
         </div>
       </section>
