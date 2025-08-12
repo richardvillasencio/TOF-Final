@@ -22,7 +22,7 @@ export default function HomePage() {
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
         </video>
-        <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/50"></div>
+        <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/70"></div>
         <div className="relative z-20 p-4">
           <h1 className="text-5xl md:text-8xl font-bold text-shadow-lg">
             FAMILY TIME MADE SIMPLE!!!
