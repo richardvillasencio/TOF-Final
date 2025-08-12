@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -76,27 +77,36 @@ export default function HomePage() {
         </FadeInOnScroll>
       </section>
 
-      {/* Services Section */}
-      <section className="py-16 bg-muted relative text-primary-foreground">
+      {/* Video Banner Section */}
+      <section className="relative py-24 text-primary-foreground">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
             <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/SwimPASBanner.mp4?alt=media&token=f8cb1b63-4f70-4347-b9f4-72fbff3eda0d" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <FadeInOnScroll>
           <div className="container mx-auto text-center relative z-20">
-              <h2 className="text-3xl font-bold">Our Services</h2>
+              <h2 className="text-3xl font-bold">A Passion Re-Imagined</h2>
+          </div>
+        </FadeInOnScroll>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-16 bg-muted">
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center">
+              <h2 className="text-3xl font-bold text-primary">Our Services</h2>
               <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                   {services.map((service, index) => (
                     <FadeInOnScroll key={service.name} delay={index * 100}>
                       <div className="group">
-                          <Card className="overflow-hidden bg-background/80 backdrop-blur-sm border-white/20">
+                          <Card className="overflow-hidden bg-background shadow-md">
                               <CardContent className="p-0">
                                   <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint}/>
                               </CardContent>
                           </Card>
-                          <p className="mt-2 font-semibold">{service.name}</p>
+                          <p className="mt-2 font-semibold text-foreground">{service.name}</p>
                       </div>
                     </FadeInOnScroll>
                   ))}
