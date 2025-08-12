@@ -18,7 +18,7 @@ const services = [
 
 export default function HomePage() {
   return (
-    <div className="bg-background text-foreground">
+    <>
       {/* Hero Section */}
       <section className="relative h-[95vh] text-primary-foreground flex items-center justify-center text-center hero-section">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
@@ -145,6 +145,6 @@ export default function HomePage() {
         </FadeInOnScroll>
       </section>
 
-    </div>
+    </>
   );
 }
