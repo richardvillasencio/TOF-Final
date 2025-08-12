@@ -63,8 +63,8 @@ export default function HomePage() {
                 </p>
                 <Button variant="accent" className="mt-6">See More</Button>
             </div>
-            <div>
-                 <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
+            <div className="flex justify-center">
+                 <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={300} height={200} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
             </div>
         </div>
       </section>
