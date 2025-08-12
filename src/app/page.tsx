@@ -80,6 +80,13 @@ export default function HomePage() {
       {/* Blue Divider */}
       <section className="bg-blue-900 py-4"></section>
       
+      {/* Full-width Video Section */}
+      <section className="w-full">
+        <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+            <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Your%20paragraph%20text%20(4).mp4?alt=media&token=48d8e87e-bd79-462c-920d-0cf92071fae2" type="video/mp4" />
+        </video>
+      </section>
+
       {/* Services Section */}
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
