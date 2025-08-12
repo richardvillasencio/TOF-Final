@@ -77,6 +77,9 @@ export default function HomePage() {
         </FadeInOnScroll>
       </section>
 
+      {/* Blue Divider */}
+      <section className="bg-blue-900 py-4"></section>
+
       {/* Services Section */}
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
