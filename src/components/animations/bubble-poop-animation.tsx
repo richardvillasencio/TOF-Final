@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -29,6 +30,7 @@ export default function BubblePoopAnimation() {
   const [bubbles, setBubbles] = useState<any[]>([]);
   const [poops, setPoops] = useState<any[]>([]);
   const [splashes, setSplashes] = useState<any[]>([]);
+  const [sparkles, setSparkles] = useState<any[]>([]);
 
   const createBubble = () => {
     const newBubble = {
@@ -80,6 +82,16 @@ export default function BubblePoopAnimation() {
   };
 
   useEffect(() => {
+    // Generate sparkles on client-side only to prevent hydration mismatch
+    const generatedSparkles = Array.from({ length: 15 }).map((_, i) => ({
+        id: i,
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 2}s`,
+        animationDuration: `${Math.random() * 2 + 1}s`,
+    }));
+    setSparkles(generatedSparkles);
+
     // Create initial bubble
     createBubble();
     
@@ -109,15 +121,15 @@ export default function BubblePoopAnimation() {
       
       {/* Floating Sparkles */}
       <div className="absolute inset-0">
-        {Array.from({ length: 15 }).map((_, i) => (
+        {sparkles.map(sparkle => (
           <div
-            key={i}
+            key={sparkle.id}
             className="absolute w-1 h-1 bg-blue-300 rounded-full animate-ping"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${Math.random() * 2 + 1}s`
+              left: sparkle.left,
+              top: sparkle.top,
+              animationDelay: sparkle.animationDelay,
+              animationDuration: sparkle.animationDuration
             }}
           ></div>
         ))}
