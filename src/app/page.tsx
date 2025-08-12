@@ -83,7 +83,7 @@ export default function HomePage() {
       {/* Swim Spa Master Section */}
        <section className="relative py-24 text-white flex items-center justify-center text-center">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x400.png">
-           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
+           <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/SwimPASBanner.mp4?alt=media&token=f8cb1b63-4f70-4347-b9f4-72fbff3eda0d" type="video/mp4" />
         </video>
         <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/60"></div>
         <div className="relative z-20 p-4">
