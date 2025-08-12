@@ -29,7 +29,7 @@ import { useState } from 'react';
 export function Header() {
   
   return (
-    <header className="bg-gradient-to-r from-[#33BFF3] to-[#F36E0E] text-white shadow-md relative z-30">
+    <header className="bg-gradient-to-r from-[#33BFF3]/80 to-[#F36E0E]/80 text-white shadow-md sticky top-0 z-50 backdrop-blur-lg">
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute left-10 bottom-6 w-14 h-14 rounded-full bg-white/20 blur-sm animate-bubble" style={{animationDuration: '6s', animationDelay: '0s'}}></div>
           <div className="absolute left-32 bottom-10 w-10 h-10 rounded-full bg-white/15 blur-sm animate-bubble" style={{animationDuration: '5s', animationDelay: '1s'}}></div>
