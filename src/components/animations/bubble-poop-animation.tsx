@@ -38,7 +38,7 @@ export default function BubblePoopAnimation() {
       x: Math.random() * 80 + 10, // Random x position (10% to 90%)
       startTime: Date.now(),
       size: Math.random() * 30 + 40, // Random size between 40-70px
-      duration: Math.random() * 3000 + 4000, // 4-7 seconds to reach top
+      duration: Math.random() * 4000 + 8000, // 8-12 seconds to reach top
     };
     
     setBubbles(prev => [...prev, newBubble]);
@@ -98,15 +98,15 @@ export default function BubblePoopAnimation() {
     // Create new bubbles periodically
     const bubbleInterval = setInterval(() => {
       createBubble();
-    }, 2000);
+    }, 4000);
 
     // Random poop events
     const poopInterval = setInterval(() => {
-      if (Math.random() < 0.3) { // 30% chance
+      if (Math.random() < 0.15) { // 15% chance
         const randomX = Math.random() * 80 + 10;
         createPoop(randomX);
       }
-    }, 1500);
+    }, 3000);
 
     return () => {
       clearInterval(bubbleInterval);
