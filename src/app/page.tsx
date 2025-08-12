@@ -82,7 +82,7 @@ export default function HomePage() {
 
       {/* New Two-Column Section */}
       <section className="grid md:grid-cols-2">
-        <div className="swim-spa-banner-left relative flex flex-col justify-center items-center text-center p-8 text-white">
+        <div className="bg-black relative flex flex-col justify-center items-center text-center p-8 text-white">
             <h2 className="text-3xl md:text-4xl font-bold text-shadow-lg">
                 We Don’t Just Sell Swim Spas
                 <br/>— We Master Them!
