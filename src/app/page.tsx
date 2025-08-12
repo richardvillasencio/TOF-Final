@@ -80,6 +80,28 @@ export default function HomePage() {
       {/* Blue Divider */}
       <section className="py-8 bg-[#002f5c]"></section>
 
+      {/* Swim Spa CTA Section */}
+      <section className="bg-background">
+        <div className="mx-auto grid grid-cols-1 md:grid-cols-2">
+            <div className="relative min-h-[400px] md:min-h-[500px]">
+                 <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
+                    <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/6594254a6ea57223d63a817b.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <div className="swim-spa-banner-right relative flex items-center justify-center p-8 text-white min-h-[400px] md:min-h-[500px]">
+                <div className="text-center relative z-10">
+                    <h2 className="text-3xl md:text-4xl font-bold text-shadow-md">
+                        We Don’t Just Sell Swim Spas
+                        <br />— We Master Them!
+                    </h2>
+                    <p className="mt-4 text-lg md:text-xl text-shadow">
+                        Experience the ultimate in aquatic fitness.
+                    </p>
+                </div>
+            </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
