@@ -77,6 +77,9 @@ export default function HomePage() {
         </FadeInOnScroll>
       </section>
 
+      {/* Blue Divider */}
+      <section className="py-8 bg-[#002f5c]"></section>
+
       {/* Video Banner Section */}
       <section className="relative h-96">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
