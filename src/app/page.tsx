@@ -78,16 +78,10 @@ export default function HomePage() {
       </section>
 
       {/* Video Banner Section */}
-      <section className="relative py-24 text-primary-foreground">
+      <section className="relative h-96">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
             <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/SwimPASBanner.mp4?alt=media&token=f8cb1b63-4f70-4347-b9f4-72fbff3eda0d" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/60 z-10"></div>
-        <FadeInOnScroll>
-          <div className="container mx-auto text-center relative z-20">
-              <h2 className="text-3xl font-bold">A Passion Re-Imagined</h2>
-          </div>
-        </FadeInOnScroll>
       </section>
 
       {/* Services Section */}
