@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, MapPin, Star } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
+import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://placehold.co/300x200.png', dataAiHint: 'hot tub' },
@@ -45,89 +46,103 @@ export default function HomePage() {
       {/* About Us Section */}
       <section className="py-16 bg-background relative overflow-hidden">
         <BubblePoopAnimation />
-        <div className="container mx-auto text-center relative z-10">
-          <h2 className="text-3xl font-bold text-primary">
-            ABOUT US
-          </h2>
-          <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
-        </div>
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center relative z-10">
+            <h2 className="text-3xl font-bold text-primary">
+              ABOUT US
+            </h2>
+            <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
+          </div>
+        </FadeInOnScroll>
 
-        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
-            <div className="text-center md:text-left">
-                <p className="uppercase text-primary font-semibold">
-                    MEET THE FOUNDER & CEO
-                </p>
-                <h3 className="text-4xl font-bold text-foreground my-2">
-                    Hi, I'm Troy!
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                    Our business began in 1991, as a hot tub rental company. We grew that company into a hot tub superstore. Our founder and CEO Troy Derheim eventually sold Tubs of Fun! to focus on designing and building swimming pools, splash pads, and specialty aquatic therapy products. Now, by customer request, and a passion re-imagined, we are back! Fully committed to serving the great people of our community with quality products and unmatched service.
-                </p>
-                <Button variant="accent" className="mt-6">See More</Button>
-            </div>
-            <div className="flex justify-center">
-                 <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={300} height={200} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
-            </div>
-        </div>
+        <FadeInOnScroll delay={200}>
+          <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
+              <div className="text-center md:text-left">
+                  <p className="uppercase text-primary font-semibold">
+                      MEET THE FOUNDER & CEO
+                  </p>
+                  <h3 className="text-4xl font-bold text-foreground my-2">
+                      Hi, I'm Troy!
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                      Our business began in 1991, as a hot tub rental company. We grew that company into a hot tub superstore. Our founder and CEO Troy Derheim eventually sold Tubs of Fun! to focus on designing and building swimming pools, splash pads, and specialty aquatic therapy products. Now, by customer request, and a passion re-imagined, we are back! Fully committed to serving the great people of our community with quality products and unmatched service.
+                  </p>
+                  <Button variant="accent" className="mt-6">See More</Button>
+              </div>
+              <div className="flex justify-center">
+                   <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={300} height={200} className="rounded-lg shadow-lg" data-ai-hint="founder portrait" />
+              </div>
+          </div>
+        </FadeInOnScroll>
       </section>
 
       {/* Services Section */}
       <section className="py-16 bg-muted">
-        <div className="container mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary">Our Services</h2>
-            <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center">
+              <h2 className="text-3xl font-bold text-primary">Our Services</h2>
+              <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                {services.map((service) => (
-                    <div key={service.name} className="group">
-                        <Card className="overflow-hidden">
-                            <CardContent className="p-0">
-                                <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint}/>
-                            </CardContent>
-                        </Card>
-                        <p className="mt-2 font-semibold text-foreground">{service.name}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                  {services.map((service, index) => (
+                    <FadeInOnScroll key={service.name} delay={index * 100}>
+                      <div className="group">
+                          <Card className="overflow-hidden">
+                              <CardContent className="p-0">
+                                  <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint}/>
+                              </CardContent>
+                          </Card>
+                          <p className="mt-2 font-semibold text-foreground">{service.name}</p>
+                      </div>
+                    </FadeInOnScroll>
+                  ))}
+              </div>
+          </div>
+        </FadeInOnScroll>
       </section>
 
       {/* Testimonials Section */}
       <section className="py-16 bg-background">
-        <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center">
+              <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
 
-            <div className="mt-8 p-6 border rounded-lg shadow-lg">
-                <div className="flex justify-center text-yellow-400 mb-4">
-                    <Star fill="currentColor"/>
-                    <Star fill="currentColor"/>
-                    <Star fill="currentColor"/>
-                    <Star fill="currentColor"/>
-                    <Star fill="currentColor"/>
-                </div>
-                <p className="italic text-muted-foreground">
-                    "This is a placeholder for the reviews widget. Customer testimonials will be displayed here."
-                </p>
-                <p className="font-bold mt-4 text-foreground">
-                    - A Happy Customer
-                </p>
-            </div>
-        </div>
+              <div className="mt-8 p-6 border rounded-lg shadow-lg">
+                  <div className="flex justify-center text-yellow-400 mb-4">
+                      <Star fill="currentColor"/>
+                      <Star fill="currentColor"/>
+                      <Star fill="currentColor"/>
+                      <Star fill="currentColor"/>
+                      <Star fill="currentColor"/>
+                  </div>
+                  <p className="italic text-muted-foreground">
+                      "This is a placeholder for the reviews widget. Customer testimonials will be displayed here."
+                  </p>
+                  <p className="font-bold mt-4 text-foreground">
+                      - A Happy Customer
+                  </p>
+              </div>
+          </div>
+        </FadeInOnScroll>
       </section>
 
        {/* Gallery Section */}
        <section className="py-16 bg-muted">
-        <div className="container mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary">Gallery</h2>
-             <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-                {Array.from({ length: 9 }).map((_, i) => (
-                    <div key={i} className="overflow-hidden rounded-lg">
-                        <Image src="https://placehold.co/600x400.png" alt={`Gallery image ${i + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={i % 2 === 0 ? 'family hot tub' : 'modern swim spa'} />
-                    </div>
-                ))}
-            </div>
-        </div>
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center">
+              <h2 className="text-3xl font-bold text-primary">Gallery</h2>
+               <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+                  {Array.from({ length: 9 }).map((_, i) => (
+                    <FadeInOnScroll key={i} delay={i * 100}>
+                      <div className="overflow-hidden rounded-lg">
+                          <Image src="https://placehold.co/600x400.png" alt={`Gallery image ${i + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={i % 2 === 0 ? 'family hot tub' : 'modern swim spa'} />
+                      </div>
+                    </FadeInOnScroll>
+                  ))}
+              </div>
+          </div>
+        </FadeInOnScroll>
       </section>
 
     </div>
