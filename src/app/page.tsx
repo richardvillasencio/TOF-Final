@@ -45,7 +45,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-16 bg-gradient-to-br from-muted to-background relative overflow-hidden -mt-10">
+      <section className="py-16 bg-background relative overflow-hidden -mt-10">
         <BubblePoopAnimation />
         <FadeInOnScroll>
           <div className="container mx-auto text-center relative z-10 pt-10">
