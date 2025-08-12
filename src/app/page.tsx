@@ -80,21 +80,20 @@ export default function HomePage() {
       {/* Blue Divider */}
       <section className="bg-blue-900 py-4"></section>
       
-      {/* New Two-Column Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <div className="text-center p-8">
-            <h2 className="text-3xl font-bold mb-4">
-              We Don’t Just Sell Swim Spas
-              <br />— We Master Them!
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Experience the ultimate in aquatic fitness.
-            </p>
-          </div>
-          <div>
-            {/* This is the empty right column */}
-          </div>
+      {/* Swim Spa Master Section */}
+       <section className="relative py-24 text-white flex items-center justify-center text-center">
+        <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x400.png">
+           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/60"></div>
+        <div className="relative z-20 p-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-shadow-lg">
+            We Don’t Just Sell Swim Spas
+            <br />— We Master Them!
+          </h2>
+          <p className="text-xl mt-4 text-shadow">
+            Experience the ultimate in aquatic fitness.
+          </p>
         </div>
       </section>
 
@@ -170,3 +169,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
