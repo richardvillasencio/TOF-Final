@@ -298,6 +298,8 @@ export default function HomePage() {
         </DialogContent>
       </Dialog>
 
+      <section className="bg-blue-900 h-[100px]"></section>
+
       <BookingSection />
     </>
   );
