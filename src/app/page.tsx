@@ -8,13 +8,13 @@ import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
-  { name: 'SAUNAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'sauna interior' },
-  { name: 'POOLS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swimming pool' },
-  { name: 'SWIM SPAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swim spa' },
-  { name: 'GAME ROOM ESSENTIALS', image: 'https://placehold.co/300x200.png', dataAiHint: 'game room' },
-  { name: 'GRILLS', image: 'https://placehold.co/300x200.png', dataAiHint: 'bbq grill' },
-  { name: 'SERVICE', image: 'https://placehold.co/300x200.png', dataAiHint: 'technician tools' },
-  { name: 'REPAIRS', image: 'https://placehold.co/300x200.png', dataAiHint: 'spa repair' },
+  { name: 'SAUNAS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FSaunas.webp?alt=media&token=18a49be9-d120-406c-b6cb-c9790ed08d28', dataAiHint: 'sauna interior' },
+  { name: 'POOLS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FPools.webp?alt=media&token=4349ac39-50a1-424a-a035-77673551f332', dataAiHint: 'swimming pool' },
+  { name: 'SWIM SPAS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FSwimspas.webp?alt=media&token=5478446c-18a7-471a-8283-9799d505e7e0', dataAiHint: 'swim spa' },
+  { name: 'GAME ROOM ESSENTIALS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FGame%20Room%20Essentials.webp?alt=media&token=9825bcfb-4e6f-4d2f-9a7c-6582531d20ec', dataAiHint: 'game room' },
+  { name: 'GRILLS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FGrills.webp?alt=media&token=38a832f0-5847-4e78-831d-2495d038e2d4', dataAiHint: 'bbq grill' },
+  { name: 'SERVICE', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FService.webp?alt=media&token=31c36398-4448-4384-93e4-35324d271542', dataAiHint: 'technician tools' },
+  { name: 'REPAIRS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FRepairs.webp?alt=media&token=49f85496-e178-4cb5-a352-d35d6480b06b', dataAiHint: 'spa repair' },
 ];
 
 export default function HomePage() {
