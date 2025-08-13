@@ -1,10 +1,10 @@
 // src/components/layout/footer.tsx
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { MessageSquare } from 'lucide-react';
-import { TubsOfFunLogo } from '@/components/ui/logo';
 
 
 export function Footer() {
@@ -19,7 +19,7 @@ export function Footer() {
             {/* Logo and About Section */}
             <div className="md:col-span-5 space-y-4">
               <Link href="/">
-                  <TubsOfFunLogo className="w-48" />
+                  <Image src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/67f93f9a71384b7dddafb553.png" alt="Tubs of Fun Logo" width={200} height={50} className="object-contain" />
               </Link>
               <p className="text-sm max-w-md">
                 Tubs of Fun! is a home and backyard leisure dealership committed to serving the residents of FARGO and SURROUNDING AREAS with quality products and services. We specialize in high-quality hot tubs, swim spas, above and in-ground swimming pool installations, saunas, and game room essentials.
