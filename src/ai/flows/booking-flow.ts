@@ -8,6 +8,7 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
 
 const CreateBookingInputSchema = z.object({
@@ -49,7 +50,29 @@ const createBookingFlow = ai.defineFlow(
       };
     }
     
-    // TODO: Integrate with Firestore to save the appointment.
+    // Save the appointment to Firestore
+    if (adminDb) {
+        try {
+            const appointmentRef = adminDb.collection('appointments').doc();
+            await appointmentRef.set({
+                ...input,
+                status: 'pending', // We'll update this after real calendar confirmation
+                createdAt: new Date().toISOString(),
+            });
+        } catch (error) {
+            console.error('Error saving appointment to Firestore:', error);
+            return {
+                success: false,
+                message: 'There was an error saving your appointment. Please try again.',
+            }
+        }
+    } else {
+         return {
+            success: false,
+            message: 'Database connection not available. Please try again later.',
+        }
+    }
+    
     // TODO: Integrate with Gmail and Google Calendar to send notifications and create events.
     
     return {

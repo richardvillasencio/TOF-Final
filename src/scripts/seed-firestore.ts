@@ -14,7 +14,7 @@ import type { PageSection as GenericPageSection } from '../lib/content-loader';
 // A map of page slugs to their content arrays.
 const pagesToSeed: Record<string, GenericPageSection[]> = {
   'design-studio': designStudioContent,
-  'home': homeContent,
+  // 'home' is no longer needed as it's static
   'about': aboutContent,
   'contact': contactContent,
   'hot-tubs': hotTubsContent,
