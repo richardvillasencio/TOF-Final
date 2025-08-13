@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Phone, MapPin, Star, BrainCircuit } from 'lucide-react';
+import { Phone, MapPin, Star, BrainCircuit, ShieldCheck } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
@@ -146,6 +146,39 @@ export default function HomePage() {
           </div>
         </FadeInOnScroll>
       </section>
+
+      {/* Veteran-Owned Section */}
+      <section className="py-16 bg-muted">
+        <FadeInOnScroll>
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <Image 
+                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101" 
+                  alt="Veteran owned business" 
+                  width={600} 
+                  height={450} 
+                  className="rounded-lg shadow-lg"
+                  data-ai-hint="soldier saluting flag"
+                />
+              </div>
+              <div className="text-left">
+                <p className="uppercase text-primary font-semibold flex items-center gap-2">
+                  <ShieldCheck />
+                  Proudly Veteran-Owned
+                </p>
+                <h3 className="text-3xl font-bold text-foreground my-2">
+                  Built on Service and Integrity
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  As a veteran-owned business, we bring the values of dedication, honor, and commitment to everything we do. We are proud to serve our community with the same integrity and excellence we learned while serving our country. Thank you for supporting a business that supports our veterans.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeInOnScroll>
+      </section>
+
        <section className="bg-blue-900 h-[100px]"></section>
 
       {/* Testimonials Section */}
