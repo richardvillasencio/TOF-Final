@@ -136,7 +136,7 @@ export default function HomePage() {
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="overflow-hidden rounded-lg shadow-md">
-                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubsbanner.jpeg?alt=media&token=c06a9d70-c113-4b68-b78f-6b2257d0f94f" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmp_0kn46w_.webp?alt=media&token=cd2a2b8b-e409-4f78-bd20-3b523f1ccd06" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
                     </div>
                      <div className="overflow-hidden rounded-lg shadow-md">
                         <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubsbanner.jpeg?alt=media&token=c06a9d70-c113-4b68-b78f-6b2257d0f94f" alt="In-stock hot tub 2" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="luxury spa interior" />
