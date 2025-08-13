@@ -154,14 +154,14 @@ export default function HomePage() {
           style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
         >
           <div className="absolute inset-0 bg-black/60"></div>
-          <div className="container mx-auto relative z-10 text-center">
+          <div className="container mx-auto relative z-10 text-right">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">We're committed to serve you!</h2>
             <Image
                 src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/veteran.svg?alt=media&token=814412af-0346-46ad-b5e5-317421da2a8a"
                 alt="Service Disabled Veteran Owned Small Business Logo"
                 width={150}
                 height={150}
-                className="mx-auto mb-4"
+                className="ml-auto mb-4"
                 data-ai-hint="veteran owned business logo"
             />
             <p className="font-semibold">Licensed & Insured</p>
