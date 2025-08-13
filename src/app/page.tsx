@@ -150,25 +150,27 @@ export default function HomePage() {
       {/* Veteran-Owned Section */}
       <FadeInOnScroll>
         <section 
-          className="relative bg-cover bg-center py-20 text-foreground"
-          style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
+          className="relative bg-cover bg-center py-20 bg-[#F8F6F2] text-foreground"
         >
-          <div className="container mx-auto relative z-10 text-right">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span>We're committed to</span><br/>
-                <span>serve you!</span>
-            </h2>
-            <Image
-                src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/veteran.svg?alt=media&token=814412af-0346-46ad-b5e5-317421da2a8a"
-                alt="Service Disabled Veteran Owned Small Business Logo"
-                width={150}
-                height={150}
-                className="ml-auto mb-4"
-                data-ai-hint="veteran owned business logo"
-            />
-            <p className="font-semibold">Licensed & Insured</p>
-            <p className="font-semibold">Military & Senior Discounts</p>
-          </div>
+         <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div></div>
+            <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    <span>We're committed to</span><br/>
+                    <span>serve you!</span>
+                </h2>
+                <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/veteran.svg?alt=media&token=814412af-0346-46ad-b5e5-317421da2a8a"
+                    alt="Service Disabled Veteran Owned Small Business Logo"
+                    width={150}
+                    height={150}
+                    className="mx-auto mb-4"
+                    data-ai-hint="veteran owned business logo"
+                />
+                <p className="font-semibold">Licensed & Insured</p>
+                <p className="font-semibold">Military & Senior Discounts</p>
+            </div>
+         </div>
         </section>
       </FadeInOnScroll>
 
