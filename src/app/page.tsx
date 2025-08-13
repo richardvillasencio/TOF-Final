@@ -8,7 +8,7 @@ import { Phone, MapPin, Star, BrainCircuit, ShieldCheck } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
@@ -244,6 +244,9 @@ export default function HomePage() {
                       </div>
                     </DialogTrigger>
                     <DialogContent className="max-w-3xl p-0">
+                       <DialogHeader className="sr-only">
+                        <DialogTitle>Enlarged Gallery Image {i + 1}</DialogTitle>
+                      </DialogHeader>
                       <Image
                         src={image.url}
                         alt={`Gallery image ${i + 1}`}
