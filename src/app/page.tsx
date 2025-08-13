@@ -17,6 +17,19 @@ const services = [
   { name: 'REPAIRS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FRepairs.webp?alt=media&token=49f85496-e178-4cb5-a352-d35d6480b06b', dataAiHint: 'spa repair' },
 ];
 
+const galleryImages = [
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941199a50269229e64e5c.webp?alt=media&token=7c13a261-2673-455b-b9d2-97203b879c54', hint: 'luxury hot tub' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f94116e3952d7c5a2c2b64.webp?alt=media&token=3911c75c-7bad-406e-8260-8472f8832a89', hint: 'outdoor spa' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941151a61a6b0bd56e355.webp?alt=media&token=26a282f6-3c8c-4a34-a218-c5b525286576', hint: 'modern backyard' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941121d51a13437e2837f.webp?alt=media&token=64e9a68a-a9e9-44d5-9477-ed155375752c', hint: 'patio furniture' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9410f135b9102c91a039b.webp?alt=media&token=96a1a4c4-e69e-4c53-90d5-24d1a038c353', hint: 'sauna interior' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9410e39665e779a96f13b.webp?alt=media&token=72de135d-20d0-405f-9781-85e3532c2538', hint: 'swim spa' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f94108873d61109033a388.webp?alt=media&token=404e76a6-e343-4f90-a292-6d24e16d48ac', hint: 'family fun' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f940a5a54e389b33a59d68.webp?alt=media&token=a3e2a91e-36c1-4b13-a441-2a6d4e5f0d86', hint: 'backyard oasis' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9408e7518e24485558482.webp?alt=media&token=76e9a315-d91d-4008-967a-1f8d4862b5d0', hint: 'night ambiance' },
+];
+
+
 export default function HomePage() {
   return (
     <>
@@ -209,10 +222,10 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold text-primary">Gallery</h2>
                <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-                  {Array.from({ length: 9 }).map((_, i) => (
+                  {galleryImages.map((image, i) => (
                     <FadeInOnScroll key={i} delay={i * 100}>
                       <div className="overflow-hidden rounded-lg">
-                          <Image src="https://placehold.co/600x400.png" alt={`Gallery image ${i + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={i % 2 === 0 ? 'family hot tub' : 'modern swim spa'} />
+                          <Image src={image.url} alt={`Gallery image ${i + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={image.hint} />
                       </div>
                     </FadeInOnScroll>
                   ))}
