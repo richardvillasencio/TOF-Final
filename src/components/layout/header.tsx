@@ -76,8 +76,8 @@ export function Header() {
               <Image
                   src={headerContent.logoImageUrl}
                   alt="Company Logo"
-                  width={150}
-                  height={38}
+                  width={200}
+                  height={51}
                   className="object-contain"
                   priority
               />
