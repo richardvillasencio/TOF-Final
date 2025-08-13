@@ -153,7 +153,6 @@ export default function HomePage() {
           className="relative bg-cover bg-center py-20 text-white"
           style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
         >
-          <div className="absolute inset-0 bg-black/60"></div>
           <div className="container mx-auto relative z-10 text-right">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">We're committed to serve you!</h2>
             <Image
