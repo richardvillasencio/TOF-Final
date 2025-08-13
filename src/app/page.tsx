@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Phone, MapPin, Star } from 'lucide-react';
+import { Phone, MapPin, Star, BrainCircuit } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
@@ -115,9 +115,37 @@ export default function HomePage() {
           </div>
         </FadeInOnScroll>
       </section>
-
-      {/* Blue Divider */}
+      
       <section className="bg-blue-900 h-[100px]"></section>
+
+      {/* Lakeville Location Section */}
+      <section className="py-16 bg-background">
+        <FadeInOnScroll>
+          <div className="container mx-auto text-center px-4">
+            <h2 className="text-3xl font-bold text-primary">Check our Lakeville Location</h2>
+            <p className="text-lg text-muted-foreground mt-2">
+              Now open in Lakeville, MN—experience our full showroom and service team!
+            </p>
+            <div className="max-w-4xl mx-auto mt-8 p-8 bg-muted rounded-2xl shadow-lg">
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <BrainCircuit className="w-8 h-8 text-primary" />
+                  <h3 className="text-2xl font-bold text-foreground">In-Stock Hot Tubs</h3>
+                </div>
+                <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
+                    Looking for a new hot tub? We offer a selection of high-quality, in-stock hot tubs ready for immediate delivery. Each hot tub combines comfort, style, and durability, featuring powerful jets and energy-efficient designs for a luxurious soaking experience. Our in-stock options allow you to skip the wait and enjoy the relaxation of a hot tub in no time.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="overflow-hidden rounded-lg shadow-md">
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubsbanner.jpeg?alt=media&token=c06a9d70-c113-4b68-b78f-6b2257d0f94f" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
+                    </div>
+                     <div className="overflow-hidden rounded-lg shadow-md">
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubsbanner.jpeg?alt=media&token=c06a9d70-c113-4b68-b78f-6b2257d0f94f" alt="In-stock hot tub 2" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="luxury spa interior" />
+                    </div>
+                </div>
+            </div>
+          </div>
+        </FadeInOnScroll>
+      </section>
 
       {/* Testimonials Section */}
       <section className="py-16 bg-background">
