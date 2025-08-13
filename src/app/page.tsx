@@ -139,13 +139,14 @@ export default function HomePage() {
                         <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmp_0kn46w_.webp?alt=media&token=cd2a2b8b-e409-4f78-bd20-3b523f1ccd06" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
                     </div>
                      <div className="overflow-hidden rounded-lg shadow-md">
-                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubsbanner.jpeg?alt=media&token=c06a9d70-c113-4b68-b78f-6b2257d0f94f" alt="In-stock hot tub 2" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="luxury spa interior" />
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpr6hjnug1.webp?alt=media&token=d4e9600c-c1c1-4e5f-8179-ba94f87f87f4" alt="In-stock hot tub 2" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="luxury spa interior" />
                     </div>
                 </div>
             </div>
           </div>
         </FadeInOnScroll>
       </section>
+       <section className="bg-blue-900 h-[100px]"></section>
 
       {/* Testimonials Section */}
       <section className="py-16 bg-background">
