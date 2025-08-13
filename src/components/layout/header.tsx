@@ -44,8 +44,8 @@ export function Header() {
       {/* Top Bar */}
       <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-            <div className="flex items-center gap-4">
-                 <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={80} height={80} />
+            <div className="flex items-center gap-2 md:gap-4">
+                 <Image src={headerContent.veteranOwnedLogoUrl} alt="Veteran Owned Business" width={60} height={60} className="w-12 h-12 md:w-20 md:h-20" />
                  <div className='flex flex-col'>
                     <div className="flex items-center gap-2">
                         <Phone size={16} />
@@ -63,8 +63,9 @@ export function Header() {
                     <Image src={headerContent.mascotImageUrl} alt="Special Offer" width={40} height={40} />
                 </Link>
             </div>
-             <div className="lg:hidden">
+             <div className="flex items-center gap-2 lg:hidden">
                 <ThemeToggle />
+                <MobileNav topNavLinks={headerContent.topNavLinks || []} mainNavLinks={headerContent.mainNavLinks || []} />
             </div>
         </div>
       </div>
@@ -75,9 +76,9 @@ export function Header() {
               <Image
                   src={headerContent.logoImageUrl}
                   alt="Company Logo"
-                  width={250}
-                  height={50}
-                  className="object-contain"
+                  width={200}
+                  height={40}
+                  className="object-contain h-10 w-auto"
                   priority
               />
           </Link>
@@ -87,7 +88,7 @@ export function Header() {
           </div>
 
           <div className="lg:hidden flex items-center gap-2">
-            <MobileNav topNavLinks={headerContent.topNavLinks || []} mainNavLinks={headerContent.mainNavLinks || []} />
+            {/* Mobile nav trigger is now in the top bar */}
           </div>
       </div>
     </header>
@@ -161,7 +162,7 @@ const DesktopNav = ({ links, isMain }: { links: NavLink[], isMain?: boolean }) =
 
 const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], mainNavLinks: NavLink[]}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const allNavLinks = [...topNavLinks, ...mainNavLinks.filter((l) => l.href !== '/')];
+  const allNavLinks = [...mainNavLinks, ...topNavLinks.filter((l) => l.href !== '/')];
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -172,7 +173,16 @@ const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], main
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
-        <div className="p-4 border-b">
+        <div className="p-4 border-b flex justify-between items-center">
+           <Link href="/" onClick={() => setIsOpen(false)}>
+              <Image
+                  src={headerContent.logoImageUrl}
+                  alt="Company Logo"
+                  width={150}
+                  height={30}
+                  className="object-contain"
+              />
+          </Link>
           <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
             <X className="h-6 w-6" />
             <span className="sr-only">Close menu</span>

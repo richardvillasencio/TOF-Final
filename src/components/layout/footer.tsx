@@ -1,3 +1,4 @@
+
 // src/components/layout/footer.tsx
 'use client';
 
@@ -26,22 +27,22 @@ export function Footer() {
     <footer>
       <div className="bg-muted text-muted-foreground">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* About Section */}
-            <div className="space-y-4">
+            <div className="space-y-4 lg:col-span-1">
               <Link href="/">
                 <Image
                       src={headerContent.logoImageUrl}
                       alt="Company Logo"
-                      width={250}
-                      height={50}
+                      width={200}
+                      height={40}
                       className="object-contain"
                   />
               </Link>
               <p className="text-sm">
                 Your premier destination for relaxation and recreation. We offer top-quality hot tubs, swim spas, and more to enhance your lifestyle.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 pt-2">
                 {socialLinks.map((social) => (
                   <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                     <social.icon className="w-6 h-6" />
@@ -85,13 +86,13 @@ export function Footer() {
             <div className="space-y-4">
               <h3 className="font-bold text-lg text-foreground">Stay Updated</h3>
               <p className="text-sm">Subscribe to our newsletter for the latest deals and news.</p>
-              <form className="flex gap-2">
-                <Input type="email" placeholder="Enter your email" className="bg-background" />
-                <Button type="submit" variant="accent">Subscribe</Button>
+              <form className="flex flex-col sm:flex-row gap-2">
+                <Input type="email" placeholder="Enter your email" className="bg-background flex-grow" />
+                <Button type="submit" variant="accent" className="w-full sm:w-auto">Subscribe</Button>
               </form>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t text-center text-sm">
+          <div className="mt-12 pt-8 border-t text-center text-sm">
             <p>&copy; {new Date().getFullYear()} TubClone. All Rights Reserved. A Fictional Website.</p>
           </div>
         </div>

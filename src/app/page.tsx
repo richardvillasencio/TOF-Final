@@ -27,13 +27,13 @@ export default function HomePage() {
         </video>
         <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/70"></div>
         <div className="relative z-20 p-4">
-          <h1 className="text-5xl md:text-8xl font-bold text-shadow-lg">
+          <h1 className="text-4xl md:text-8xl font-bold text-shadow-lg">
             FAMILY TIME MADE SIMPLE!!!
           </h1>
-          <p className="text-xl md:text-2xl mt-4 text-shadow">
+          <p className="text-lg md:text-2xl mt-4 text-shadow">
             Let us help you transform your space into something special
           </p>
-          <p className="text-lg md:text-xl mt-2 text-shadow">
+          <p className="text-base md:text-xl mt-2 text-shadow">
             Our friendly and knowledgeable staff are here to show you our amazing Hot tubs, Swim spas, Pools, Saunas, and more!
           </p>
         </div>
@@ -58,7 +58,7 @@ export default function HomePage() {
 
         <FadeInOnScroll delay={200}>
           <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
-              <div className="text-left pl-8">
+              <div className="text-left md:pl-8 px-4">
                   <p className="uppercase text-primary font-semibold">
                       MEET THE FOUNDER & CEO
                   </p>
@@ -72,7 +72,7 @@ export default function HomePage() {
                     <Button variant="accent">See More</Button>
                   </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center px-4">
                    <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={400} height={500} className="rounded-lg shadow-lg object-cover" data-ai-hint="founder portrait" />
               </div>
           </div>
@@ -92,7 +92,7 @@ export default function HomePage() {
       {/* Services Section */}
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
-          <div className="container mx-auto text-center">
+          <div className="container mx-auto text-center px-4">
               <h2 className="text-3xl font-bold text-primary">Our Services</h2>
               <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
 
@@ -117,7 +117,7 @@ export default function HomePage() {
       {/* Testimonials Section */}
       <section className="py-16 bg-background">
         <FadeInOnScroll>
-          <div className="container mx-auto text-center">
+          <div className="container mx-auto text-center px-4">
               <h2 className="text-4xl font-bold text-primary">What they say about us...</h2>
 
               <div className="mt-8 p-6 border rounded-lg shadow-lg">
@@ -142,7 +142,7 @@ export default function HomePage() {
        {/* Gallery Section */}
        <section className="py-16 bg-muted">
         <FadeInOnScroll>
-          <div className="container mx-auto text-center">
+          <div className="container mx-auto text-center px-4">
               <h2 className="text-3xl font-bold text-primary">Gallery</h2>
                <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
