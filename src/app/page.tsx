@@ -154,8 +154,8 @@ export default function HomePage() {
           style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
         >
           <div className="container mx-auto relative z-10 text-right">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 flex flex-col items-end">
-                <span>We're committed to</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span>We're committed to</span><br/>
                 <span>serve you!</span>
             </h2>
             <Image
