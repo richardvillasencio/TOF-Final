@@ -7,7 +7,7 @@ import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const services = [
-  { name: 'HOT TUBS', image: 'https://placehold.co/300x200.png', dataAiHint: 'hot tub' },
+  { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
   { name: 'SAUNAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'sauna interior' },
   { name: 'POOLS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swimming pool' },
   { name: 'SWIM SPAS', image: 'https://placehold.co/300x200.png', dataAiHint: 'swim spa' },
