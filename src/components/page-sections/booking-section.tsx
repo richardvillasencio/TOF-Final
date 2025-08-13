@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, MapPin, User, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 export function BookingSection() {
   const [selectedDate, setSelectedDate] = useState(new Date(2025, 7, 14)); // August 14, 2025
@@ -220,12 +221,12 @@ export function BookingSection() {
               </div>
 
               {/* Book Button */}
-              <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] group shadow-lg">
+              <Link href="/booking" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] group shadow-lg inline-block text-center">
                 <span className="flex items-center justify-center gap-2">
                   <Sparkles className="w-5 h-5 group-hover:animate-spin transition-transform" />
                   Book Your Experience
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
