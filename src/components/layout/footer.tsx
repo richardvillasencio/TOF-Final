@@ -5,14 +5,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { MessageSquare } from 'lucide-react';
+import { Bubbles } from './bubbles';
 
 
 export function Footer() {
 
   return (
-    <footer className="relative">
+    <footer className="relative bg-gradient-to-r from-[#33BFF3]/80 to-[#F36E0E]/80 text-white overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none z-0">
+            <Bubbles />
+        </div>
       {/* Main Footer Content */}
-      <div className="bg-gradient-to-r from-gray-400/30 to-orange-300/40 text-white">
+      <div className="relative z-10">
         <div className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             
@@ -60,14 +64,14 @@ export function Footer() {
       <Button
         variant="default"
         size="icon"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 z-20"
       >
         <MessageSquare className="h-7 w-7" />
         <span className="sr-only">Chat</span>
       </Button>
 
       {/* Copyright Bar */}
-      <div className="bg-gray-800 text-gray-400 py-3">
+      <div className="bg-gray-800 text-gray-400 py-3 relative z-10">
         <div className="container mx-auto px-4 text-center text-xs">
           <p>&copy; {new Date().getFullYear()} TubClone. All Rights Reserved. A Fictional Website.</p>
         </div>
