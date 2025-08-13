@@ -58,7 +58,7 @@ export default function HomePage() {
 
         <FadeInOnScroll delay={200}>
           <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
-              <div className="text-left">
+              <div className="text-left pl-8">
                   <p className="uppercase text-primary font-semibold">
                       MEET THE FOUNDER & CEO
                   </p>
