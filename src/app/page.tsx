@@ -13,7 +13,7 @@ const services = [
   { name: 'SWIM SPAS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2Fswimspas.webp?alt=media&token=0ffadadc-9af2-4225-a141-8b754e8a1518', dataAiHint: 'swim spa' },
   { name: 'GAME ROOM ESSENTIALS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FGameroomEssentials.webp?alt=media&token=85b79a59-f590-432f-b3c3-79ce102d41a2', dataAiHint: 'game room' },
   { name: 'GRILLS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FGrills.webp?alt=media&token=38a832f0-5847-4e78-831d-2495d038e2d4', dataAiHint: 'bbq grill' },
-  { name: 'SERVICE', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FService.webp?alt=media&token=31c36398-4448-4384-93e4-35324d271542', dataAiHint: 'technician tools' },
+  { name: 'SERVICE', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FServices.webp?alt=media&token=f3ba459f-ae99-48ec-9219-cea429b0a697', dataAiHint: 'technician tools' },
   { name: 'REPAIRS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FRepairs.webp?alt=media&token=49f85496-e178-4cb5-a352-d35d6480b06b', dataAiHint: 'spa repair' },
 ];
 
