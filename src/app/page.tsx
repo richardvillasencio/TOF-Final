@@ -153,8 +153,8 @@ export default function HomePage() {
           className="relative bg-cover bg-center py-20 text-foreground"
           style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
         >
-         <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
-            <div></div>
+         <div className="container mx-auto grid md:grid-cols-3 gap-8 items-center relative z-10">
+            <div className="md:col-span-2"></div>
             <div className="text-center">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
                     <span>We're committed to</span><br/>
