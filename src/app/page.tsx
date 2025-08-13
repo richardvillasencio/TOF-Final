@@ -68,7 +68,9 @@ export default function HomePage() {
                   <p className="text-muted-foreground leading-relaxed">
                       Our business began in 1991, as a hot tub rental company. We grew that company into a hot tub superstore. Our founder and CEO Troy Derheim eventually sold Tubs of Fun! to focus on designing and building swimming pools, splash pads, and and specialty aquatic therapy products. Now, by customer request, and a passion re-imagined, we are back! Fully committed to serving the great people of our community with quality products and unmatched service.
                   </p>
-                  <Button variant="accent" className="mt-6">See More</Button>
+                  <div className="text-center mt-6">
+                    <Button variant="accent">See More</Button>
+                  </div>
               </div>
               <div className="flex justify-center">
                    <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" alt="Founder Troy" width={400} height={500} className="rounded-lg shadow-lg object-cover" data-ai-hint="founder portrait" />
