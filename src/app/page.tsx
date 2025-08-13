@@ -152,15 +152,7 @@ export default function HomePage() {
         <section className="bg-background">
             <div className="container mx-auto">
                 <div className="grid md:grid-cols-2 items-center">
-                    <div className="relative w-full h-full min-h-[400px]">
-                        <Image 
-                            src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101"
-                            alt="Soldier saluting American flag"
-                            fill
-                            className="object-cover"
-                            data-ai-hint="soldier saluting flag"
-                        />
-                    </div>
+                    <div></div>
                     <div className="bg-[#FFFDF6] p-8 md:p-16 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">We're committed to serve you!</h2>
                         <Image
