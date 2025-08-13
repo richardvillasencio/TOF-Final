@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-screen text-primary-foreground flex items-center justify-center text-center hero-section">
+      <section className="relative h-[95vh] text-primary-foreground flex items-center justify-center text-center hero-section">
         <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
         </video>
@@ -102,7 +102,9 @@ export default function HomePage() {
                       <div className="group">
                           <Card className="overflow-hidden bg-background shadow-md">
                               <CardContent className="p-0">
-                                  <Image src={service.image} alt={service.name} width={300} height={200} className="w-full h-auto object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint}/>
+                                  <div className="aspect-w-4 aspect-h-3">
+                                    <Image src={service.image} alt={service.name} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform" data-ai-hint={service.dataAiHint}/>
+                                  </div>
                               </CardContent>
                           </Card>
                           <p className="mt-2 font-semibold text-foreground">{service.name}</p>

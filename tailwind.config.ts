@@ -103,6 +103,7 @@ export default {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('@tailwindcss/aspect-ratio'),
     function ({ addUtilities }: { addUtilities: any }) {
       const newUtilities = {
         '.text-shadow': {
