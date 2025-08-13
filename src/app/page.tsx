@@ -83,7 +83,7 @@ export default function HomePage() {
       <section className="bg-blue-900 h-[100px]"></section>
       
       {/* Full-width Video Section */}
-      <section className="w-full">
+      <section className="w-full h-[800px] flex">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover">
             <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Swimspasbanner.mp4?alt=media&token=2e0447bd-2d4b-4aee-9640-e4edbb38e4fd" type="video/mp4" />
         </video>
