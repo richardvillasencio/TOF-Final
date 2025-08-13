@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle } from 'lucide-react';
+import { createBooking } from '@/ai/flows/booking-flow';
 
 export default function BookingPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
@@ -35,29 +36,30 @@ export default function BookingPage() {
     setError(null);
     setIsSuccess(false);
 
-    // This is where we will call our Firebase Function in the next step.
-    // For now, we'll simulate the process.
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate a "not available" response for a specific day (e.g., all Tuesdays)
-      if (selectedDate.getDay() === 2) {
-        throw new Error('Sorry, that date is unavailable. Please choose another date.');
-      }
-
-      // If successful:
-      setIsSuccess(true);
-      toast({
-        title: 'Booking Request Sent!',
-        description: "We've received your request and will confirm via email shortly.",
+      const result = await createBooking({
+        name,
+        email,
+        phone,
+        selectedDate: selectedDate.toISOString(),
       });
 
+      if (result.success) {
+        setIsSuccess(true);
+        toast({
+          title: 'Booking Request Sent!',
+          description: result.message,
+        });
+      } else {
+        throw new Error(result.message);
+      }
+
     } catch (err: any) {
-        setError(err.message);
+        const errorMessage = err.message || 'An unexpected error occurred.';
+        setError(errorMessage);
         toast({
             title: 'Booking Failed',
-            description: err.message || 'An unexpected error occurred.',
+            description: errorMessage,
             variant: 'destructive',
         });
     } finally {
