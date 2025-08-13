@@ -9,6 +9,7 @@ import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { BookingSection } from '@/components/page-sections/booking-section';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
@@ -296,6 +297,8 @@ export default function HomePage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <BookingSection />
     </>
   );
 }
