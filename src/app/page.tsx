@@ -1,10 +1,14 @@
 
+'use client';
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, MapPin, Star, BrainCircuit, ShieldCheck } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
@@ -31,6 +35,8 @@ const galleryImages = [
 
 
 export default function HomePage() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
   return (
     <>
       {/* Hero Section */}
@@ -219,21 +225,40 @@ export default function HomePage() {
        <section className="py-16 bg-muted">
         <FadeInOnScroll>
           <div className="container mx-auto text-center px-4">
-              <h2 className="text-3xl font-bold text-primary">Gallery</h2>
-               <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-                  {galleryImages.map((image, i) => (
-                    <FadeInOnScroll key={i} delay={i * 100}>
-                      <div className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
-                          <Image src={image.url} alt={`Gallery image ${i + 1}`} width={600} height={600} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={image.hint} />
+            <h2 className="text-3xl font-bold text-primary">Gallery</h2>
+            <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+              {galleryImages.map((image, i) => (
+                <FadeInOnScroll key={i} delay={i * 100}>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="overflow-hidden rounded-lg aspect-square cursor-pointer">
+                        <Image
+                          src={image.url}
+                          alt={`Gallery image ${i + 1}`}
+                          width={600}
+                          height={600}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform"
+                          data-ai-hint={image.hint}
+                        />
                       </div>
-                    </FadeInOnScroll>
-                  ))}
-              </div>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-3xl p-0">
+                      <Image
+                        src={image.url}
+                        alt={`Gallery image ${i + 1}`}
+                        width={1200}
+                        height={800}
+                        className="w-full h-full object-contain rounded-lg"
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </FadeInOnScroll>
+              ))}
+            </div>
           </div>
         </FadeInOnScroll>
       </section>
-
     </>
   );
 }
