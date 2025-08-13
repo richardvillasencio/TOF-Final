@@ -18,15 +18,15 @@ const services = [
 ];
 
 const galleryImages = [
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941199a50269229e64e5c.webp?alt=media&token=7c13a261-2673-455b-b9d2-97203b879c54', hint: 'luxury hot tub' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f94116e3952d7c5a2c2b64.webp?alt=media&token=3911c75c-7bad-406e-8260-8472f8832a89', hint: 'outdoor spa' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941151a61a6b0bd56e355.webp?alt=media&token=26a282f6-3c8c-4a34-a218-c5b525286576', hint: 'modern backyard' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f941121d51a13437e2837f.webp?alt=media&token=64e9a68a-a9e9-44d5-9477-ed155375752c', hint: 'patio furniture' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9410f135b9102c91a039b.webp?alt=media&token=96a1a4c4-e69e-4c53-90d5-24d1a038c353', hint: 'sauna interior' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9410e39665e779a96f13b.webp?alt=media&token=72de135d-20d0-405f-9781-85e3532c2538', hint: 'swim spa' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f94108873d61109033a388.webp?alt=media&token=404e76a6-e343-4f90-a292-6d24e16d48ac', hint: 'family fun' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f940a5a54e389b33a59d68.webp?alt=media&token=a3e2a91e-36c1-4b13-a441-2a6d4e5f0d86', hint: 'backyard oasis' },
-    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2F67f9408e7518e24485558482.webp?alt=media&token=76e9a315-d91d-4008-967a-1f8d4862b5d0', hint: 'night ambiance' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmp1th8eydt.webp?alt=media', hint: 'luxury hot tub' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmp5p3u3289.webp?alt=media', hint: 'outdoor spa' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmp69jqwjvg.webp?alt=media', hint: 'modern backyard' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmp8yos2_u2.webp?alt=media', hint: 'patio furniture' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmp_aiw6b2t.webp?alt=media', hint: 'sauna interior' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmpfpg1t81n.webp?alt=media', hint: 'swim spa' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmpp4ovjmxg.webp?alt=media', hint: 'family fun' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmppr74nfqm.webp?alt=media', hint: 'backyard oasis' },
+    { url: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Ftmpy9gzrogz.webp?alt=media', hint: 'night ambiance' },
 ];
 
 
