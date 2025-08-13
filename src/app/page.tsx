@@ -136,7 +136,7 @@ export default function HomePage() {
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="overflow-hidden rounded-lg shadow-md">
-                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmp_0kn46w_.webp?alt=media&token=cd2a2b8b-e409-4f78-bd20-3b523f1ccd06" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
+                        <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/instockhottubanner.webp?alt=media&token=e733088a-3642-4f35-9c9e-64a06d8de96c" alt="In-stock hot tub 1" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="in-stock hot tub" />
                     </div>
                      <div className="overflow-hidden rounded-lg shadow-md">
                         <Image src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpr6hjnug1.webp?alt=media&token=d4e9600c-c1c1-4e5f-8179-ba94f87f87f4" alt="In-stock hot tub 2" width={600} height={500} className="w-full h-full object-cover" data-ai-hint="luxury spa interior" />
@@ -148,36 +148,36 @@ export default function HomePage() {
       </section>
 
       {/* Veteran-Owned Section */}
-      <section className="py-16 bg-muted">
-        <FadeInOnScroll>
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <Image 
-                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101" 
-                  alt="Veteran owned business" 
-                  width={600} 
-                  height={450} 
-                  className="rounded-lg shadow-lg"
-                  data-ai-hint="soldier saluting flag"
-                />
-              </div>
-              <div className="text-left">
-                <p className="uppercase text-primary font-semibold flex items-center gap-2">
-                  <ShieldCheck />
-                  Proudly Veteran-Owned
-                </p>
-                <h3 className="text-3xl font-bold text-foreground my-2">
-                  Built on Service and Integrity
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  As a veteran-owned business, we bring the values of dedication, honor, and commitment to everything we do. We are proud to serve our community with the same integrity and excellence we learned while serving our country. Thank you for supporting a business that supports our veterans.
-                </p>
-              </div>
+      <FadeInOnScroll>
+        <section className="bg-background">
+            <div className="container mx-auto">
+                <div className="grid md:grid-cols-2 items-center">
+                    <div className="relative w-full h-full min-h-[400px]">
+                        <Image 
+                            src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101"
+                            alt="Soldier saluting American flag"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="soldier saluting flag"
+                        />
+                    </div>
+                    <div className="bg-[#FFFDF6] p-8 md:p-16 text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">We're committed to serve you!</h2>
+                        <Image
+                            src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/sdvosb-logo.png?alt=media&token=e5732431-4b13-4a69-80a2-23b53a85375f"
+                            alt="Service Disabled Veteran Owned Small Business Logo"
+                            width={150}
+                            height={150}
+                            className="mx-auto mb-4"
+                            data-ai-hint="veteran owned business logo"
+                        />
+                        <p className="font-semibold text-foreground">Licensed & Insured</p>
+                        <p className="font-semibold text-foreground">Military & Senior Discounts</p>
+                    </div>
+                </div>
             </div>
-          </div>
-        </FadeInOnScroll>
-      </section>
+        </section>
+      </FadeInOnScroll>
 
        <section className="bg-blue-900 h-[100px]"></section>
 
