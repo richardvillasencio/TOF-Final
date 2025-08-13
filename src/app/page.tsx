@@ -224,8 +224,8 @@ export default function HomePage() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
                   {galleryImages.map((image, i) => (
                     <FadeInOnScroll key={i} delay={i * 100}>
-                      <div className="overflow-hidden rounded-lg">
-                          <Image src={image.url} alt={`Gallery image ${i + 1}`} width={600} height={400} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={image.hint} />
+                      <div className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
+                          <Image src={image.url} alt={`Gallery image ${i + 1}`} width={600} height={600} className="w-full h-full object-cover hover:scale-105 transition-transform" data-ai-hint={image.hint} />
                       </div>
                     </FadeInOnScroll>
                   ))}
