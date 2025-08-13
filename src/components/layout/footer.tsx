@@ -11,7 +11,7 @@ import { Bubbles } from './bubbles';
 export function Footer() {
 
   return (
-    <footer className="relative bg-gradient-to-r from-[#33BFF3]/50 to-[#F36E0E]/50 text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-r from-[#33BFF3]/70 to-[#F36E0E]/70 text-white overflow-hidden">
         <div className="absolute inset-0 pointer-events-none z-0">
             <Bubbles />
         </div>
