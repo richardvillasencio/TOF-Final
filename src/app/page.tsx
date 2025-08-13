@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Phone, MapPin, Star, BrainCircuit, ShieldCheck } from 'lucide-react';
+import { Phone, MapPin, Star, BrainCircuit, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import BubblePoopAnimation from '@/components/animations/bubble-poop-animation';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 import { useState } from 'react';
@@ -35,7 +35,19 @@ const galleryImages = [
 
 
 export default function HomePage() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+  const handleNext = () => {
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex((selectedImageIndex + 1) % galleryImages.length);
+    }
+  };
+
+  const handlePrev = () => {
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex((selectedImageIndex - 1 + galleryImages.length) % galleryImages.length);
+    }
+  };
   
   return (
     <>
@@ -230,38 +242,60 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
               {galleryImages.map((image, i) => (
                 <FadeInOnScroll key={i} delay={i * 100}>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <div className="overflow-hidden rounded-lg aspect-square cursor-pointer">
-                        <Image
-                          src={image.url}
-                          alt={`Gallery image ${i + 1}`}
-                          width={600}
-                          height={600}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
-                          data-ai-hint={image.hint}
-                        />
-                      </div>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-3xl p-0">
-                       <DialogHeader className="sr-only">
-                        <DialogTitle>Enlarged Gallery Image {i + 1}</DialogTitle>
-                      </DialogHeader>
-                      <Image
-                        src={image.url}
-                        alt={`Gallery image ${i + 1}`}
-                        width={1200}
-                        height={800}
-                        className="w-full h-full object-contain rounded-lg"
-                      />
-                    </DialogContent>
-                  </Dialog>
+                  <div 
+                    className="overflow-hidden rounded-lg aspect-square cursor-pointer"
+                    onClick={() => setSelectedImageIndex(i)}
+                  >
+                    <Image
+                      src={image.url}
+                      alt={`Gallery image ${i + 1}`}
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform"
+                      data-ai-hint={image.hint}
+                    />
+                  </div>
                 </FadeInOnScroll>
               ))}
             </div>
           </div>
         </FadeInOnScroll>
       </section>
+      
+      <Dialog open={selectedImageIndex !== null} onOpenChange={() => setSelectedImageIndex(null)}>
+        <DialogContent className="max-w-5xl p-0">
+           <DialogHeader className="sr-only">
+            <DialogTitle>Enlarged Gallery Image</DialogTitle>
+          </DialogHeader>
+          {selectedImageIndex !== null && (
+            <div className="relative">
+              <Image
+                src={galleryImages[selectedImageIndex].url}
+                alt={`Enlarged gallery image ${selectedImageIndex + 1}`}
+                width={1200}
+                height={800}
+                className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-2 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/75"
+                onClick={handlePrev}
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/75"
+                onClick={handleNext}
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
