@@ -150,10 +150,9 @@ export default function HomePage() {
       {/* Veteran-Owned Section */}
       <FadeInOnScroll>
         <section 
-          className="relative bg-cover bg-center py-20 text-white"
+          className="relative bg-cover bg-center py-20 text-foreground"
           style={{ backgroundImage: "url('https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/67fbfb7ac7a015af86d6df0c.png?alt=media&token=49cbee03-d9b4-40ca-8bfe-c735464bf101')" }}
         >
-        <div className="absolute inset-0 bg-black/60 z-0"></div>
          <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
             <div></div>
             <div className="text-center">
