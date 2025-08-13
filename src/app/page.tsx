@@ -164,7 +164,7 @@ export default function HomePage() {
                     <div className="bg-[#FFFDF6] p-8 md:p-16 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">We're committed to serve you!</h2>
                         <Image
-                            src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/sdvosb-logo.png?alt=media&token=e5732431-4b13-4a69-80a2-23b53a85375f"
+                            src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/veteran.svg?alt=media&token=814412af-0346-46ad-b5e5-317421da2a8a"
                             alt="Service Disabled Veteran Owned Small Business Logo"
                             width={150}
                             height={150}
