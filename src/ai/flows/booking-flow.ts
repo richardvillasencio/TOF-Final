@@ -114,6 +114,66 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date, accessToken: 
   }
 }
 
+async function createCalendarEvent(bookingDetails: CreateBookingInput, startTime: Date, endTime: Date, accessToken: string): Promise<void> {
+    const createEventUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/events`;
+
+    const event = {
+        subject: `Showroom Visit: ${bookingDetails.name}`,
+        body: {
+            contentType: 'HTML',
+            content: `
+                A new showroom visit has been booked.<br/><br/>
+                <b>Customer:</b> ${bookingDetails.name}<br/>
+                <b>Email:</b> ${bookingDetails.email}<br/>
+                <b>Phone:</b> ${bookingDetails.phone || 'Not provided'}<br/>
+                <b>Time:</b> ${startTime.toLocaleString('en-US', { timeZone: 'UTC' })} - ${endTime.toLocaleString('en-US', { timeZone: 'UTC' })}
+            `,
+        },
+        start: {
+            dateTime: startTime.toISOString(),
+            timeZone: 'UTC',
+        },
+        end: {
+            dateTime: endTime.toISOString(),
+            timeZone: 'UTC',
+        },
+        attendees: [
+            {
+                emailAddress: {
+                    address: bookingDetails.email,
+                    name: bookingDetails.name,
+                },
+                type: 'required',
+            },
+        ],
+    };
+
+    try {
+        const response = await fetch(createEventUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(event),
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error('Microsoft Graph API Error creating calendar event:', {
+                status: response.status,
+                statusText: response.statusText,
+                body: errorBody,
+            });
+            // Don't throw to the user, but log it. The booking is still made.
+        } else {
+            console.log(`[Booking Flow] Successfully created calendar event for ${bookingDetails.email}`);
+        }
+    } catch (error) {
+        console.error('[Booking Flow] Failed to create calendar event:', error);
+    }
+}
+
 async function sendConfirmationEmail(bookingDetails: CreateBookingInput, accessToken: string): Promise<void> {
     const sendMailUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/sendMail`;
 
@@ -236,6 +296,9 @@ const createBookingFlow = ai.defineFlow(
         } else {
              console.warn('Firestore Admin DB not available. Skipping database write.');
         }
+
+        // Create the event in the calendar
+        await createCalendarEvent(input, selectedDate, endDate, accessToken);
 
         // Send confirmation email after successful booking
         await sendConfirmationEmail(input, accessToken);
