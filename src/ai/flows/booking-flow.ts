@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A booking agent that checks for availability and confirms appointments.
@@ -74,7 +75,6 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
         dateTime: endTime.toISOString(),
         timeZone: 'UTC',
       },
-      availabilityViewInterval: 15,
     };
 
     const response = await fetch(scheduleApiUrl, {
@@ -102,6 +102,7 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
     
     // Check if there are any schedule items returned. If empty, the slot is free.
     const scheduleItems = data.value[0]?.scheduleItems || [];
+    // We expect the array to be empty if the time slot is free.
     return scheduleItems.length === 0;
 
   } catch (error) {
