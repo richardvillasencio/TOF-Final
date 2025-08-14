@@ -10,8 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
-import { google } from 'googleapis';
-
+import { ConfidentialClientApplication } from '@azure/msal-node';
 
 const CreateBookingInputSchema = z.object({
   name: z.string().describe('The full name of the person making the booking.'),
@@ -28,26 +27,79 @@ const CreateBookingOutputSchema = z.object({
 export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 
 
-// --- Google Calendar Integration ---
-const CALENDAR_ID = 'villasenciorichard@gmail.com';
+// --- Microsoft Graph Integration ---
+const msalConfig = {
+  auth: {
+    clientId: process.env.AZURE_CLIENT_ID!,
+    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
+    clientSecret: process.env.AZURE_CLIENT_SECRET!,
+  },
+};
 
-async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<boolean> {
-    // This is where we will integrate with the Google Calendar API.
-    // For now, we will simulate the check. In the next steps, we will replace this
-    // with actual API calls after setting up authentication.
-    console.log(`Simulating calendar check for ${startTime.toISOString()} to ${endTime.toISOString()}`);
-    
-    // TODO: Replace this with actual Google Calendar API call.
-    // This placeholder will always return "unavailable" until we configure OAuth.
-    return false;
+const cca = new ConfidentialClientApplication(msalConfig);
+const CALENDAR_USER_ID = 'rv@derheiminc.com'; 
+
+async function getGraphToken() {
+  const clientCredentialRequest = {
+    scopes: ['https://graph.microsoft.com/.default'],
+  };
+  return await cca.acquireTokenByClientCredential(clientCredentialRequest);
 }
 
+async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<boolean> {
+  try {
+    const tokenResponse = await getGraphToken();
+    if (!tokenResponse) {
+      throw new Error('Could not acquire token for Graph API.');
+    }
+
+    const scheduleApiUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/calendar/getSchedule`;
+    
+    const requestBody = {
+      schedules: [CALENDAR_USER_ID],
+      startTime: {
+        dateTime: startTime.toISOString(),
+        timeZone: 'UTC',
+      },
+      endTime: {
+        dateTime: endTime.toISOString(),
+        timeZone: 'UTC',
+      },
+      availabilityViewInterval: 60, // Check in 60-minute intervals
+    };
+
+    const response = await fetch(scheduleApiUrl, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tokenResponse.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('Graph API Error:', response.status, errorBody);
+        throw new Error(`Graph API request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // Check if there are any schedule items returned. If empty, the slot is free.
+    const scheduleItems = data.value[0]?.scheduleItems || [];
+    return scheduleItems.length === 0;
+
+  } catch (error) {
+    console.error('Error in isTimeSlotAvailable:', error);
+    // Important: Fail-safe to prevent booking if the check fails.
+    return false;
+  }
+}
 
 // Exported wrapper function to be called from the client
 export async function createBooking(input: CreateBookingInput): Promise<CreateBookingOutput> {
   return createBookingFlow(input);
 }
-
 
 const createBookingFlow = ai.defineFlow(
   {
@@ -75,7 +127,7 @@ const createBookingFlow = ai.defineFlow(
             const appointmentRef = adminDb.collection('appointments').doc();
             await appointmentRef.set({
                 ...input,
-                status: 'pending', // We'll update this after real calendar confirmation
+                status: 'confirmed', // Status is confirmed as we've checked availability
                 createdAt: new Date().toISOString(),
             });
         } catch (error) {
@@ -92,11 +144,9 @@ const createBookingFlow = ai.defineFlow(
         }
     }
     
-    // TODO: Integrate with Gmail and Google Calendar to send notifications and create events.
-    
     return {
       success: true,
-      message: "We've received your request and will confirm via email shortly.",
+      message: "Your appointment is confirmed! We look forward to seeing you.",
     };
   }
 );
