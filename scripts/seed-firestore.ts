@@ -1,9 +1,22 @@
 // A script to seed the Firestore database with initial page content.
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
-
-import { adminDb } from '../src/lib/firebase';
+// Note: Next.js automatically loads environment variables from .env.local, so dotenv is not needed for this script when run with tsx.
+import { adminDb } from '../src/lib/firebase/admin';
+import { designStudioContent } from '../src/lib/content/design-studio';
 import { homeContent } from '../src/lib/content/home';
+import { aboutContent } from '../src/lib/content/about';
+import { contactContent } from '../src/lib/content/contact';
+import { hotTubsContent } from '../src/lib/content/hot-tubs';
+import { headerContent } from '../src/lib/content/header';
+import type { PageSection as GenericPageSection } from '../src/lib/content-loader';
+
+// A map of page slugs to their content arrays.
+const pagesToSeed: Record<string, GenericPageSection[]> = {
+  'design-studio': designStudioContent,
+  // 'home' is no longer needed as it's static
+  'about': aboutContent,
+  'contact': contactContent,
+  'hot-tubs': hotTubsContent,
+};
 
 async function seedDatabase() {
   if (!adminDb) {
@@ -13,27 +26,44 @@ async function seedDatabase() {
 
   console.log('Starting to seed database...');
 
-  // Seed the layout for the home page
+  // Seed global content (like the header)
   try {
-    const homeLayoutRef = adminDb.collection('layouts').doc('homePage');
-    const initialOrder = homeContent.map(section => section.id);
-    await homeLayoutRef.set({ order: initialOrder });
-    console.log("Successfully seeded layout for 'homePage'.");
+    const headerRef = adminDb.collection('globals').doc('header');
+    await headerRef.set(headerContent);
+    console.log("Successfully seeded global header content.");
   } catch (error) {
-      console.error("Error seeding layout for 'homePage':", error);
+    console.error("Error seeding global header content:", error);
   }
 
-  // Seed the content for each section of the home page
-  for (const section of homeContent) {
+
+  for (const [pageSlug, sections] of Object.entries(pagesToSeed)) {
+    console.log(`\nSeeding content for page: '${pageSlug}'`);
+    const pageRef = adminDb.collection('pages').doc(pageSlug);
+
+    // Use a batched write to perform multiple operations atomically.
+    const batch = adminDb.batch();
+
+    for (const [index, section] of sections.entries()) {
+      const { id, component, props } = section;
+      const sectionRef = pageRef.collection('sections').doc(id);
+      
+      const dataToSet = {
+        component,
+        props,
+        order: index, // Add an 'order' field to maintain the sequence.
+      };
+
+      batch.set(sectionRef, dataToSet);
+      console.log(`  -> Queued section '${id}' with order ${index}`);
+    }
+
     try {
-        const sectionRef = adminDb.collection('sectionContent').doc(section.id);
-        await sectionRef.set(section.props);
-        console.log(`  -> Successfully seeded content for section '${section.id}'`);
+      await batch.commit();
+      console.log(`Successfully seeded ${sections.length} sections for page '${pageSlug}'.`);
     } catch (error) {
-        console.error(`Error seeding content for section '${section.id}':`, error);
+      console.error(`Error committing batch for page '${pageSlug}':`, error);
     }
   }
-
 
   console.log('\nDatabase seeding completed.');
   process.exit(0);

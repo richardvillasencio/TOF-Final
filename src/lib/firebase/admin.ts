@@ -1,9 +1,6 @@
 // src/lib/firebase/admin.ts
 import 'server-only';
 import admin from 'firebase-admin';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '.env.local' });
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
