@@ -7,7 +7,6 @@
  * - CreateBookingInput - The input type for the createBooking function.
  * - CreateBookingOutput - The return type for the createBooking function.
  */
-import 'dotenv/config';
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
@@ -34,9 +33,9 @@ const CALENDAR_USER_ID = 'rv@derheiminc.com';
 function getMsalClient() {
     const msalConfig = {
       auth: {
-        clientId: process.env.AZURE_CLIENT_ID!,
-        authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
-        clientSecret: process.env.AZURE_CLIENT_SECRET!,
+        clientId: process.env.MS_CLIENT_ID!,
+        authority: `https://login.microsoftonline.com/${process.env.MS_TENANT_ID}`,
+        clientSecret: process.env.MS_CLIENT_SECRET!,
       },
     };
     return new ConfidentialClientApplication(msalConfig);
@@ -117,7 +116,7 @@ const createBookingFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-        if (!process.env.AZURE_CLIENT_ID || !process.env.AZURE_TENANT_ID || !process.env.AZURE_CLIENT_SECRET) {
+        if (!process.env.MS_CLIENT_ID || !process.env.MS_TENANT_ID || !process.env.MS_CLIENT_SECRET) {
             console.error('Azure client credentials are not configured correctly. Check your environment variables.');
             return {
                 success: false,
