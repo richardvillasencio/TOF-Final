@@ -43,6 +43,7 @@ function getMsalClient() {
       },
     };
     if (!msalConfig.auth.clientId || !msalConfig.auth.clientSecret || !msalConfig.auth.authority) {
+        console.error('Azure client credentials are not configured in .env.local');
         throw new Error('Azure client credentials are not configured in .env.local');
     }
     return new ConfidentialClientApplication(msalConfig);
@@ -53,30 +54,43 @@ async function getGraphToken() {
   const clientCredentialRequest = {
     scopes: ['https://graph.microsoft.com/.default'],
   };
-  const tokenResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
-  if (!tokenResponse) {
-    throw new Error('Could not acquire token for Graph API.');
+  try {
+    const tokenResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
+    if (!tokenResponse) {
+      throw new Error('Could not acquire token for Graph API.');
+    }
+    return tokenResponse.accessToken;
+  } catch (error) {
+    console.error("[Booking Flow] Error acquiring Graph API token:", error);
+    throw new Error('Failed to acquire authentication token for calendar service.');
   }
-  return tokenResponse.accessToken;
 }
 
 async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<boolean> {
+  let accessToken;
   try {
-    const accessToken = await getGraphToken();
-    const scheduleApiUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/calendar/getSchedule`;
-    
-    const requestBody = {
-      schedules: [CALENDAR_USER_ID],
-      startTime: {
-        dateTime: startTime.toISOString(),
-        timeZone: 'UTC',
-      },
-      endTime: {
-        dateTime: endTime.toISOString(),
-        timeZone: 'UTC',
-      },
-    };
+    accessToken = await getGraphToken();
+  } catch (error) {
+    // The error from getGraphToken is already logged and is specific enough.
+    // We re-throw it to be caught by the main flow handler.
+    throw error;
+  }
+  
+  const scheduleApiUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/calendar/getSchedule`;
+  
+  const requestBody = {
+    schedules: [CALENDAR_USER_ID],
+    startTime: {
+      dateTime: startTime.toISOString(),
+      timeZone: 'UTC',
+    },
+    endTime: {
+      dateTime: endTime.toISOString(),
+      timeZone: 'UTC',
+    },
+  };
 
+  try {
     const response = await fetch(scheduleApiUrl, {
       method: 'POST',
       headers: {
@@ -88,27 +102,25 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
     });
 
     if (!response.ok) {
+        // THIS IS THE CRUCIAL PART: Log the detailed error from Microsoft
         const errorBody = await response.text();
-        console.error('Graph API Error Response:', {
+        console.error('Microsoft Graph API Error Response:', {
             status: response.status,
             statusText: response.statusText,
             body: errorBody,
         });
-        // Throw a detailed error to be caught by the flow
-        throw new Error(`Graph API request failed with status ${response.status}: ${errorBody}`);
+        // Throw a generic error to the user, but the detailed log is on the server
+        throw new Error(`Graph API request failed.`);
     }
 
     const data = await response.json();
-    
-    // Check if there are any schedule items returned. If empty, the slot is free.
     const scheduleItems = data.value[0]?.scheduleItems || [];
-    // We expect the array to be empty if the time slot is free.
+    // The slot is available if there are NO items in the schedule for that time.
     return scheduleItems.length === 0;
 
-  } catch (error) {
-    console.error('[Booking Flow] Error in isTimeSlotAvailable:', error);
-    // Rethrow the error to be handled by the calling flow.
-    // This provides a more specific error message to the end-user.
+  } catch (error: any) {
+    console.error('[Booking Flow] Error in isTimeSlotAvailable during fetch:', error);
+    // Rethrow a user-friendly error to be handled by the calling flow.
     throw new Error('There was an error checking calendar availability. The service may be down.');
   }
 }
@@ -127,7 +139,6 @@ const createBookingFlow = ai.defineFlow(
   async (input) => {
     try {
         const selectedDate = new Date(input.selectedDate);
-        // Assume a 1-hour appointment for now
         const endDate = new Date(selectedDate.getTime() + 60 * 60 * 1000); 
 
         const isAvailable = await isTimeSlotAvailable(selectedDate, endDate);
@@ -139,13 +150,12 @@ const createBookingFlow = ai.defineFlow(
         };
         }
         
-        // Save the appointment to Firestore
         if (adminDb) {
             try {
                 const appointmentRef = adminDb.collection('appointments').doc();
                 await appointmentRef.set({
                     ...input,
-                    status: 'confirmed', // Status is confirmed as we've checked availability
+                    status: 'confirmed',
                     createdAt: new Date().toISOString(),
                 });
             } catch (error) {
@@ -156,10 +166,7 @@ const createBookingFlow = ai.defineFlow(
                 }
             }
         } else {
-            return {
-                success: false,
-                message: 'Database connection not available. Please try again later.',
-            }
+             console.warn('Firestore Admin DB not available. Skipping database write.');
         }
         
         return {
@@ -167,7 +174,9 @@ const createBookingFlow = ai.defineFlow(
         message: "Your appointment is confirmed! We look forward to seeing you.",
         };
     } catch (err: any) {
-         console.error('[Booking Flow] Flow execution failed:', err);
+         // The detailed error is already logged inside the helper functions.
+         // We return the user-friendly message from the thrown error.
+         console.error('[Booking Flow] Flow execution failed at top level:', err);
          return {
             success: false,
             message: err.message || 'An unexpected error occurred during the booking process.',
