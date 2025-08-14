@@ -107,31 +107,19 @@ export default function HomePage() {
                     </Button>
                   </div>
               </div>
-               <div className="relative flex justify-center items-center p-8">
-                  {/* Decorative SVG elements */}
-                  <svg width="100%" height="100%" viewBox="0 0 500 500" className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M414.2,43.3c38,38,62,89.5,62,145.7s-24,107.7-62,145.7s-89.5,62-145.7,62s-107.7-24-145.7-62 s-62-89.5-62-145.7S82.8,81.3,120.8,43.3S210.3-18.7,266.5-18.7S376.2,5.3,414.2,43.3z" fill="#0E76BC" opacity="0.1"></path>
-                    <circle cx="450" cy="450" r="50" fill="#F36E0E" opacity="0.1"></circle>
-                  </svg>
+               <div className="relative p-8 flex justify-center items-center">
+                  <div className="absolute top-0 left-10 w-72 h-96 bg-blue-100/50 rounded-3xl transform -rotate-12"></div>
+                  <div className="absolute top-10 right-0 w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="absolute bottom-10 left-0 w-3 h-3 bg-primary rounded-full"></div>
                   
-                  {/* Image with SVG clip-path */}
-                  <div className="relative w-[400px] h-[500px]">
-                     <svg width="0" height="0" className="absolute">
-                      <defs>
-                        <clipPath id="customShape" clipPathUnits="objectBoundingBox">
-                          <path d="M0.98,0.222C0.98,0.366,0.925,0.5,0.826,0.612C0.726,0.724,0.596,0.793,0.457,0.824C0.318,0.854,0.178,0.844,0.07,0.793C-0.038,0.742,-0.02,0.57,0.064,0.446C0.149,0.322,0.316,0.246,0.455,0.216C0.594,0.186,0.734,0.196,0.842,0.247C0.95,0.298,0.98,0.366,0.98,0.222"></path>
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <div className="relative w-full h-full" style={{clipPath: 'url(#customShape)'}}>
-                      <Image 
-                        src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" 
-                        alt="Founder Troy" 
-                        fill
-                        className="object-cover"
-                        data-ai-hint="founder portrait" 
-                      />
-                    </div>
+                  <div className="relative w-[350px] h-[450px] shadow-2xl rounded-2xl overflow-hidden">
+                    <Image 
+                      src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Troy.webp?alt=media&token=ed2c1bc3-f12b-49d9-ba9b-921d2693039c" 
+                      alt="Founder Troy" 
+                      fill
+                      className="object-cover"
+                      data-ai-hint="founder portrait" 
+                    />
                   </div>
               </div>
           </div>
@@ -331,3 +319,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
