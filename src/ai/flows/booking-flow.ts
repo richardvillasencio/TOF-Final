@@ -31,11 +31,14 @@ export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 const CALENDAR_USER_ID = 'rv@derheiminc.com'; 
 
 function getMsalClient() {
+    if (!process.env.MS_CLIENT_ID || !process.env.MS_TENANT_ID || !process.env.MS_CLIENT_SECRET) {
+        throw new Error("Azure client credentials are not configured correctly in environment variables.");
+    }
     const msalConfig = {
       auth: {
-        clientId: process.env.MS_CLIENT_ID!,
+        clientId: process.env.MS_CLIENT_ID,
         authority: `https://login.microsoftonline.com/${process.env.MS_TENANT_ID}`,
-        clientSecret: process.env.MS_CLIENT_SECRET!,
+        clientSecret: process.env.MS_CLIENT_SECRET,
       },
     };
     return new ConfidentialClientApplication(msalConfig);
@@ -48,11 +51,13 @@ async function getGraphToken(cca: ConfidentialClientApplication) {
   try {
     const tokenResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
     if (!tokenResponse) {
-      throw new Error('Could not acquire token for Graph API.');
+      // This case is unlikely as acquireTokenByClientCredential throws on failure, but it's good practice.
+      throw new Error('Could not acquire token for Graph API, response was empty.');
     }
     return tokenResponse.accessToken;
-  } catch (error) {
-    console.error("[Booking Flow] Error acquiring Graph API token:", error);
+  } catch (error: any) {
+    console.error("[Booking Flow] MSAL Error acquiring Graph API token:", error.errorCode, error.errorMessage, error.subError, error.stack);
+    // Do not expose detailed MSAL errors to the client.
     throw new Error('Failed to acquire authentication token for calendar service.');
   }
 }
@@ -99,6 +104,7 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date, accessToken: 
 
   } catch (error: any) {
     console.error('[Booking Flow] Error in isTimeSlotAvailable during fetch:', error);
+    // This is the error that will be propagated to the user-facing message.
     throw new Error('There was an error checking calendar availability. The service may be down.');
   }
 }
@@ -116,14 +122,6 @@ const createBookingFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-        if (!process.env.MS_CLIENT_ID || !process.env.MS_TENANT_ID || !process.env.MS_CLIENT_SECRET) {
-            console.error('Azure client credentials are not configured correctly. Check your environment variables.');
-            return {
-                success: false,
-                message: 'The booking service is not configured correctly. Please contact the administrator.',
-            }
-        }
-
         const cca = getMsalClient();
         const accessToken = await getGraphToken(cca);
 
@@ -164,9 +162,17 @@ const createBookingFlow = ai.defineFlow(
         };
     } catch (err: any) {
          console.error('[Booking Flow] Flow execution failed:', err);
+         const userMessage = err.message || 'An unexpected error occurred during the booking process.';
+         // Avoid exposing internal implementation details from errors.
+         if (userMessage.includes("credentials are not configured")) {
+             return {
+                 success: false,
+                 message: 'The booking service is not configured correctly. Please contact the administrator.'
+             }
+         }
          return {
             success: false,
-            message: err.message || 'An unexpected error occurred during the booking process.',
+            message: userMessage,
          }
     }
   }
