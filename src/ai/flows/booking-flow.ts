@@ -11,14 +11,9 @@ import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
 import { ConfidentialClientApplication } from '@azure/msal-node';
-import dotenv from 'dotenv';
-
-// Load environment variables from .env.local
-dotenv.config({ path: '.env.local' });
-
 
 const CreateBookingInputSchema = z.object({
-  name: z.string().describe('The full name of the person making the booking.'),
+  name: z.string().describe('The full name of a person.'),
   email: z.string().email().describe('The email address of the person.'),
   phone: z.string().optional().describe('The phone number of the person.'),
   selectedDate: z.string().datetime().describe('The ISO 8601 string of the desired booking date.'),
@@ -122,7 +117,7 @@ const createBookingFlow = ai.defineFlow(
   async (input) => {
     try {
         if (!process.env.AZURE_CLIENT_ID || !process.env.AZURE_TENANT_ID || !process.env.AZURE_CLIENT_SECRET) {
-            console.error('Azure client credentials are not configured in .env.local');
+            console.error('Azure client credentials are not configured correctly. Check your environment variables.');
             return {
                 success: false,
                 message: 'The booking service is not configured correctly. Please contact the administrator.',
