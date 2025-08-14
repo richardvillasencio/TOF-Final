@@ -11,6 +11,9 @@ import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
 import { ConfidentialClientApplication } from '@azure/msal-node';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
 
 const CreateBookingInputSchema = z.object({
   name: z.string().describe('The full name of the person making the booking.'),
