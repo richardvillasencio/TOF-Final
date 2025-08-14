@@ -114,6 +114,82 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date, accessToken: 
   }
 }
 
+async function sendConfirmationEmail(bookingDetails: CreateBookingInput, accessToken: string): Promise<void> {
+    const sendMailUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/sendMail`;
+
+    const formattedDate = new Date(bookingDetails.selectedDate).toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'UTC'
+    });
+
+    const emailBody = {
+        message: {
+            subject: "Your Showroom Visit is Confirmed!",
+            body: {
+                contentType: "HTML",
+                content: `
+                    <h1>Booking Confirmed!</h1>
+                    <p>Hi ${bookingDetails.name},</p>
+                    <p>Thank you for booking a visit with us. Your appointment is confirmed for:</p>
+                    <p><b>${formattedDate}</b></p>
+                    <p>We look forward to seeing you at our Fargo store!</p>
+                    <p>If you need to reschedule, please contact us.</p>
+                    <br/>
+                    <p>Thank you,</p>
+                    <p>The TubClone Team</p>
+                `
+            },
+            toRecipients: [
+                {
+                    emailAddress: {
+                        address: bookingDetails.email
+                    }
+                }
+            ],
+            ccRecipients: [
+                 {
+                    emailAddress: {
+                        address: CALENDAR_USER_ID
+                    }
+                }
+            ]
+        },
+        saveToSentItems: "true"
+    };
+
+    try {
+        const response = await fetch(sendMailUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(emailBody)
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error('Microsoft Graph API Error sending email:', {
+                status: response.status,
+                statusText: response.statusText,
+                body: errorBody,
+            });
+            // We don't throw an error here to the user, as the booking itself was successful.
+            // We just log it for debugging.
+        } else {
+            console.log(`[Booking Flow] Successfully sent confirmation email to ${bookingDetails.email}`);
+        }
+    } catch (error) {
+        console.error('[Booking Flow] Failed to send confirmation email:', error);
+    }
+}
+
+
 // Exported wrapper function to be called from the client
 export async function createBooking(input: CreateBookingInput): Promise<CreateBookingOutput> {
   return createBookingFlow(input);
@@ -160,6 +236,9 @@ const createBookingFlow = ai.defineFlow(
         } else {
              console.warn('Firestore Admin DB not available. Skipping database write.');
         }
+
+        // Send confirmation email after successful booking
+        await sendConfirmationEmail(input, accessToken);
         
         return {
         success: true,
