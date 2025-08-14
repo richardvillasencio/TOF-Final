@@ -52,16 +52,16 @@ async function getGraphToken() {
   const clientCredentialRequest = {
     scopes: ['https://graph.microsoft.com/.default'],
   };
-  return await cca.acquireTokenByClientCredential(clientCredentialRequest);
+  const tokenResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
+  if (!tokenResponse) {
+    throw new Error('Could not acquire token for Graph API.');
+  }
+  return tokenResponse.accessToken;
 }
 
 async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<boolean> {
   try {
-    const tokenResponse = await getGraphToken();
-    if (!tokenResponse) {
-      throw new Error('Could not acquire token for Graph API.');
-    }
-
+    const accessToken = await getGraphToken();
     const scheduleApiUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/calendar/getSchedule`;
     
     const requestBody = {
@@ -74,22 +74,28 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
         dateTime: endTime.toISOString(),
         timeZone: 'UTC',
       },
-      availabilityViewInterval: 60, // Check in 60-minute intervals
+      availabilityViewInterval: 15,
     };
 
     const response = await fetch(scheduleApiUrl, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${tokenResponse.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
+        Prefer: 'outlook.timezone="UTC"',
       },
       body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
         const errorBody = await response.text();
-        console.error('Graph API Error:', response.status, errorBody);
-        throw new Error(`Graph API request failed with status ${response.status}`);
+        console.error('Graph API Error Response:', {
+            status: response.status,
+            statusText: response.statusText,
+            body: errorBody,
+        });
+        // Throw a detailed error to be caught by the flow
+        throw new Error(`Graph API request failed with status ${response.status}: ${errorBody}`);
     }
 
     const data = await response.json();
@@ -99,9 +105,10 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
     return scheduleItems.length === 0;
 
   } catch (error) {
-    console.error('Error in isTimeSlotAvailable:', error);
-    // Important: Fail-safe to prevent booking if the check fails.
-    return false;
+    console.error('[Booking Flow] Error in isTimeSlotAvailable:', error);
+    // Rethrow the error to be handled by the calling flow.
+    // This provides a more specific error message to the end-user.
+    throw new Error('There was an error checking calendar availability. The service may be down.');
   }
 }
 
@@ -117,45 +124,53 @@ const createBookingFlow = ai.defineFlow(
     outputSchema: CreateBookingOutputSchema,
   },
   async (input) => {
-    const selectedDate = new Date(input.selectedDate);
-    // Assume a 1-hour appointment for now
-    const endDate = new Date(selectedDate.getTime() + 60 * 60 * 1000); 
+    try {
+        const selectedDate = new Date(input.selectedDate);
+        // Assume a 1-hour appointment for now
+        const endDate = new Date(selectedDate.getTime() + 60 * 60 * 1000); 
 
-    const isAvailable = await isTimeSlotAvailable(selectedDate, endDate);
+        const isAvailable = await isTimeSlotAvailable(selectedDate, endDate);
 
-    if (!isAvailable) {
-      return {
-        success: false,
-        message: 'Sorry, that date is unavailable. Please choose another date.',
-      };
-    }
-    
-    // Save the appointment to Firestore
-    if (adminDb) {
-        try {
-            const appointmentRef = adminDb.collection('appointments').doc();
-            await appointmentRef.set({
-                ...input,
-                status: 'confirmed', // Status is confirmed as we've checked availability
-                createdAt: new Date().toISOString(),
-            });
-        } catch (error) {
-            console.error('Error saving appointment to Firestore:', error);
+        if (!isAvailable) {
+        return {
+            success: false,
+            message: 'Sorry, that date is unavailable. Please choose another date.',
+        };
+        }
+        
+        // Save the appointment to Firestore
+        if (adminDb) {
+            try {
+                const appointmentRef = adminDb.collection('appointments').doc();
+                await appointmentRef.set({
+                    ...input,
+                    status: 'confirmed', // Status is confirmed as we've checked availability
+                    createdAt: new Date().toISOString(),
+                });
+            } catch (error) {
+                console.error('Error saving appointment to Firestore:', error);
+                return {
+                    success: false,
+                    message: 'There was an error saving your appointment. Please try again.',
+                }
+            }
+        } else {
             return {
                 success: false,
-                message: 'There was an error saving your appointment. Please try again.',
+                message: 'Database connection not available. Please try again later.',
             }
         }
-    } else {
+        
+        return {
+        success: true,
+        message: "Your appointment is confirmed! We look forward to seeing you.",
+        };
+    } catch (err: any) {
+         console.error('[Booking Flow] Flow execution failed:', err);
          return {
             success: false,
-            message: 'Database connection not available. Please try again later.',
-        }
+            message: err.message || 'An unexpected error occurred during the booking process.',
+         }
     }
-    
-    return {
-      success: true,
-      message: "Your appointment is confirmed! We look forward to seeing you.",
-    };
   }
 );
