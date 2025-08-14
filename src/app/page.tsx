@@ -81,17 +81,17 @@ export default function HomePage() {
       <section className="py-16 bg-background relative overflow-hidden -mt-24">
         <BubblePoopAnimation />
         <FadeInOnScroll>
-          <div className="container mx-auto text-center relative z-10 pt-10">
-            <h2 className="text-3xl font-bold text-primary">
+          <div className="container mx-auto relative z-10 pt-10">
+             <h2 className="text-3xl font-bold text-primary">
               ABOUT US
             </h2>
-            <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
+            <div className="w-16 h-1 bg-accent my-4"></div>
           </div>
         </FadeInOnScroll>
 
         <FadeInOnScroll delay={200}>
           <div className="container mx-auto grid md:grid-cols-2 gap-8 items-center mt-8 relative z-10">
-              <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+              <Card className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
                   <p className="uppercase text-primary font-semibold">
                       MEET THE FOUNDER & CEO
                   </p>
@@ -106,7 +106,7 @@ export default function HomePage() {
                         <Link href="/about">See More</Link>
                     </Button>
                   </div>
-              </div>
+              </Card>
                <div className="relative p-8 flex justify-center items-center">
                   <div className="absolute top-0 left-10 w-72 h-96 bg-blue-100/50 rounded-3xl transform -rotate-12"></div>
                   <div className="absolute top-10 right-0 w-2 h-2 bg-accent rounded-full"></div>
@@ -140,7 +140,7 @@ export default function HomePage() {
       <section className="py-16 bg-muted">
         <FadeInOnScroll>
           <div className="container mx-auto text-center px-4">
-              <h2 className="text-3xl font-bold text-primary">Our Services</h2>
+              <h2 className="text-3xl font-bold text-primary">Our Hot Tubs, Saunas &amp; Other Services</h2>
               <div className="w-16 h-1 bg-accent mx-auto my-4"></div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
