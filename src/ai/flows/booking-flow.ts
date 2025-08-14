@@ -7,13 +7,14 @@
  * - CreateBookingInput - The input type for the createBooking function.
  * - CreateBookingOutput - The return type for the createBooking function.
  */
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
-
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
 import { ConfidentialClientApplication } from '@azure/msal-node';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env.local
+dotenv.config({ path: '.env.local' });
 
 
 const CreateBookingInputSchema = z.object({
@@ -42,15 +43,10 @@ function getMsalClient() {
         clientSecret: process.env.AZURE_CLIENT_SECRET!,
       },
     };
-    if (!msalConfig.auth.clientId || !msalConfig.auth.clientSecret || !msalConfig.auth.authority) {
-        console.error('Azure client credentials are not configured in .env.local');
-        throw new Error('Azure client credentials are not configured in .env.local');
-    }
     return new ConfidentialClientApplication(msalConfig);
 }
 
-async function getGraphToken() {
-  const cca = getMsalClient();
+async function getGraphToken(cca: ConfidentialClientApplication) {
   const clientCredentialRequest = {
     scopes: ['https://graph.microsoft.com/.default'],
   };
@@ -66,16 +62,7 @@ async function getGraphToken() {
   }
 }
 
-async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<boolean> {
-  let accessToken;
-  try {
-    accessToken = await getGraphToken();
-  } catch (error) {
-    // The error from getGraphToken is already logged and is specific enough.
-    // We re-throw it to be caught by the main flow handler.
-    throw error;
-  }
-  
+async function isTimeSlotAvailable(startTime: Date, endTime: Date, accessToken: string): Promise<boolean> {
   const scheduleApiUrl = `https://graph.microsoft.com/v1.0/users/${CALENDAR_USER_ID}/calendar/getSchedule`;
   
   const requestBody = {
@@ -102,25 +89,21 @@ async function isTimeSlotAvailable(startTime: Date, endTime: Date): Promise<bool
     });
 
     if (!response.ok) {
-        // THIS IS THE CRUCIAL PART: Log the detailed error from Microsoft
         const errorBody = await response.text();
         console.error('Microsoft Graph API Error Response:', {
             status: response.status,
             statusText: response.statusText,
             body: errorBody,
         });
-        // Throw a generic error to the user, but the detailed log is on the server
-        throw new Error(`Graph API request failed.`);
+        throw new Error(`Graph API request failed with status ${response.status}.`);
     }
 
     const data = await response.json();
     const scheduleItems = data.value[0]?.scheduleItems || [];
-    // The slot is available if there are NO items in the schedule for that time.
     return scheduleItems.length === 0;
 
   } catch (error: any) {
     console.error('[Booking Flow] Error in isTimeSlotAvailable during fetch:', error);
-    // Rethrow a user-friendly error to be handled by the calling flow.
     throw new Error('There was an error checking calendar availability. The service may be down.');
   }
 }
@@ -138,10 +121,21 @@ const createBookingFlow = ai.defineFlow(
   },
   async (input) => {
     try {
+        if (!process.env.AZURE_CLIENT_ID || !process.env.AZURE_TENANT_ID || !process.env.AZURE_CLIENT_SECRET) {
+            console.error('Azure client credentials are not configured in .env.local');
+            return {
+                success: false,
+                message: 'The booking service is not configured correctly. Please contact the administrator.',
+            }
+        }
+
+        const cca = getMsalClient();
+        const accessToken = await getGraphToken(cca);
+
         const selectedDate = new Date(input.selectedDate);
         const endDate = new Date(selectedDate.getTime() + 60 * 60 * 1000); 
 
-        const isAvailable = await isTimeSlotAvailable(selectedDate, endDate);
+        const isAvailable = await isTimeSlotAvailable(selectedDate, endDate, accessToken);
 
         if (!isAvailable) {
         return {
@@ -174,9 +168,7 @@ const createBookingFlow = ai.defineFlow(
         message: "Your appointment is confirmed! We look forward to seeing you.",
         };
     } catch (err: any) {
-         // The detailed error is already logged inside the helper functions.
-         // We return the user-friendly message from the thrown error.
-         console.error('[Booking Flow] Flow execution failed at top level:', err);
+         console.error('[Booking Flow] Flow execution failed:', err);
          return {
             success: false,
             message: err.message || 'An unexpected error occurred during the booking process.',
