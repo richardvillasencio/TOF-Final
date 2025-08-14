@@ -81,11 +81,11 @@ export default function HomePage() {
       <section className="py-16 bg-background relative overflow-hidden -mt-24">
         <BubblePoopAnimation />
         <FadeInOnScroll>
-          <div className="container mx-auto relative z-10 pt-10">
+          <div className="container mx-auto relative z-10 pt-10 text-center">
              <h2 className="text-3xl font-bold text-primary">
               ABOUT US
             </h2>
-            <div className="w-16 h-1 bg-accent my-4"></div>
+            <div className="w-16 h-1 bg-accent my-4 mx-auto"></div>
           </div>
         </FadeInOnScroll>
 
