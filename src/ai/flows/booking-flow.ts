@@ -7,6 +7,7 @@
  * - CreateBookingInput - The input type for the createBooking function.
  * - CreateBookingOutput - The return type for the createBooking function.
  */
+import 'dotenv/config';
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
@@ -51,12 +52,16 @@ async function getGraphToken(cca: ConfidentialClientApplication) {
   try {
     const tokenResponse = await cca.acquireTokenByClientCredential(clientCredentialRequest);
     if (!tokenResponse) {
-      // This case is unlikely as acquireTokenByClientCredential throws on failure, but it's good practice.
       throw new Error('Could not acquire token for Graph API, response was empty.');
     }
     return tokenResponse.accessToken;
   } catch (error: any) {
-    console.error("[Booking Flow] MSAL Error acquiring Graph API token:", error.errorCode, error.errorMessage, error.subError, error.stack);
+    console.error("[Booking Flow] MSAL Error acquiring Graph API token:", {
+        errorCode: error.errorCode,
+        errorMessage: error.errorMessage,
+        subError: error.subError,
+        correlationId: error.correlationId,
+    });
     // Do not expose detailed MSAL errors to the client.
     throw new Error('Failed to acquire authentication token for calendar service.');
   }
