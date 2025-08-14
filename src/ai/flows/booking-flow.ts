@@ -6,14 +6,14 @@
  * - CreateBookingInput - The input type for the createBooking function.
  * - CreateBookingOutput - The return type for the createBooking function.
  */
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
 import { ConfidentialClientApplication } from '@azure/msal-node';
-import dotenv from 'dotenv';
 
-dotenv.config({ path: '.env.local' });
 
 const CreateBookingInputSchema = z.object({
   name: z.string().describe('The full name of the person making the booking.'),
@@ -31,18 +31,24 @@ export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 
 
 // --- Microsoft Graph Integration ---
-const msalConfig = {
-  auth: {
-    clientId: process.env.AZURE_CLIENT_ID!,
-    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
-    clientSecret: process.env.AZURE_CLIENT_SECRET!,
-  },
-};
-
-const cca = new ConfidentialClientApplication(msalConfig);
 const CALENDAR_USER_ID = 'rv@derheiminc.com'; 
 
+function getMsalClient() {
+    const msalConfig = {
+      auth: {
+        clientId: process.env.AZURE_CLIENT_ID!,
+        authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
+        clientSecret: process.env.AZURE_CLIENT_SECRET!,
+      },
+    };
+    if (!msalConfig.auth.clientId || !msalConfig.auth.clientSecret || !msalConfig.auth.authority) {
+        throw new Error('Azure client credentials are not configured in .env.local');
+    }
+    return new ConfidentialClientApplication(msalConfig);
+}
+
 async function getGraphToken() {
+  const cca = getMsalClient();
   const clientCredentialRequest = {
     scopes: ['https://graph.microsoft.com/.default'],
   };
