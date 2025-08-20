@@ -83,7 +83,9 @@
 }
 
 @layer components {
-  /* Floating + popping keyframes */
+  /* Step 1: Define the bubble animation keyframes.
+     This animation controls how the bubbles float up, change size, and fade out.
+     It creates a "popping" effect at the end. */
   @keyframes floatUpPop {
     0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.95; }
     70%  { transform: translateY(-50vh) translateX(10px) scale(1.05); opacity: 0.85; }
@@ -91,11 +93,13 @@
     90%  { transform: translateY(-70vh) translateX(0) scale(1.3); opacity: 0.4; }
     100% { transform: translateY(-75vh) scale(0); opacity: 0; }
   }
+  /* The class we will apply to each bubble div */
   .animate-bubble {
     animation-name: floatUpPop;
     animation-timing-function: ease-in;
     animation-iteration-count: infinite;
   }
+  /* Accessibility: Disable animation if the user prefers reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .animate-bubble { animation: none !important; }
   }

@@ -1,4 +1,5 @@
 // src/components/layout/header.tsx
+// Step 3: Integrate the Bubbles component and apply the final styles to the Header.
 'use client';
 
 import Image from 'next/image';
@@ -23,18 +24,25 @@ import { type NavLink, type HeaderContent, headerContent } from '@/lib/content/h
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '../theme-toggle';
 import { useState } from 'react';
+// We import the Bubbles component we just created.
 import { Bubbles } from './bubbles';
 
 
 export function Header() {
   
   return (
+    // Here we apply the core styling for the header:
+    // - `bg-gradient-to-r...`: This creates the beautiful blue-to-orange gradient.
+    // - `sticky top-0 z-50`: This makes the header stick to the top of the screen on scroll.
+    // - `backdrop-blur-lg`: This adds the frosted-glass effect to blur content behind it.
     <header className="bg-gradient-to-r from-[#33BFF3]/80 to-[#F36E0E]/80 text-white shadow-md sticky top-0 z-50 backdrop-blur-lg">
+      {/* We place the Bubbles component inside a container with `overflow-hidden`.
+          This ensures the bubbles are contained within the header and don't spill out. */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <Bubbles />
       </div>
 
-      {/* Top Bar */}
+      {/* Top Bar - relative z-10 makes sure it sits on top of the bubbles */}
       <div className="py-2 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center gap-2 md:gap-4">
@@ -63,7 +71,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Main Navigation */}
+      {/* Main Navigation - relative z-10 makes sure it sits on top of the bubbles */}
       <div className="container mx-auto px-4 flex justify-between items-center py-2 relative z-10">
           <Link href="/" aria-label="TubClone Home">
               <Image
