@@ -126,7 +126,8 @@ async function createCalendarEvent(bookingDetails: CreateBookingInput, startTime
                 <b>Customer:</b> ${bookingDetails.name}<br/>
                 <b>Email:</b> ${bookingDetails.email}<br/>
                 <b>Phone:</b> ${bookingDetails.phone || 'Not provided'}<br/>
-                <b>Time:</b> ${startTime.toLocaleString('en-US', { timeZone: 'UTC' })} - ${endTime.toLocaleString('en-US', { timeZone: 'UTC' })}
+                <b>Time:</b> ${startTime.toLocaleString('en-US', { timeZone: 'UTC' })} - ${endTime.toLocaleString('en-US', { timeZone: 'UTC' })}<br/><br/>
+                This is a virtual meeting.
             `,
         },
         start: {
@@ -146,6 +147,8 @@ async function createCalendarEvent(bookingDetails: CreateBookingInput, startTime
                 type: 'required',
             },
         ],
+        isOnlineMeeting: true,
+        onlineMeetingProvider: 'teamsForBusiness'
     };
 
     try {
@@ -197,7 +200,7 @@ async function sendConfirmationEmail(bookingDetails: CreateBookingInput, accessT
                     <p>Hi ${bookingDetails.name},</p>
                     <p>Thank you for booking a visit with us. Your appointment is confirmed for:</p>
                     <p><b>${formattedDate}</b></p>
-                    <p>We look forward to seeing you at our Fargo store!</p>
+                    <p>A meeting link has been sent in a separate calendar invitation. We look forward to speaking with you!</p>
                     <p>If you need to reschedule, please contact us.</p>
                     <br/>
                     <p>Thank you,</p>
@@ -324,3 +327,5 @@ const createBookingFlow = ai.defineFlow(
     }
   }
 );
+
+    
