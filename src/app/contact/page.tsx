@@ -1,3 +1,4 @@
+
 import { loadPageContent, type PageSection } from '@/lib/content-loader';
 import { HeroSection } from '@/components/page-sections/hero-section';
 import { ContactFormSection } from '@/components/page-sections/contact-form-section';
@@ -11,11 +12,17 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   LocationsSection,
 };
 
-function renderComponent(config: PageSection) {
+function renderComponent(config: PageSection, pageName: string) {
   const Component = componentMap[config.component];
   if (!Component) {
     return null;
   }
+  const docPath = `pages/${pageName}/sections/${config.id}`;
+  // The HeroSection component expects docPath as a direct prop
+  if (config.component === 'HeroSection') {
+     return <Component key={config.id} docPath={docPath} />;
+  }
+  // Other components might have it as part of their props from the DB
   return <Component key={config.id} {...config.props} id={config.id} />;
 }
 
@@ -38,7 +45,7 @@ export default async function ContactPage() {
 
   return (
     <div data-studio-id="pages/contact/sections" data-studio-id-mode="reorder" className="flex flex-col">
-      {pageContent.map((sectionConfig) => renderComponent(sectionConfig))}
+      {pageContent.map((sectionConfig) => renderComponent(sectionConfig, 'contact'))}
     </div>
   );
 }
