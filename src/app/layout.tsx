@@ -4,7 +4,6 @@ import './globals.css';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: 'West Fargo Hot Tubs & Saunas | TubClone | Your Local Spa Dealer',
@@ -73,19 +72,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
           <Header />
           <main className="flex-grow bg-background">
             {children}
           </main>
           <Footer />
           <Toaster />
-        </ThemeProvider>
       </body>
     </html>
   );

@@ -22,7 +22,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 import { type NavLink, type HeaderContent, headerContent } from '@/lib/content/header';
 import { cn } from '@/lib/utils';
-import { ThemeToggle } from '../theme-toggle';
 import { useState } from 'react';
 // We import the Bubbles component we just created.
 import { Bubbles } from './bubbles';
@@ -65,7 +64,6 @@ export function Header() {
                 </Link>
             </div>
              <div className="flex items-center gap-2 lg:hidden">
-                <ThemeToggle />
                 <MobileNav topNavLinks={headerContent.topNavLinks || []} mainNavLinks={headerContent.mainNavLinks || []} />
             </div>
         </div>
