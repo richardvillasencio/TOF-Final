@@ -14,7 +14,7 @@ const spaSeries = [
       alt: 'Bullfrog M-Series Spa in a luxurious backyard setting',
       hint: 'luxury hot tub',
     },
-    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/m-series-logo.svg?alt=media&token=40428453-1563-4de2-9856-59918c5e6348',
+    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%20logo.webp?alt=media&token=23c07b49-258c-451f-a9a6-f4c305830d69',
     specs: {
       seats: '7-10',
       jetPaks: '4-7',
