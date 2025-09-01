@@ -50,7 +50,7 @@ const spaSeries = [
       alt: 'Bullfrog X-Series Spa in a backyard',
       hint: 'family hot tub',
     },
-    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/x-series-logo.svg?alt=media&token=ac24c653-e96e-4734-92ca-49d799014bd6',
+    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FX%20SERIES%20logo.webp?alt=media&token=749c53a5-a3f8-4593-87c6-9b1a0bc15a43',
     specs: {
       seats: '3-8',
       jetPaks: 'N/A', // Not specified in OCR for this model
