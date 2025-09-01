@@ -10,7 +10,7 @@ const spaSeries = [
     tagline: 'Elite Class',
     description: "M Series™ spas combine intuitive functionality, gorgeous aesthetics, and the most versatile layouts ever seen in portable spas, together with Bullfrog Spas' legendary JetPak Therapy System™, to create the most elite spa experience available today. Enjoy JetPaks in all premium seat locations, Simplicity™ water care, multi-functional controls throughout the spa, smart sensor technology, and layouts designed to be enjoyed in a variety of positions by people of various sizes and body types.",
     image: {
-      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/bullfrog-m-series.webp?alt=media&token=e9e8f6e8-2c26-4444-9e19-21448b11c97a',
+      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%E2%84%A2%20SPAS.webp?alt=media&token=2c64a282-a2c9-436d-919f-2ceb8d763523',
       alt: 'Bullfrog M-Series Spa in a luxurious backyard setting',
       hint: 'luxury hot tub',
     },
