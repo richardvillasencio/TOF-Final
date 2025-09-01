@@ -46,7 +46,7 @@ const spaSeries = [
     tagline: 'Comfort Class',
     description: "X Series™ brings you the legendary engineering and reliability of Bullfrog Spas in a value-packed, comfort-class spa line. The remarkable set of features include the long-lasting, wood-free EnduraFrame™, the solid one-piece spa base, full-foam insulation, impressive lighting and water features, and superior-quality components, to create a luxurious spa experience that rivals competitors' high-end offerings but at a price you'll love. Discover X Series for yourself and enjoy the life-changing benefits.",
     image: {
-      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/bullfrog-x-series.webp?alt=media&token=c19a0f5a-3453-432a-9e12-32a4e21a4f0b',
+      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FX%20SERIES%E2%84%A2%20SPAS.webp?alt=media&token=79cbac66-dbd2-4557-90fa-3fabecac17d4',
       alt: 'Bullfrog X-Series Spa in a backyard',
       hint: 'family hot tub',
     },
