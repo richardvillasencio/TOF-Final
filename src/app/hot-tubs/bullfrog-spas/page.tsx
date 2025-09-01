@@ -32,7 +32,7 @@ const spaSeries = [
       alt: 'Bullfrog A-Series Spa on a clean patio',
       hint: 'modern hot tub',
     },
-    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/a-series-logo.svg?alt=media&token=9629b35b-11c5-430c-99f5-74898de5973e',
+    logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FA%20SERIES%20logo.webp?alt=media&token=9b3285c9-d73d-4be5-93e4-2fec4ab6d1b3',
     specs: {
       seats: '3-9',
       jetPaks: '2-7',
