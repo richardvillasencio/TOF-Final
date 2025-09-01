@@ -28,7 +28,7 @@ const spaSeries = [
     tagline: 'Luxury Class',
     description: 'Available in three trim levels, the A Series is an advanced and stylish collection of premium hot tubs that set an elevated standard for luxury and performance. The elegantly styled A Series spas allow you to design your ultimate personal experience. Each trim level features the JetPak Therapy System™, a thoughtful mix of seat depths, improved seating ergonomics, headrests, and water features. The three trim level options truly raise the bar for maximum personalization of your hot tub.',
     image: {
-      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/bullfrog-a-series.webp?alt=media&token=7c2b64a2-15a0-47b2-84b2-277e923e595e',
+      src: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FA%20SERIES%E2%84%A2%20SPAS.webp?alt=media&token=7d6c41cb-f7fb-4697-bdee-a105f97b2bff',
       alt: 'Bullfrog A-Series Spa on a clean patio',
       hint: 'modern hot tub',
     },
