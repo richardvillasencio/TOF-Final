@@ -4,6 +4,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
+import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const spaSeries = [
   {
@@ -17,10 +19,10 @@ const spaSeries = [
     },
     logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%20logo.webp?alt=media&token=23c07b49-258c-451f-a9a6-f4c305830d69',
     specs: [
-        { label: 'Available Seats', value: '7-10' },
-        { label: 'JetPaks', value: '4-7' },
-        { label: 'Spa Models', value: '4' },
-        { label: 'Starting MSRP', value: '$21,995-$27,495' },
+        'Premium JetPaks in all locations',
+        'Multi-functional controls',
+        'Designed for varied body types',
+        'The most elite spa experience'
     ],
     href: '/hot-tubs/bullfrog-spas/m-series',
   },
@@ -35,10 +37,10 @@ const spaSeries = [
     },
     logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FA%20SERIES%20logo.webp?alt=media&token=9b3285c9-d73d-4be5-93e4-2fec4ab6d1b3',
     specs: [
-        { label: 'Available Seats', value: '3-9' },
-        { label: 'JetPaks', value: '2-7' },
-        { label: 'Spa Models', value: '9' },
-        { label: 'Starting MSRP', value: '$10,495-$24,995' },
+        '3 trim levels available',
+        'JetPak Therapy System™',
+        'Improved seating ergonomics',
+        'Maximum personalization'
     ],
     href: '#', // Placeholder link
   },
@@ -53,10 +55,10 @@ const spaSeries = [
     },
     logo: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FX%20SERIES%20logo.webp?alt=media&token=749c53a5-a3f8-4593-87c6-9b1a0bc15a43',
     specs: [
-        { label: 'Available Seats', value: '3-8' },
-        { label: 'Jet Count', value: '21-44' },
-        { label: 'Spa Models', value: '7' },
-        { label: 'Starting MSRP', value: '$7,995-$13,995' },
+        'Wood-free EnduraFrame™',
+        'Full-foam insulation',
+        'Impressive lighting & water features',
+        'Great value for the price'
     ],
     href: '#', // Placeholder link
   },
@@ -67,85 +69,78 @@ export default function BullfrogSpasPage() {
     <div className="bg-white text-gray-800">
       
       {/* Hero Section */}
-      <section className="w-full">
+      <section className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-center text-white text-center">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Gallery%2Fcouple-in-spa-banner.webp?alt=media&token=8d76a0d3-35a9-466c-859a-14f7b4dc5a9c"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2F16_couple_2.jpg?alt=media&token=cdc09a33-07ea-4458-befb-28887154323a"
           alt="Couple relaxing in a Bullfrog Spa"
-          width={1920}
-          height={800}
-          className="w-full h-auto object-cover max-h-[60vh]"
+          fill
+          className="object-cover"
           data-ai-hint="couple relaxing spa"
           priority
         />
-      </section>
-
-      {/* Intro Section */}
-      <section className="py-12 md:py-20 text-center container mx-auto px-4">
-        <h2 className="text-xl font-semibold text-gray-500 tracking-widest">BULLFROG SPAS</h2>
-        <h1 className="text-4xl md:text-5xl font-bold text-blue-900 mt-2">HOT TUB SELECTION</h1>
-        <p className="max-w-4xl mx-auto mt-6 text-gray-600 leading-relaxed">
-            Bullfrog Spas is a premium hot tub manufacturer that focuses on providing a customizable, high-quality, and innovative spa experience. The company was founded on the idea of offering a spa that can be tailored to individual needs, and they achieved this with their JetPak Therapy System. This system allows users to customize their spa's jet configurations by swapping out different JetPaks, which each offer a variety of massage styles. Whether you want a deep tissue massage, a relaxing soak, or a gentle hydromassage, the flexibility of the JetPak system ensures that the spa experience meets your specific preferences.
-        </p>
+        <div className="absolute inset-0 bg-black/40" />
+        <FadeInOnScroll className="relative z-10 p-4">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-shadow-lg">
+                Peaceful Body.
+            </h1>
+             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-shadow-md mt-2">
+                Peaceful Mind. Peaceful Home.
+            </h2>
+        </FadeInOnScroll>
       </section>
 
       {/* Spa Series Sections */}
       <div className="bg-gray-50/70">
-        <div className="container mx-auto px-4 py-16 sm:py-24 space-y-20">
-          {spaSeries.map((series) => (
-            <div key={series.name} className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-              
-              {/* Image & Specs Column */}
-              <div className="flex flex-col gap-4">
-                <div className="relative w-full aspect-w-4 aspect-h-3">
-                  <Image
-                    src={series.image.src}
-                    alt={series.image.alt}
-                    fill
-                    className="object-cover rounded-lg shadow-lg"
-                    data-ai-hint={series.image.hint}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700">
-                    {series.specs.map(spec => (
-                        <div key={spec.label}>
-                            <span className="font-bold">{spec.label}:</span> {spec.value}
-                        </div>
-                    ))}
-                </div>
-              </div>
-              
-              {/* Details Column */}
-              <div className="flex flex-col justify-center text-center md:text-left items-center md:items-start">
-                 <div className="relative h-20 w-40 mb-4">
+        <div className="container mx-auto px-4 py-16 sm:py-24 space-y-24">
+          {spaSeries.map((series, index) => (
+            <FadeInOnScroll key={series.name} delay={index * 150}>
+                <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                
+                {/* Image Column */}
+                <div className={`overflow-hidden rounded-lg shadow-2xl ${index % 2 === 1 ? 'md:order-last' : ''}`}>
                     <Image
-                        src={series.logo}
-                        alt={`${series.name} Logo`}
-                        fill
-                        className="object-contain"
+                        src={series.image.src}
+                        alt={series.image.alt}
+                        width={800}
+                        height={600}
+                        className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
+                        data-ai-hint={series.image.hint}
                     />
-                 </div>
-                <h2 className="text-3xl font-bold text-gray-800">{series.name}</h2>
-                <h3 className="text-primary text-xl font-semibold tracking-wider uppercase mt-1 mb-4">{series.tagline}</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">{series.description}</p>
-                <Button asChild size="lg" className="bg-gray-800 hover:bg-gray-900 text-white shadow-lg transform hover:-translate-y-1 transition-transform px-10">
-                  <Link href={series.href}>Select {series.name.split(' ')[0]}</Link>
-                </Button>
-              </div>
+                </div>
+                
+                {/* Details Column */}
+                <div className="flex flex-col justify-center">
+                    <div className="relative h-20 w-40 mb-4">
+                        <Image
+                            src={series.logo}
+                            alt={`${series.name} Logo`}
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-800">{series.name}</h2>
+                    <h3 className="text-primary text-xl font-semibold tracking-wider uppercase mt-1 mb-4">{series.tagline}</h3>
+                    <p className="text-gray-600 mb-6 leading-relaxed">{series.description}</p>
+                    
+                    <ul className="space-y-3 mb-8">
+                        {series.specs.map(spec => (
+                            <li key={spec} className="flex items-center gap-3">
+                                <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                                <span className="text-gray-700">{spec}</span>
+                            </li>
+                        ))}
+                    </ul>
 
-            </div>
+                    <Button asChild size="lg" className="bg-gray-800 hover:bg-gray-900 text-white shadow-lg transform hover:-translate-y-1 transition-transform px-10 self-start">
+                    <Link href={series.href}>Select {series.name.split(' ')[0]}</Link>
+                    </Button>
+                </div>
+
+                </div>
+            </FadeInOnScroll>
           ))}
         </div>
       </div>
-
-       {/* Final CTA Section */}
-       <section className="py-12 bg-blue-50">
-            <div className="container mx-auto px-4 text-center">
-                <p className="text-lg text-gray-700 max-w-5xl mx-auto">
-                    Experience the ultimate in personalized relaxation with Bullfrog Spas - where innovative design, powerful hydrotherapy, and customizable comfort come together to create the perfect spa experience, just for you.
-                </p>
-            </div>
-       </section>
-
     </div>
   );
 }
