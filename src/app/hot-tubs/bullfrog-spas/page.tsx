@@ -69,15 +69,17 @@ export default function BullfrogSpasPage() {
     <div className="bg-white text-gray-800">
       
       {/* Hero Section */}
-      <section className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-center text-white text-center">
-        <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2F16_couple_2.jpg?alt=media&token=cdc09a33-07ea-4458-befb-28887154323a"
-          alt="Couple relaxing in a Bullfrog Spa"
-          fill
-          className="object-cover"
-          data-ai-hint="couple relaxing spa"
-          priority
-        />
+      <section className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-center text-white text-center overflow-hidden">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          poster="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2F16_couple_2.jpg?alt=media&token=cdc09a33-07ea-4458-befb-28887154323a"
+        >
+          <source src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Swimspasbanner.mp4?alt=media&token=2e0447bd-2d4b-4aee-9640-e4edbb38e4fd" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-black/40" />
         <FadeInOnScroll className="relative z-10 p-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-shadow-lg">
