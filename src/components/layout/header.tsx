@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menubar,
   MenubarContent,
@@ -172,7 +172,7 @@ const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], main
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-full max-w-sm p-0 bg-background text-foreground">
-        <div className="p-4 border-b flex justify-between items-center">
+        <SheetHeader className="p-4 border-b flex flex-row justify-between items-center">
            <Link href="/" onClick={() => setIsOpen(false)}>
               <Image
                   src={headerContent.logoImageUrl}
@@ -182,11 +182,12 @@ const MobileNav = ({ topNavLinks, mainNavLinks }: { topNavLinks: NavLink[], main
                   className="object-contain"
               />
           </Link>
+          <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
           <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
             <X className="h-6 w-6" />
             <span className="sr-only">Close menu</span>
           </Button>
-        </div>
+        </SheetHeader>
         <div className="flex flex-col h-full overflow-y-auto p-4">
           <MobileNavLinks links={allNavLinks} onLinkClick={() => setIsOpen(false)} />
         </div>
