@@ -1,9 +1,12 @@
 
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
+import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const spaSeries = [
   {
@@ -64,64 +67,84 @@ const spaSeries = [
 
 export default function BullfrogSpasPage() {
   return (
-    <div className="bg-background text-foreground">
-      <div className="container mx-auto px-4 py-16 sm:py-24">
-        
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-primary font-semibold tracking-wider uppercase">Bullfrog Spas</h2>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mt-2">Peaceful Body, Peaceful Mind, Peaceful Home.</h1>
-          <div className="w-24 h-1 bg-accent mx-auto my-6"></div>
-          <p className="text-lg text-muted-foreground">
-            Your Bullfrog Spa will be the best place to connect with what matters most. You’ll find that as you take time to relax and connect with family and loved ones your home will become a more peaceful and joyful place.
-          </p>
+    <div className="bg-gray-50 text-foreground">
+      
+      {/* Hero Section */}
+      <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-white">
+        <Image
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2F16_couple_2.jpg?alt=media&token=cdc09a33-07ea-4458-befb-28887154323a"
+          alt="Couple relaxing in a Bullfrog Spa"
+          fill
+          className="object-cover"
+          data-ai-hint="couple relaxing spa"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 text-center p-4">
+          <FadeInOnScroll>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-shadow-lg">
+              Peaceful Body, Peaceful Mind, Peaceful Home.
+            </h1>
+            <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-200 text-shadow">
+              Your Bullfrog Spa will be the best place to connect with what matters most. You’ll find that as you take time to relax and connect with family and loved ones your home will become a more peaceful and joyful place.
+            </p>
+          </FadeInOnScroll>
         </div>
+        <div className="absolute bottom-10 z-10 animate-bounce">
+            <ChevronDown className="w-10 h-10 text-white/80"/>
+        </div>
+      </section>
 
-        <div className="flex flex-col gap-16 md:gap-24">
+      {/* Spa Series Sections */}
+      <div className="container mx-auto px-4 py-16 sm:py-24">
+        <div className="flex flex-col gap-24">
           {spaSeries.map((series, index) => (
-            <div key={series.name} className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center`}>
-              
-              <div className={`relative w-full aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-2xl group ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
-                <Image
-                  src={series.image.src}
-                  alt={series.image.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  data-ai-hint={series.image.hint}
-                />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                 <div className="absolute bottom-4 left-4">
-                     <Image
-                        src={series.logo}
-                        alt={`${series.name} Logo`}
-                        width={150}
-                        height={50}
-                        className="object-contain"
-                    />
-                 </div>
-              </div>
-              
-              <div className={`flex flex-col justify-center ${index % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}>
-                <h3 className="text-3xl font-bold text-foreground">{series.name}</h3>
-                <p className="text-xl text-primary font-semibold mb-4">{series.tagline}</p>
-                <p className="text-muted-foreground mb-6">{series.description}</p>
+            <FadeInOnScroll key={series.name} delay={index * 150}>
+              <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
                 
-                <ul className="grid grid-cols-2 gap-x-4 gap-y-2 mb-6 text-muted-foreground">
-                    {Object.entries(series.specs).map(([key, value]) => (
-                        <li key={key} className="flex items-center gap-2">
-                           <Check className="w-4 h-4 text-green-500" />
-                           <span><strong>{key}:</strong> {value}</span>
-                        </li>
-                    ))}
-                </ul>
-
-                <div className="mt-4">
-                    <Button asChild size="lg" className="shadow-lg">
-                      <Link href={series.href}>Explore {series.name.split(' ')[0]}</Link>
-                    </Button>
+                <div className={`relative w-full aspect-w-4 aspect-h-3 rounded-2xl overflow-hidden shadow-2xl group ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
+                  <Image
+                    src={series.image.src}
+                    alt={series.image.alt}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    data-ai-hint={series.image.hint}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-6 left-6">
+                      <Image
+                          src={series.logo}
+                          alt={`${series.name} Logo`}
+                          width={180}
+                          height={60}
+                          className="object-contain drop-shadow-lg"
+                      />
+                  </div>
                 </div>
-              </div>
+                
+                <div className={`flex flex-col justify-center ${index % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}>
+                  <h3 className="text-primary font-semibold tracking-wider uppercase">{series.tagline}</h3>
+                  <h2 className="text-4xl font-bold text-foreground mt-1 mb-4">{series.name}</h2>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">{series.description}</p>
+                  
+                  <ul className="grid grid-cols-2 gap-x-6 gap-y-3 mb-8 text-muted-foreground">
+                      {Object.entries(series.specs).map(([key, value]) => (
+                          <li key={key} className="flex items-center gap-3">
+                            <Check className="w-5 h-5 text-green-500 shrink-0" />
+                            <span><strong className="font-semibold text-foreground">{key}:</strong> {value}</span>
+                          </li>
+                      ))}
+                  </ul>
 
-            </div>
+                  <div className="mt-4">
+                      <Button asChild size="lg" className="shadow-lg transform hover:-translate-y-1 transition-transform">
+                        <Link href={series.href}>Explore {series.name.split(' ')[0]}</Link>
+                      </Button>
+                  </div>
+                </div>
+
+              </div>
+            </FadeInOnScroll>
           ))}
         </div>
       </div>
