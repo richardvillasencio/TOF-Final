@@ -57,12 +57,12 @@ const trimLevels = [
 ];
 
 const aSeriesModels = [
-  { name: 'A9L', seats: 9, jetpaks: 7, dimensions: "9'4\" (2.84m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A8', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A7', seats: 7, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
-  { name: 'A7L', seats: 6, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
-  { name: 'A8L', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A6L', seats: 5, jetpaks: 4, dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)" },
+  { name: 'A9L', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA9L.webp?alt=media&token=5b293672-005d-4f7f-8c38-89c560377e82', dataAiHint: 'spa layout', seats: 9, jetpaks: 7, dimensions: "9'4\" (2.84m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A8', image: 'https://picsum.photos/300/300?random=1', dataAiHint: 'spa layout', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A7', image: 'https://picsum.photos/300/300?random=2', dataAiHint: 'spa layout', seats: 7, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
+  { name: 'A7L', image: 'https://picsum.photos/300/300?random=3', dataAiHint: 'spa layout', seats: 6, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
+  { name: 'A8L', image: 'https://picsum.photos/300/300?random=4', dataAiHint: 'spa layout', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A6L', image: 'https://picsum.photos/300/300?random=5', dataAiHint: 'spa layout', seats: 5, jetpaks: 4, dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)" },
 ];
 
 export default function ASeriesPage() {
@@ -158,6 +158,16 @@ export default function ASeriesPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
             {aSeriesModels.map((model) => (
               <FadeInOnScroll key={model.name} className="flex flex-col text-center">
+                <div className="mb-6">
+                    <Image 
+                        src={model.image}
+                        alt={`Top-down view of the ${model.name} Spa layout`}
+                        width={300}
+                        height={300}
+                        className="mx-auto"
+                        data-ai-hint={model.dataAiHint}
+                    />
+                </div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">{model.name}</h3>
                 <div className="text-sm text-gray-600 font-semibold uppercase space-y-2 mb-4">
                   <p>AVAILABLE SEATS: {model.seats}</p>
