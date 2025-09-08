@@ -3,58 +3,66 @@
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
+import { Check } from 'lucide-react';
+
+const trimLevels = [
+  {
+    name: 'A Series Choice',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-choice.webp?alt=media&token=8660e5aa-1833-4f51-b847-a9a7a974f07a',
+    dataAiHint: 'hot tub side',
+    features: [
+      'Choice standard 3-tone JetPaks',
+      'Choice standard 3-tone headrests',
+      'Choice standard interior lighting',
+      'Choice standard exterior lighting',
+      'Choice standard JetPak count',
+      'Premium headrests',
+      'Premium touch-screen control'
+    ]
+  },
+  {
+    name: 'A Series Choice w/ Luxury Pkg.',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-luxury.webp?alt=media&token=4802c63f-671e-4504-8b63-ab5880f08985',
+    dataAiHint: 'hot tub side wood',
+    features: [
+      'Select premium 2-tone cabinetry',
+      'Select premium Tungsten metallic jet faces',
+      'Premium interior lighting',
+      'Premium exterior lighting',
+      'Choice standard water feature',
+      'Choice standard JetPak count',
+      'Premium headrests',
+      'Premium 2-function auxiliary controls (jets, lights)',
+      'Premium touch-screen control'
+    ]
+  },
+  {
+    name: 'A Series Select',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-select.webp?alt=media&token=f0d2c0b4-4b5c-44e2-b06f-402a11b96a98',
+    dataAiHint: 'hot tub side dark',
+    features: [
+      'Select premium 2-tone cabinetry',
+      'Select premium Tungsten metallic jet faces',
+      'Select premium JetPak insert design',
+      'Premium interior lighting',
+      'Premium exterior lighting',
+      'Select premium water feature',
+      'Max JetPak count',
+      'Premium headrests',
+      'Premium 2-function auxiliary controls (jets, lighting, water feature)',
+      'Premium touch-screen control'
+    ]
+  }
+];
 
 const aSeriesModels = [
-  {
-    name: 'A9L',
-    image: 'https://picsum.photos/300/300?random=1',
-    alt: 'Top-down view of the A9L Spa layout',
-    dataAiHint: 'spa layout',
-    specs: {
-      seats: 9,
-      jetpaks: 7,
-      dimensions: "9'4\" (2.84m) x 7'10\" (2.39m) x 38\" (.97m)"
-    },
-    description: "The A9L is the ultimate luxury spa with seating for up to 9 adults. It offers the most JetPak therapy options and a spacious open layout perfect for entertaining or stretching out and relaxing."
-  },
-  {
-    name: 'A8L',
-    image: 'https://picsum.photos/300/300?random=2',
-    alt: 'Top-down view of the A8L Spa layout',
-    dataAiHint: 'spa layout',
-    specs: {
-      seats: 8,
-      jetpaks: 6,
-      dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)"
-    },
-    description: "A popular choice for its balance of space and features, the A8L provides a premium hydrotherapy experience with a variety of seating options, including a comfortable lounge seat."
-  },
-  {
-    name: 'A7L',
-    image: 'https://picsum.photos/300/300?random=3',
-    alt: 'Top-down view of the A7L Spa layout',
-    dataAiHint: 'spa layout',
-    specs: {
-      seats: 6,
-      jetpaks: 5,
-      dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)"
-    },
-    description: "The A7L is a mid-size spa that doesn't compromise on luxury. It features a reversible lounge seat and is perfect for those who want premium therapy in a more compact footprint."
-  },
-  {
-    name: 'A6L',
-    image: 'https://picsum.photos/300/300?random=4',
-    alt: 'Top-down view of the A6L Spa layout',
-    dataAiHint: 'spa layout',
-    specs: {
-      seats: 5,
-      jetpaks: 4,
-      dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)"
-    },
-    description: "Ideal for smaller spaces, the A6L still offers a premium hot tub experience with four customizable JetPaks and a variety of seating options for up to 5 adults."
-  },
+  { name: 'A9L', seats: 9, jetpaks: 7, dimensions: "9'4\" (2.84m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A8', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A7', seats: 7, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
+  { name: 'A7L', seats: 6, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
+  { name: 'A8L', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A6L', seats: 5, jetpaks: 4, dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)" },
 ];
 
 export default function ASeriesPage() {
@@ -64,20 +72,20 @@ export default function ASeriesPage() {
       {/* Hero Section */}
       <section className="relative w-full text-white text-center">
         <Image
-          src="https://picsum.photos/1920/1080?random=5"
-          alt="Family enjoying a Bullfrog A-Series Spa"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Faseries-hero.webp?alt=media&token=8ba080c9-9524-4f51-b84e-28958564e9a5"
+          alt="Man relaxing in a Bullfrog A-Series Spa"
           width={1920}
-          height={1080}
-          className="object-cover w-full h-auto"
+          height={800}
+          className="object-cover w-full h-auto max-h-[70vh]"
           priority
-          data-ai-hint="family relaxing spa"
+          data-ai-hint="man relaxing spa"
         />
-        <div className="w-full bg-gray-800 py-6">
+        <div className="w-full bg-[#007AB8] py-6">
           <FadeInOnScroll>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               A SERIES™
             </h1>
-            <p className="text-lg text-gray-300">Luxury Class</p>
+            <p className="text-lg text-gray-200">Luxury Class</p>
           </FadeInOnScroll>
         </div>
       </section>
@@ -96,40 +104,66 @@ export default function ASeriesPage() {
                   ></iframe>
                 </div>
                 <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mt-8">
-                    A Series™ spas are the epitome of luxury and performance. With elegant styling and the customizable JetPak Therapy System™, you can design your ultimate personal relaxation experience.
+                    Engineered with the JetPak Therapy System, and outfitted with industry-best features and available in three trim and options packages to suit your lifestyle, the A Series™ sets an elevated standard for luxury, performance, efficiency, and personalization.
                 </p>
             </FadeInOnScroll>
         </div>
       </section>
 
-      {/* Spa Models Section */}
+      {/* Trim Levels Section */}
       <section className="bg-white pb-16 sm:pb-24">
         <div className="container mx-auto px-4">
           <FadeInOnScroll>
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">A Series™ Spa Models</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">Trim Level Quick Comparison</h2>
             <div className="w-24 h-1 bg-gray-300 mx-auto mb-12"></div>
           </FadeInOnScroll>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-            {aSeriesModels.map((model) => (
-              <FadeInOnScroll key={model.name} className="flex flex-col text-center">
-                 <div className="mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            {trimLevels.map((level) => (
+              <FadeInOnScroll key={level.name} className="flex flex-col text-center">
+                 <div className="mb-6 flex-shrink-0">
                     <Image 
-                        src={model.image}
-                        alt={model.alt}
-                        width={300}
-                        height={300}
+                        src={level.image}
+                        alt={`Bullfrog Spa ${level.name}`}
+                        width={350}
+                        height={233}
                         className="mx-auto"
-                        data-ai-hint={model.dataAiHint}
+                        data-ai-hint={level.dataAiHint}
                     />
                 </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">{level.name}</h3>
+                <ul className="space-y-3 text-left text-sm text-gray-600 flex-grow">
+                  {level.features.map(feature => (
+                    <li key={feature} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Spa Models Section */}
+      <section className="bg-gray-50 py-16 sm:py-24">
+        <div className="container mx-auto px-4">
+          <FadeInOnScroll>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">A Series Spa Models</h2>
+            <p className="text-center text-gray-500 mb-4">Models shown in newest Trim-Level Packages</p>
+            <div className="w-24 h-1 bg-gray-300 mx-auto mb-12"></div>
+          </FadeInOnScroll>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+            {aSeriesModels.map((model) => (
+              <FadeInOnScroll key={model.name} className="flex flex-col text-center">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">{model.name}</h3>
                 <div className="text-sm text-gray-600 font-semibold uppercase space-y-2 mb-4">
                   <p>AVAILABLE SEATS: {model.specs.seats}</p>
                   <p>JETPAKS: {model.specs.jetpaks}</p>
                   <p>DIMENSIONS:<br/>{model.specs.dimensions}</p>
                 </div>
-                <p className="text-gray-600 mt-4 text-sm leading-relaxed text-left flex-grow">{model.description}</p>
               </FadeInOnScroll>
             ))}
           </div>
@@ -137,7 +171,7 @@ export default function ASeriesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-white py-12 border-t border-b border-gray-200">
+      <section className="bg-gray-800 py-12">
         <div className="container mx-auto px-4">
            <FadeInOnScroll>
             <div className="flex items-center justify-center gap-8">
@@ -149,7 +183,7 @@ export default function ASeriesPage() {
                     className="flex-shrink-0"
                     data-ai-hint="company mascot"
                 />
-                <h3 className="text-2xl font-semibold text-gray-700">FOR MORE INFORMATION PLEASE DON'T HESITATE TO <br/>TALK WITH US IN THE CHATBOX!</h3>
+                <h3 className="text-2xl font-semibold text-white">FOR MORE INFORMATION PLEASE DON'T HESITATE TO <br/>TALK WITH US IN THE CHATBOX!</h3>
             </div>
            </FadeInOnScroll>
         </div>
