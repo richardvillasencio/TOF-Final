@@ -21,7 +21,7 @@ const mSeriesModels = [
   },
   {
     name: 'M8',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%E2%84%A2%20SPAS%2FM8.webp?alt=media&token=0b6016b8-648b-4b2a-89aa-e0bf79bb5037',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2FM8.webp?alt=media&token=c03547cc-18f1-40b9-aac4-7c6823264121',
     alt: 'Top-down view of the M8 Spa layout',
     dataAiHint: 'spa layout',
     specs: {
