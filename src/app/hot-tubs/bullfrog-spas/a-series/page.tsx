@@ -9,7 +9,7 @@ import { Check } from 'lucide-react';
 const trimLevels = [
   {
     name: 'A Series Choice',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-choice.webp?alt=media&token=8660e5aa-1833-4f51-b847-a9a7a974f07a',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA%20Series%20Choice.webp?alt=media&token=6c6fb5e2-fb98-455e-8a89-00ad8c5b2afb',
     dataAiHint: 'hot tub side',
     features: [
       'Choice standard 3-tone JetPaks',
