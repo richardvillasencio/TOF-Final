@@ -33,7 +33,7 @@ const mSeriesModels = [
   },
   {
     name: 'M7',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%E2%84-A2%20SPAS%2FM7.webp?alt=media&token=1e52467d-9488-466d-9686-218f4a35cd3c',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2FM7.webp?alt=media&token=31ce09d1-3c41-4aa5-b3db-bc15553c11ce',
     alt: 'Top-down view of the M7 Spa layout',
     dataAiHint: 'spa layout',
     specs: {
