@@ -23,7 +23,7 @@ const trimLevels = [
   },
   {
     name: 'A Series Choice w/ Luxury Pkg.',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-luxury.webp?alt=media&token=4802c63f-671e-4504-8b63-ab5880f08985',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA%20Series%20Luxury%20Pkg..webp?alt=media&token=1e41ec55-30c5-4ba5-a713-b8e5dc05492f',
     dataAiHint: 'hot tub side wood',
     features: [
       'Select premium 2-tone cabinetry',
