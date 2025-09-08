@@ -39,7 +39,7 @@ const trimLevels = [
   },
   {
     name: 'A Series Select',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Ftrim-select.webp?alt=media&token=f0d2c0b4-4b5c-44e2-b06f-402a11b96a98',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA%20Series%20Selc.webp?alt=media&token=4cb889c3-62c1-419a-b1c8-d57d9333e9fe',
     dataAiHint: 'hot tub side dark',
     features: [
       'Select premium 2-tone cabinetry',
