@@ -160,9 +160,9 @@ export default function ASeriesPage() {
               <FadeInOnScroll key={model.name} className="flex flex-col text-center">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">{model.name}</h3>
                 <div className="text-sm text-gray-600 font-semibold uppercase space-y-2 mb-4">
-                  <p>AVAILABLE SEATS: {model.specs.seats}</p>
-                  <p>JETPAKS: {model.specs.jetpaks}</p>
-                  <p>DIMENSIONS:<br/>{model.specs.dimensions}</p>
+                  <p>AVAILABLE SEATS: {model.seats}</p>
+                  <p>JETPAKS: {model.jetpaks}</p>
+                  <p>DIMENSIONS:<br/>{model.dimensions}</p>
                 </div>
               </FadeInOnScroll>
             ))}
