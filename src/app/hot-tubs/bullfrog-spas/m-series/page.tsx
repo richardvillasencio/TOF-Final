@@ -86,14 +86,15 @@ export default function MSeriesPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="container mx-auto px-4 text-center">
             <FadeInOnScroll>
-                <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2Fmseries_intro.webp?alt=media&token=27d9255a-3652-4753-9130-101f305001d2"
-                    alt="Side view of an M-Series spa with LED lighting"
-                    width={800}
-                    height={450}
-                    className="mx-auto rounded-lg"
-                    data-ai-hint="spa lighting night"
-                />
+                <div className="aspect-w-16 aspect-h-9 mx-auto max-w-4xl rounded-lg overflow-hidden shadow-xl">
+                  <iframe 
+                    src="https://www.youtube.com/embed/gHB0YcNOscc" 
+                    title="YouTube video player" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    className="w-full h-full"
+                  ></iframe>
+                </div>
                 <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mt-8">
                     Combining captivating aesthetics with unmatched versatility and ease of use, M Series™ spas are the pathway to a peaceful body, peaceful mind, and peaceful home.
                 </p>
