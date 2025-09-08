@@ -65,12 +65,12 @@ export default function MSeriesPage() {
       {/* Hero Section */}
       <section className="relative h-[50vh] w-full flex items-end justify-center text-white text-center overflow-hidden">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fm-series-hero.webp?alt=media&token=3817a14e-6e2a-4638-89c0-621e25e98517"
-          alt="Man relaxing in a Bullfrog M-Series Spa"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2Fmseriesbanner.png?alt=media&token=153fac53-56c5-4d35-8315-e9a9c21446f2"
+          alt="Couple relaxing in a Bullfrog M-Series Spa"
           fill
           className="object-cover"
           priority
-          data-ai-hint="man relaxing"
+          data-ai-hint="couple relaxing spa"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         <div className="relative z-10 p-8 md:p-12 w-full bg-gray-800/70 backdrop-blur-sm">
@@ -181,5 +181,7 @@ export default function MSeriesPage() {
     </div>
   );
 }
+
+    
 
     
