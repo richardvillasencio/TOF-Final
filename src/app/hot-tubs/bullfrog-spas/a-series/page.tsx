@@ -12,10 +12,11 @@ const trimLevels = [
     image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA%20Series%20Choice.webp?alt=media&token=6c6fb5e2-fb98-455e-8a89-00ad8c5b2afb',
     dataAiHint: 'hot tub side',
     features: [
-      'Choice standard 3-tone JetPaks',
+      'Choice standard cabinetry',
       'Choice standard 3-tone headrests',
       'Choice standard interior lighting',
       'Choice standard exterior lighting',
+      'Choice standard water feature',
       'Choice standard JetPak count',
       'Premium headrests',
       'Premium touch-screen control'
@@ -61,7 +62,7 @@ const aSeriesModels = [
   { name: 'A8', image: 'https://picsum.photos/300/300?random=1', dataAiHint: 'spa layout', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
   { name: 'A7', image: 'https://picsum.photos/300/300?random=2', dataAiHint: 'spa layout', seats: 7, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
   { name: 'A7L', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA7L.webp?alt=media&token=25baf434-b0c8-4719-aba3-392dfc6a9979', dataAiHint: 'spa layout', seats: 6, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
-  { name: 'A8L', image: 'https://picsum.photos/300/300?random=4', dataAiHint: 'spa layout', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
+  { name: 'A8L', image: 'https://picsum.photos/300/300?random=4', dataAiHint: 'spa layout', seats: 6, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
   { name: 'A6L', image: 'https://picsum.photos/300/300?random=5', dataAiHint: 'spa layout', seats: 5, jetpaks: 4, dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)" },
 ];
 
