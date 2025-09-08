@@ -4,7 +4,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const mSeriesModels = [
@@ -63,17 +62,17 @@ export default function MSeriesPage() {
     <div className="bg-white text-gray-800">
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] w-full flex items-end justify-center text-white text-center overflow-hidden">
+      <section className="relative w-full text-white text-center">
         <Image
           src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2Fmseriesbanner.png?alt=media&token=153fac53-56c5-4d35-8315-e9a9c21446f2"
-          alt="Couple relaxing in a Bullfrog M-Series Spa"
-          fill
-          className="object-cover"
+          alt="Man relaxing in a Bullfrog M-Series Spa"
+          width={1920}
+          height={1080}
+          className="object-cover w-full h-auto"
           priority
-          data-ai-hint="couple relaxing spa"
+          data-ai-hint="man relaxing spa"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        <div className="relative z-10 p-8 md:p-12 w-full bg-gray-800/70 backdrop-blur-sm">
+        <div className="w-full bg-gray-800 py-6">
           <FadeInOnScroll>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               M SERIES™
@@ -83,79 +82,53 @@ export default function MSeriesPage() {
         </div>
       </section>
 
-      {/* JetPak Therapy Section */}
+      {/* Introduction Section */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="container mx-auto px-4">
-          <FadeInOnScroll>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="text-center md:text-left">
-                <h2 className="text-4xl font-bold text-gray-800 mb-4">JetPak Therapy System™</h2>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Combining captivating aesthetics with unmatched versatility and ease of use, M Series™ spas are the pathway to a peaceful body, peaceful mind, and peaceful home.
-                </p>
-                <div className="flex items-center gap-4 justify-center md:justify-start">
-                   <div className="flex items-center gap-2">
-                        <button className="p-1.5 rounded-full border border-gray-300 hover:bg-gray-100 disabled:opacity-50" disabled>
-                            <ChevronLeft className="h-4 w-4 text-gray-500" />
-                        </button>
-                         <button className="p-1.5 rounded-full border border-gray-300 hover:bg-gray-100">
-                            <ChevronRight className="h-4 w-4 text-gray-500" />
-                        </button>
-                   </div>
-                   <div className="flex items-center gap-2">
-                        <div className="w-8 h-1 bg-red-500 rounded-full"></div>
-                        <div className="w-8 h-1 bg-gray-300 rounded-full"></div>
-                        <div className="w-8 h-1 bg-gray-300 rounded-full"></div>
-                   </div>
-                </div>
-              </div>
-              <div className="flex justify-center">
+        <div className="container mx-auto px-4 text-center">
+            <FadeInOnScroll>
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fjetpak-therapy.webp?alt=media&token=c199587a-b50a-48d5-b04f-124b81cd7097"
-                  alt="Bullfrog Spas JetPak Therapy System"
-                  width={500}
-                  height={400}
-                  className="object-contain"
-                  data-ai-hint="spa jets"
+                    src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2Fmseries_intro.webp?alt=media&token=27d9255a-3652-4753-9130-101f305001d2"
+                    alt="Side view of an M-Series spa with LED lighting"
+                    width={800}
+                    height={450}
+                    className="mx-auto rounded-lg"
+                    data-ai-hint="spa lighting night"
                 />
-              </div>
-            </div>
-          </FadeInOnScroll>
+                <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mt-8">
+                    Combining captivating aesthetics with unmatched versatility and ease of use, M Series™ spas are the pathway to a peaceful body, peaceful mind, and peaceful home.
+                </p>
+            </FadeInOnScroll>
         </div>
       </section>
 
       {/* Spa Models Section */}
-      <section className="bg-gray-50 py-16 sm:py-24">
+      <section className="bg-white pb-16 sm:pb-24">
         <div className="container mx-auto px-4">
           <FadeInOnScroll>
-            <h2 className="text-3xl font-bold text-center text-primary mb-2">M Series™ Spa Models</h2>
-            <div className="w-16 h-1 bg-accent mx-auto mb-12"></div>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">M Series™ Spa Models</h2>
+            <div className="w-24 h-1 bg-gray-300 mx-auto mb-12"></div>
           </FadeInOnScroll>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
             {mSeriesModels.map((model) => (
-              <FadeInOnScroll key={model.name} className="flex flex-col">
-                <Card className="flex flex-col flex-grow text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-4">
-                      <Image 
+              <FadeInOnScroll key={model.name} className="flex flex-col text-center">
+                 <div className="mb-6">
+                    <Image 
                         src={model.image}
                         alt={model.alt}
                         width={300}
                         height={300}
                         className="mx-auto"
                         data-ai-hint={model.dataAiHint}
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800">{model.name}</h3>
-                    <div className="text-sm text-gray-500 mt-4 space-y-1">
-                      <p><b>AVAILABLE SEATS:</b> {model.specs.seats}</p>
-                      <p><b>JETPAKS:</b> {model.specs.jetpaks}</p>
-                      <p><b>DIMENSIONS:</b><br/>{model.specs.dimensions}</p>
-                    </div>
-                    <p className="text-gray-600 mt-4 text-sm leading-relaxed text-left flex-grow">{model.description}</p>
-                  </CardContent>
-                </Card>
+                    />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">{model.name}</h3>
+                <div className="text-sm text-gray-600 font-semibold uppercase space-y-2 mb-4">
+                  <p>AVAILABLE SEATS: {model.specs.seats}</p>
+                  <p>JETPAKS: {model.specs.jetpaks}</p>
+                  <p>DIMENSIONS:<br/>{model.specs.dimensions}</p>
+                </div>
+                <p className="text-gray-600 mt-4 text-sm leading-relaxed text-left flex-grow">{model.description}</p>
               </FadeInOnScroll>
             ))}
           </div>
@@ -163,10 +136,21 @@ export default function MSeriesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gray-800 py-12">
-        <div className="container mx-auto px-4 text-center">
-            <h3 className="text-2xl font-semibold text-white">FOR MORE INFORMATION PLEASE DON&apos;T HESITATE TO</h3>
-            <h3 className="text-2xl font-semibold text-white">TALK WITH US IN THE CHATBOX!</h3>
+      <section className="bg-white py-12 border-t border-b border-gray-200">
+        <div className="container mx-auto px-4">
+           <FadeInOnScroll>
+            <div className="flex items-center justify-center gap-8">
+                <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/tmpw_imh3fc.webp?alt=media&token=49a0cdfb-d711-4eea-a4b5-3713bc4da3be"
+                    alt="Tubs of Fun Mascot"
+                    width={150}
+                    height={150}
+                    className="flex-shrink-0"
+                    data-ai-hint="company mascot"
+                />
+                <h3 className="text-2xl font-semibold text-gray-700">FOR MORE INFORMATION PLEASE DON'T HESITATE TO <br/>TALK WITH US IN THE CHATBOX!</h3>
+            </div>
+           </FadeInOnScroll>
         </div>
       </section>
 
@@ -181,7 +165,3 @@ export default function MSeriesPage() {
     </div>
   );
 }
-
-    
-
-    
