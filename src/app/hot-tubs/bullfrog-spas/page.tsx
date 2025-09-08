@@ -41,7 +41,7 @@ const spaSeries = [
         'Spa Models: 9',
         'Starting MSRP: $10,495-$24,995',
     ],
-    href: '#', // Placeholder link
+    href: '/hot-tubs/bullfrog-spas/a-series',
   },
   {
     name: 'X Series™ Spas',
@@ -59,7 +59,7 @@ const spaSeries = [
         'Spa Models: 7',
         'Starting MSRP: $7,995-$13,995',
     ],
-    href: '#', // Placeholder link
+    href: '/hot-tubs/bullfrog-spas/x-series',
   },
 ];
 
@@ -167,4 +167,3 @@ export default function BullfrogSpasPage() {
     </div>
   );
 }
-
