@@ -9,7 +9,7 @@ import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 const mSeriesModels = [
   {
     name: 'M9',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%E2%84%A2%20SPAS%2FM9.webp?alt=media&token=c19b33a7-5421-4d37-8395-58e1c6622416',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2FM9.webp?alt=media&token=e0a10b76-38d4-4aad-89b9-df3a89381740',
     alt: 'Top-down view of the M9 Spa layout',
     dataAiHint: 'spa layout',
     specs: {
