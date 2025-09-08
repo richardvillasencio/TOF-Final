@@ -45,7 +45,7 @@ const mSeriesModels = [
   },
   {
     name: 'M6',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2FM%20SERIES%E2%84-A2%20SPAS%2FM6.webp?alt=media&token=b71c7752-bfb2-4d2b-b6fd-8d297d025175',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fmseries%2FM6.webp?alt=media&token=850868e6-a3f5-45f3-9b66-2ce939b6acb6',
     alt: 'Top-down view of the M6 Spa layout',
     dataAiHint: 'spa layout',
     specs: {
