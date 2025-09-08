@@ -72,7 +72,7 @@ export default function ASeriesPage() {
       {/* Hero Section */}
       <section className="relative w-full text-white text-center">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2Faseries-hero.webp?alt=media&token=8ba080c9-9524-4f51-b84e-28958564e9a5"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FAseries.jpeg?alt=media&token=2a9cc36c-ca23-4e4d-8de4-f23dfc147526"
           alt="Man relaxing in a Bullfrog A-Series Spa"
           width={1920}
           height={800}
