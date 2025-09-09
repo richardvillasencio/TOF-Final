@@ -87,7 +87,7 @@ const aSeriesModels = [
   },
   { 
     name: 'A6', 
-    image: 'https://picsum.photos/300/300?random=4',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA6.webp?alt=media&token=aa107a60-7a2b-4ca2-ba93-3ee1cce27b78',
     dataAiHint: 'spa layout', 
     availableSeats: 6, 
     premiumJetpakSeats: '3 or 4*', 
@@ -260,5 +260,3 @@ export default function ASeriesPage() {
     </div>
   );
 }
-
-    
