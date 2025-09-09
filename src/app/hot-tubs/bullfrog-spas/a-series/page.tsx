@@ -78,7 +78,7 @@ const aSeriesModels = [
   },
   { 
     name: 'A7D', 
-    image: 'https://picsum.photos/300/300?random=3', 
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA7D.webp?alt=media&token=2eaede9d-0286-40dd-afc5-320f570060bd', 
     dataAiHint: 'spa layout', 
     availableSeats: 5, 
     premiumJetpakSeats: '4 or 5*', 
