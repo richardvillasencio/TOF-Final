@@ -105,7 +105,7 @@ const aSeriesModels = [
   },
   { 
     name: 'A5L', 
-    image: 'https://picsum.photos/300/300?random=6', 
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA5L.webp?alt=media&token=196507ef-c821-497c-aaa7-9d052c9063d6', 
     dataAiHint: 'spa layout', 
     availableSeats: 3, 
     premiumJetpakSeats: '2 or 3*', 
