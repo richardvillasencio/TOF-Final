@@ -58,12 +58,33 @@ const trimLevels = [
 ];
 
 const aSeriesModels = [
-  { name: 'A9L', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA9L.webp?alt=media&token=5b293672-005d-4f7f-8c38-89c560377e82', dataAiHint: 'spa layout', seats: 9, jetpaks: 7, dimensions: "9'4\" (2.84m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A8', image: 'https://picsum.photos/300/300?random=1', dataAiHint: 'spa layout', seats: 8, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A7', image: 'https://picsum.photos/300/300?random=2', dataAiHint: 'spa layout', seats: 7, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
-  { name: 'A7L', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA7L.webp?alt=media&token=25baf434-b0c8-4719-aba3-392dfc6a9979', dataAiHint: 'spa layout', seats: 6, jetpaks: 5, dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)" },
-  { name: 'A8L', image: 'https://picsum.photos/300/300?random=4', dataAiHint: 'spa layout', seats: 6, jetpaks: 6, dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)" },
-  { name: 'A6L', image: 'https://picsum.photos/300/300?random=5', dataAiHint: 'spa layout', seats: 5, jetpaks: 4, dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)" },
+  { 
+    name: 'A9L', 
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA9L.webp?alt=media&token=5b293672-005d-4f7f-8c38-89c560377e82', 
+    dataAiHint: 'spa layout', 
+    availableSeats: 9, 
+    premiumJetpakSeats: 7, 
+    loungeSeats: 1, 
+    dimensions: "9'2\" (2.77m) x 7'10\" (2.39m) x 3'2\" (.97m)" 
+  },
+  { 
+    name: 'A7L', 
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Faseries%2FA7L.webp?alt=media&token=25baf434-b0c8-4719-aba3-392dfc6a9979', 
+    dataAiHint: 'spa layout', 
+    availableSeats: 6, 
+    premiumJetpakSeats: '4 or 5*', 
+    loungeSeats: 1, 
+    dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 3' (.92m)" 
+  },
+  { 
+    name: 'A7D', 
+    image: 'https://picsum.photos/300/300?random=3', 
+    dataAiHint: 'spa layout', 
+    availableSeats: 5, 
+    premiumJetpakSeats: '4 or 5*', 
+    loungeSeats: 2, 
+    dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 3' (.92m)" 
+  },
 ];
 
 export default function ASeriesPage() {
@@ -156,7 +177,7 @@ export default function ASeriesPage() {
             <div className="w-24 h-1 bg-gray-300 mx-auto mb-12"></div>
           </FadeInOnScroll>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
             {aSeriesModels.map((model) => (
               <FadeInOnScroll key={model.name} className="flex flex-col text-center">
                 <div className="mb-6">
@@ -171,8 +192,9 @@ export default function ASeriesPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">{model.name}</h3>
                 <div className="text-sm text-gray-600 font-semibold uppercase space-y-2 mb-4">
-                  <p>AVAILABLE SEATS: {model.seats}</p>
-                  <p>JETPAKS: {model.jetpaks}</p>
+                  <p>AVAILABLE SEATS: {model.availableSeats}</p>
+                  <p>PREMIUM JETPAK SEATS: {model.premiumJetpakSeats}</p>
+                  <p>LOUNGE SEATS: {model.loungeSeats}</p>
                   <p>DIMENSIONS:<br/>{model.dimensions}</p>
                 </div>
               </FadeInOnScroll>
