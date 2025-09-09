@@ -2,58 +2,112 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
+import { Check } from 'lucide-react';
+
+const trimLevels = [
+  {
+    name: 'X Series Choice',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Choice.webp?alt=media&token=e937397b-c368-45a8-8e6f-7c182ac7601c',
+    dataAiHint: 'hot tub side',
+    features: [
+      'Premium interior lighting',
+      'Choice standard interior lighting',
+      'Choice standard jets (x series design)',
+      'Choice standard pump-size norms',
+    ]
+  },
+  {
+    name: 'X Series Select',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Select.webp?alt=media&token=8e9e1c2b-e525-46e3-96b5-555e54d85a06',
+    dataAiHint: 'hot tub side wood',
+    features: [
+      'Premium exterior lighting',
+      'Select premium interior lighting',
+      'Select premium Graphite w/ SS & Black finishes (x series design)',
+      'Select premium size (ie: when available Series, jets are attached to horsepower)',
+      'Premium touch-screen control',
+    ]
+  },
+];
 
 const xSeriesModels = [
   {
     name: 'X8',
-    image: 'https://picsum.photos/300/300?random=11',
-    alt: 'Top-down view of the X8 Spa layout',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8.webp?alt=media&token=be34a361-b769-4e08-9df2-5d46cfc3c861',
     dataAiHint: 'spa layout',
     specs: {
-      seats: 8,
-      jetCount: 44,
-      dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)"
+      seats: '8',
+      jetCount: '44',
+      dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)",
     },
-    description: "The X8 is a spacious and comfortable hot tub perfect for families and entertaining. It offers a variety of seating options and a powerful jet system for a relaxing hydrotherapy experience."
+    description: "The X8 is the classic 8-person hot tub that has something for everyone. With varied seating depths and jet configurations, there's a favorite seat for people of all shapes and sizes. Enjoy the company of friends and family or simply relax on your own. The X8 provides the versatile hydrotherapy experience you're looking for, all at a price you'll love."
+  },
+  {
+    name: 'X8L',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8L.webp?alt=media&token=262edb39-1fd1-4a1d-8e7c-87d0c3dd1b8a',
+    dataAiHint: 'spa layout',
+    specs: {
+      seats: '6',
+      jetCount: '45',
+      dimensions: "7'10\" (2.39m) x 7'10\" (2.39m) x 38\" (.97m)",
+    },
+    description: "In addition to a playing-style open seating area, the spacious X8L includes a relaxing lounge seat. This variety gives you the flexibility you're looking for. Enjoy a rejuvenating soak in the targeted therapy seats or get a full-body massage in the lounge. The X8L is the ultimate hot tub for the person who wants it all, with a price you can afford."
   },
   {
     name: 'X7',
-    image: 'https://picsum.photos/300/300?random=12',
-    alt: 'Top-down view of the X7 Spa layout',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX7.webp?alt=media&token=6a1a1f0a-b328-406a-9351-40487560a639',
     dataAiHint: 'spa layout',
     specs: {
-      seats: 7,
-      jetCount: 38,
-      dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)"
+      seats: '8',
+      jetCount: '38',
+      dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)",
     },
-    description: "A popular model, the X7 provides a great balance of features and value. It includes a comfortable lounge seat and a variety of jets to target key muscle groups."
+    description: "Designed to be spacious, therapeutic, and comfortable, the X7 is a well-rounded hot tub with a variety of seating options. It comes with an assortment of jets that are perfectly aligned to massage your tired muscles. In comparison, the X7 is similar to the X8 but with a slightly smaller footprint. You will find that this spa is perfect for spending time with family and will be a great addition to your yard."
+  },
+  {
+    name: 'X7L',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX7L.webp?alt=media&token=0f7823f6-5e5d-4bd9-937b-839396ac387b',
+    dataAiHint: 'spa layout',
+    specs: {
+      seats: '6',
+      jetCount: '41',
+      dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 36\" (.91m)",
+    },
+    description: "When it comes to creating a tranquil environment in a home, there are few things that provide the immediate comfort and therapy like the X7L hot tub. With its comfortable lounge and premium captain seats, you and your guests can enjoy a variety of massages. Designed with eight seats, the X7L allows you to enjoy the company of friends and family or just get some much-needed alone time."
   },
   {
     name: 'X6L',
-    image: 'https://picsum.photos/300/300?random=13',
-    alt: 'Top-down view of the X6L Spa layout',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX6L.webp?alt=media&token=c19c3c1e-b83c-47bb-a988-51829e1eb743',
     dataAiHint: 'spa layout',
     specs: {
-      seats: 6,
-      jetCount: 28,
-      dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)"
+      seats: '6',
+      jetCount: '28',
+      dimensions: "6'8\" (2.03m) x 7'4\" (2.24m) x 34\" (.86m)",
     },
-    description: "The X6L is designed for smaller spaces without sacrificing comfort. It features a lounge seat and provides a soothing hydrotherapy experience for up to 6 adults."
+    description: "For comprehensive hydrotherapy, the X6L is the ideal hot tub for recovery or for just relaxing. You can ease your muscles in the lounger after a long day or spend time with your loved ones in this compact, yet spacious, hot tub. Feel a sense of relief after a long evening relaxing with your family and friends."
+  },
+  {
+    name: 'X6R',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX6R.webp?alt=media&token=2409f6e5-47e0-4033-911b-32acb49ddedb',
+    dataAiHint: 'spa layout',
+    specs: {
+      seats: '6',
+      jetCount: '21',
+      dimensions: "dia. 6'6\" (1.98m) x 36\" (.91m)",
+    },
+    description: "The X6R is the new therapy experience from Bullfrog Spas. Ideal for enjoying a single life, but also for those family moments with children. Its circular shape will make it easier to fit into your backyard decor. Sit back comfortably in your spa and enjoy a state of maximum well being. Sit back comfortably in your spa and enjoy a state of maximum wellbeing, and create an aesthetically adaptable space for work."
   },
   {
     name: 'X5L',
-    image: 'https://picsum.photos/300/300?random=14',
-    alt: 'Top-down view of the X5L Spa layout',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX5L.webp?alt=media&token=98d975a6-96b6-45ef-b121-65476a66b7c5',
     dataAiHint: 'spa layout',
     specs: {
-      seats: 4,
-      jetCount: 21,
-      dimensions: "5'8\" (1.73m) x 7' (2.13m) x 31\" (.79m)"
+      seats: '4',
+      jetCount: '21',
+      dimensions: "5'8\" (1.73m) x 7' (2.13m) x 31\" (.79m)",
     },
-    description: "The most compact spa in the X Series, the X5L is perfect for balconies and small patios. It's a great entry-level hot tub that still offers the quality and reliability of Bullfrog Spas."
+    description: "If you're a person who wants to experience all the benefits of a hot tub, or enjoy a simple life with your loved ones, the X5L is the perfect spa for you. Compact and relaxing, this hot tub mobility allows you to create a comfortable space in your home without worrying about space. Sit down and enjoy a comfortable hydrotherapy session after the affordable hydrotherapy experience from your home available today."
   },
 ];
 
@@ -64,59 +118,78 @@ export default function XSeriesPage() {
       {/* Hero Section */}
       <section className="relative w-full text-white text-center">
         <Image
-          src="https://picsum.photos/1920/1080?random=15"
-          alt="Friends enjoying a Bullfrog X-Series Spa"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FXseries-banner.jpg?alt=media&token=96e00b8e-e7ff-46b0-af25-103362a7ed8f"
+          alt="Couple relaxing in a Bullfrog X-Series Spa"
           width={1920}
-          height={1080}
-          className="object-cover w-full h-auto"
+          height={800}
+          className="object-cover w-full h-auto max-h-[70vh]"
           priority
-          data-ai-hint="friends relaxing spa"
+          data-ai-hint="couple relaxing spa"
         />
-        <div className="w-full bg-gray-800 py-6">
+        <div className="w-full bg-[#4A555A] py-6">
           <FadeInOnScroll>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               X SERIES™
             </h1>
-            <p className="text-lg text-gray-300">Comfort Class</p>
+            <p className="text-lg text-gray-200">Comfort Class</p>
           </FadeInOnScroll>
         </div>
       </section>
 
-      {/* Introduction Section */}
+      {/* Trim Levels Section */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="container mx-auto px-4 text-center">
-            <FadeInOnScroll>
-                <div className="aspect-w-16 aspect-h-9 mx-auto max-w-4xl rounded-lg overflow-hidden shadow-xl">
-                  <iframe 
-                    src="https://www.youtube.com/embed/gHB0YcNOscc" 
-                    title="YouTube video player" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
-                <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mt-8">
-                    X Series™ spas offer the legendary engineering and reliability of Bullfrog Spas in a value-packed comfort-class line. Enjoy a luxurious spa experience at a price you'll love.
-                </p>
-            </FadeInOnScroll>
-        </div>
-      </section>
-
-      {/* Spa Models Section */}
-      <section className="bg-white pb-16 sm:pb-24">
         <div className="container mx-auto px-4">
           <FadeInOnScroll>
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">X Series™ Spa Models</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">X Series Trim Level Quick Comparison</h2>
+             <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-center mb-12">
+                Built with a pleasing design you will love that provides you a better value. Enjoy the premium series. Select your Trim level and then customize with your choice of options, upgrades, and accessories.
+            </p>
+          </FadeInOnScroll>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 max-w-4xl mx-auto">
+            {trimLevels.map((level) => (
+              <FadeInOnScroll key={level.name} className="flex flex-col text-center">
+                 <div className="mb-6 flex-shrink-0">
+                    <Image 
+                        src={level.image}
+                        alt={`Bullfrog Spa ${level.name}`}
+                        width={350}
+                        height={233}
+                        className="mx-auto"
+                        data-ai-hint={level.dataAiHint}
+                    />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">{level.name}</h3>
+                <ul className="space-y-3 text-left text-sm text-gray-600 flex-grow">
+                  {level.features.map(feature => (
+                    <li key={feature} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 mt-0.5 text-blue-600 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </FadeInOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Spa Models Section */}
+      <section className="bg-gray-50 py-16 sm:py-24">
+        <div className="container mx-auto px-4">
+          <FadeInOnScroll>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">X Series Spa Models</h2>
+            <p className="text-center text-gray-500 mb-4">Models shown in newest Trim-Level Packages</p>
             <div className="w-24 h-1 bg-gray-300 mx-auto mb-12"></div>
           </FadeInOnScroll>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
             {xSeriesModels.map((model) => (
               <FadeInOnScroll key={model.name} className="flex flex-col text-center">
-                 <div className="mb-6">
+                <div className="mb-6">
                     <Image 
                         src={model.image}
-                        alt={model.alt}
+                        alt={`Top-down view of the ${model.name} Spa layout`}
                         width={300}
                         height={300}
                         className="mx-auto"
@@ -129,7 +202,7 @@ export default function XSeriesPage() {
                   <p>JET COUNT: {model.specs.jetCount}</p>
                   <p>DIMENSIONS:<br/>{model.specs.dimensions}</p>
                 </div>
-                <p className="text-gray-600 mt-4 text-sm leading-relaxed text-left flex-grow">{model.description}</p>
+                 <p className="text-gray-600 mt-4 text-sm leading-relaxed text-left flex-grow">{model.description}</p>
               </FadeInOnScroll>
             ))}
           </div>
@@ -137,7 +210,7 @@ export default function XSeriesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-white py-12 border-t border-b border-gray-200">
+      <section className="bg-gray-800 py-12">
         <div className="container mx-auto px-4">
            <FadeInOnScroll>
             <div className="flex items-center justify-center gap-8">
@@ -149,7 +222,7 @@ export default function XSeriesPage() {
                     className="flex-shrink-0"
                     data-ai-hint="company mascot"
                 />
-                <h3 className="text-2xl font-semibold text-gray-700">FOR MORE INFORMATION PLEASE DON'T HESITATE TO <br/>TALK WITH US IN THE CHATBOX!</h3>
+                <h3 className="text-2xl font-semibold text-white">FOR MORE INFORMATION PLEASE DON'T HESITATE TO <br/>TALK WITH US IN THE CHATBOX!</h3>
             </div>
            </FadeInOnScroll>
         </div>
