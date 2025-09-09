@@ -85,6 +85,33 @@ const aSeriesModels = [
     loungeSeats: 2, 
     dimensions: "7'4\" (2.24m) x 7'4\" (2.24m) x 3' (.92m)" 
   },
+  { 
+    name: 'A6', 
+    image: 'https://picsum.photos/300/300?random=4',
+    dataAiHint: 'spa layout', 
+    availableSeats: 6, 
+    premiumJetpakSeats: '3 or 4*', 
+    loungeSeats: 0, 
+    dimensions: "7'4\" (2.24m) x 6'8\" (2.03m) x 2'10\" (.86m)"
+  },
+  { 
+    name: 'A6L', 
+    image: 'https://picsum.photos/300/300?random=5', 
+    dataAiHint: 'spa layout', 
+    availableSeats: 6, 
+    premiumJetpakSeats: '3 or 4*', 
+    loungeSeats: 1, 
+    dimensions: "7'4\" (2.24m) x 6'8\" (2.03m) x 2'10\" (.86m)"
+  },
+  { 
+    name: 'A5L', 
+    image: 'https://picsum.photos/300/300?random=6', 
+    dataAiHint: 'spa layout', 
+    availableSeats: 3, 
+    premiumJetpakSeats: '2 or 3*', 
+    loungeSeats: 1, 
+    dimensions: "5'8\" (1.72m) x 7' (2.13m) x 2'8\" (.81m)"
+  },
 ];
 
 export default function ASeriesPage() {
@@ -233,3 +260,5 @@ export default function ASeriesPage() {
     </div>
   );
 }
+
+    
