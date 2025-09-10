@@ -19,7 +19,7 @@ const trimLevels = [
   },
   {
     name: 'X Series Select',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Select.webp?alt=media&token=8e9e1c2b-e525-46e3-96b5-555e54d85a06',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.png?alt=media&token=2d6e80ce-b0e7-4202-952a-df887b43b462',
     dataAiHint: 'hot tub side wood',
     features: [
       'Premium exterior lighting',
