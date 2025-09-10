@@ -8,7 +8,7 @@ import { Check } from 'lucide-react';
 const trimLevels = [
   {
     name: 'X Series Choice',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Choice.webp?alt=media&token=e113a69a-0e9e-4c75-b6a1-55c3298a0914',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.webp?alt=media&token=6a0c1c0e-74cf-4208-b79b-e6b2f3eaaf1f',
     dataAiHint: 'hot tub side',
     features: [
       'Premium interior lighting',
