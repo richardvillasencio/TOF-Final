@@ -8,7 +8,7 @@ import { Check } from 'lucide-react';
 const trimLevels = [
   {
     name: 'X Series Choice',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Choice.webp?alt=media&token=e937397b-c368-45a8-8e6f-7c182ac7601c',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.png?alt=media&token=2d6e80ce-b0e7-4202-952a-df887b43b462',
     dataAiHint: 'hot tub side',
     features: [
       'Premium interior lighting',
@@ -118,7 +118,7 @@ export default function XSeriesPage() {
       {/* Hero Section */}
       <section className="relative w-full text-white text-center">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FxseriesBanner.jpeg?alt=media"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FBullfrog-Spas-2022-X-Series-Lifestyle-Couple-in-Spa-with-Dog-01-scaled.jpg?alt=media&token=86d70a4c-5353-43f6-93a8-4228c2e64627"
           alt="Couple relaxing in a Bullfrog X-Series Spa"
           width={1920}
           height={800}
