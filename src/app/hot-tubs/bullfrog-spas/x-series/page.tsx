@@ -45,7 +45,7 @@ const xSeriesModels = [
   },
   {
     name: 'X8L',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8L.webp?alt=media&token=262edb39-1fd1-4a1d-8e7c-87d0c3dd1b8a',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8L.png?alt=media&token=1d2efe96-126a-439f-a707-f04cb2118a4b',
     dataAiHint: 'spa layout',
     specs: {
       seats: '6',
