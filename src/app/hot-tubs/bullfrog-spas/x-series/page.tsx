@@ -8,7 +8,7 @@ import { Check } from 'lucide-react';
 const trimLevels = [
   {
     name: 'X Series Choice',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.webp?alt=media&token=6a0c1c0e-74cf-4208-b79b-e6b2f3eaaf1f',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Choice.webp?alt=media&token=e113a69a-0e9e-4c75-b6a1-55c3298a0914',
     dataAiHint: 'hot tub side',
     features: [
       'Premium interior lighting',
@@ -19,7 +19,7 @@ const trimLevels = [
   },
   {
     name: 'X Series Select',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Select.png?alt=media&token=489e2f69-f831-4822-995b-7b1a1361732a',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.png?alt=media&token=2d6e80ce-b0e7-4202-952a-df887b43b462',
     dataAiHint: 'hot tub side wood',
     features: [
       'Premium exterior lighting',
