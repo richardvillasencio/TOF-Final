@@ -19,7 +19,7 @@ const trimLevels = [
   },
   {
     name: 'X Series Select',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series.png?alt=media&token=2d6e80ce-b0e7-4202-952a-df887b43b462',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX%20Series%20Select.png?alt=media&token=489e2f69-f831-4822-995b-7b1a1361732a',
     dataAiHint: 'hot tub side wood',
     features: [
       'Premium exterior lighting',
@@ -34,7 +34,7 @@ const trimLevels = [
 const xSeriesModels = [
   {
     name: 'X8',
-    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8.webp?alt=media&token=be34a361-b769-4e08-9df2-5d46cfc3c861',
+    image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FX8.png?alt=media&token=82d2ce3f-e5d5-43f3-9ff3-abcff7b1ec29',
     dataAiHint: 'spa layout',
     specs: {
       seats: '8',
