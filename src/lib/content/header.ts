@@ -47,11 +47,6 @@ export const headerContent: HeaderContent = {
           id: 'main-1-1',
           href: '/hot-tubs/bullfrog-spas',
           label: 'Bullfrog Spas',
-        },
-        {
-          id: 'main-1-2',
-          href: '/hot-tubs/qca-spas',
-          label: 'QCA Spas',
         }
       ],
     },

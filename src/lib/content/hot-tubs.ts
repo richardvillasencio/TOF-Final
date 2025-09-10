@@ -29,15 +29,14 @@ export const hotTubsContent: PageSection[] = [
         component: 'FeaturedBrandsSection',
         props: {
             subtitle: 'PREMIUM BRANDS',
-            title: 'Featuring Bullfrog & QCA Spas',
-            description: 'We exclusively carry the most innovative and reliable brands in the industry. Bullfrog Spas offer the patented JetPak Therapy System™ for a personalized massage experience. QCA Spas are renowned for their quality craftsmanship and energy efficiency.',
+            title: 'Featuring Bullfrog Spas',
+            description: 'We exclusively carry the most innovative and reliable brands in the industry. Bullfrog Spas offer the patented JetPak Therapy System™ for a personalized massage experience.',
             brands: [
                 { name: 'Bullfrog Spas', logoUrl: 'https://placehold.co/400x300.png', dataAiHint: 'brand logo', href: '/hot-tubs/bullfrog-spas' },
-                { name: 'QCA Spas', logoUrl: 'https://placehold.co/400x300.png', dataAiHint: 'brand logo 2', href: '/hot-tubs/qca-spas' },
             ],
             buttons: {
                 primary: { href: '/hot-tubs/bullfrog-spas', text: 'Explore Bullfrog' },
-                secondary: { href: '/hot-tubs/qca-spas', text: 'Explore QCA' },
+                secondary: { href: '/contact', text: 'Request Info' },
             }
         }
     },
@@ -48,11 +47,8 @@ export const hotTubsContent: PageSection[] = [
             title: 'Our Hot Tub Collection',
             products: [
                 { name: 'M-Series M9', category: 'Bullfrog Spas', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'luxury spa night', href: '/hot-tubs/bullfrog-spas/m-series', price: 'Call for Price' },
-                { name: 'Star Series Spa', category: 'QCA Spas', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'round hot tub', href: '/hot-tubs/qca-spas/star', price: 'Call for Price' },
                 { name: 'Model Ultra', category: 'Premium Series', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'modern hot tub', href: '/hot-tubs/models/ultra', price: 'View Details' },
                 { name: 'Model Aquarius', category: 'Premium Series', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'family hot tub', href: '/hot-tubs/models/aquarius', price: 'View Details' },
-                { name: 'Majestic Series Spa', category: 'QCA Spas', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'patio spa', href: '/hot-tubs/qca-spas/majestic', price: 'Call for Price' },
-                { name: 'Jewel Series Spa', category: 'QCA Spas', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'compact hot tub', href: '/hot-tubs/qca-spas/jewel', price: 'Call for Price' },
                 { name: 'Model Pisces', category: 'Premium Series', imageUrl: 'https://placehold.co/600x400.png', imageHint: 'relaxing spa', href: '/hot-tubs/models/pisces', price: 'View Details' },
             ]
         }
