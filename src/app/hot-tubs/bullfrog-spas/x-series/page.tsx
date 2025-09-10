@@ -118,7 +118,7 @@ export default function XSeriesPage() {
       {/* Hero Section */}
       <section className="relative w-full text-white text-center">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FBullfrog-Spas-2022-X-Series-Lifestyle-Couple-in-Spa-with-Dog-01-scaled.jpg?alt=media&token=86d70a4c-5353-43f6-93a8-4228c2e64627"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/BullfrogSpa%2Fxseries%2FxseriesBanner.jpeg?alt=media&token=c5661243-9038-435e-82dc-00090e85396e"
           alt="Couple relaxing in a Bullfrog X-Series Spa"
           width={1920}
           height={800}
