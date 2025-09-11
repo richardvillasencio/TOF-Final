@@ -64,7 +64,7 @@ export default function SaunasPage() {
           src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fsauna%20banner.jpeg?alt=media&token=fe69d19e-e7ff-403c-a3a4-53164de1eb21"
           alt="Woman relaxing in a premium sauna"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           data-ai-hint="woman relaxing sauna"
         />
@@ -174,5 +174,3 @@ export default function SaunasPage() {
     </div>
   );
 }
-
-    
