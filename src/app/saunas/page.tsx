@@ -150,7 +150,7 @@ export default function SaunasPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fwellness-journey.jpg?alt=media&token=07c21f1e-797a-426c-8515-3e5401344426"
+                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2F67e2e214bc74225e131a2155.jpeg?alt=media&token=a4b0c426-d657-41c4-ae0d-72e59a5063ca"
                   alt="Woman enjoying the wellness benefits of a sauna"
                   width={600}
                   height={700}
