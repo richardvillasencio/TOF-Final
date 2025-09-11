@@ -9,6 +9,13 @@ import { FadeInOnScroll } from '@/components/animations/fade-in-on-scroll';
 
 const saunaBrands = [
     {
+        name: 'QCA Saunas',
+        description: 'Blending innovation with relaxation, QCA Saunas offers a diverse range of infrared and traditional saunas designed for energy efficiency and superior performance. Known for their easy installation and high-quality craftsmanship, these saunas bring spo-like comfort right to your home.',
+        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fqcasuanas.webp?alt=media&token=86a11707-88e4-4482-9951-a20c3a81a7b6',
+        dataAiHint: 'woman relaxing sauna',
+        href: '#',
+    },
+    {
         name: 'Golden Designs',
         description: 'Combining modern technology with luxury design, Golden Designs specializes in infrared saunas that offer low EMF emissions, energy efficiency, and therapeutic benefits. These sleek, easy-to-use saunas are perfect for anyone looking to enjoy detoxification, stress relief, and improved circulation in the comfort of their home.',
         image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FGolden%20Designs.webp?alt=media&token=8e9f50e8-d102-45e8-8a4d-c052d9a9f243',
@@ -17,16 +24,9 @@ const saunaBrands = [
     },
     {
         name: 'Almost Heaven',
-        description: 'With a legacy rooted in authentic Finnish sauna traditions, Almost Heaven Saunas is renowned for its beautifully crafted barrel and indoor saunas. Built from premium-grade lumber and designed for exceptional heat retention, these saunas provide the ultimate steam therapy experience for deep relaxation and wellness.',
-        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FAlmost%20Heaven.webp?alt=media&token=f0d2c0b3-6c8a-4933-9188-51838634e2c2',
-        dataAiHint: 'barrel sauna outdoor',
-        href: '#',
-    },
-    {
-        name: 'Finlandia',
-        description: 'Experience authentic Finnish craftsmanship with Finlandia. These saunas are built with premium woods and offer a traditional sauna experience, known for promoting relaxation, improving circulation, and cleansing the body through deep, comforting heat.',
-        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FFinlandia.webp?alt=media&token=0b604a8e-28f0-45f8-857e-f6335a14d593',
-        dataAiHint: 'traditional finnish sauna',
+        description: "With a legacy rooted in authentic Finnish sauna traditions, Almost Heaven Saunas is renowned for its beautifully crafted barrel and indoor saunas. Built from premium-grade lumber and designed for exceptional heat retention, these saunas provide the ultimate steam therapy experience for deep relaxation and wellness.",
+        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Falmsotheaven.webp?alt=media&token=ea5c39ce-3531-411a-85d0-99e82a933f4a',
+        dataAiHint: 'woman entering sauna',
         href: '#',
     }
 ];
@@ -40,7 +40,7 @@ export default function SaunasPage() {
           src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fsauna%20banner.jpeg?alt=media&token=fe69d19e-e7ff-403c-a3a4-53164de1eb21"
           alt="Woman relaxing in a premium sauna"
           fill
-          className="object-cover object-top"
+          className="object-cover object-center"
           priority
           data-ai-hint="woman relaxing sauna"
         />
