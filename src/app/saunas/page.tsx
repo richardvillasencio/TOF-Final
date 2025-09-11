@@ -25,7 +25,7 @@ const saunaBrands = [
     {
         name: 'Almost Heaven',
         description: "With a legacy rooted in authentic Finnish sauna traditions, Almost Heaven Saunas is renowned for its beautifully crafted barrel and indoor saunas. Built from premium-grade lumber and designed for exceptional heat retention, these saunas provide the ultimate steam therapy experience for deep relaxation and wellness.",
-        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FAlmost%20Heaven.webp?alt=media',
+        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FAlmost%20Heaven.webp?alt=media&token=38a8e188-d38a-4933-a3a8-4e12e3e2b204',
         dataAiHint: 'woman entering sauna',
         href: '#',
     }
@@ -130,7 +130,7 @@ export default function SaunasPage() {
               </div>
               <div className="rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FSauna-cta.webp?alt=media&token=25081f96-3c0e-436d-9781-8319f391b157"
+                  src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2F67e2e214bc74225e131a2155.jpeg?alt=media&token=a4b0c426-d657-41c4-ae0d-72e59a5063ca"
                   alt="Woman enjoying the wellness benefits of a sauna"
                   width={600}
                   height={400}
