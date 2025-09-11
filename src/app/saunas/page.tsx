@@ -61,7 +61,7 @@ export default function SaunasPage() {
       {/* Hero Section */}
       <section className="relative h-[70vh] w-full flex items-center justify-center text-white text-center overflow-hidden">
         <Image
-          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fsauna-hero-new.jpg?alt=media&token=9635560b-8533-4f9e-953b-e01e4a64d1ea"
+          src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fsauna%20banner.jpeg?alt=media&token=fe69d19e-e7ff-403c-a3a4-53164de1eb21"
           alt="Woman relaxing in a premium sauna"
           fill
           className="object-cover"
