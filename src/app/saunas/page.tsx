@@ -11,7 +11,7 @@ const saunaBrands = [
     {
         name: 'QCA Saunas',
         description: 'Blending innovation with relaxation, QCA Saunas offers a diverse range of infrared and traditional saunas designed for energy efficiency and superior performance. Known for their easy installation and high-quality craftsmanship, these saunas bring spo-like comfort right to your home.',
-        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fqcasuanas.webp?alt=media&token=86a11707-88e4-4482-9951-a20c3a81a7b6',
+        image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2FQCA%20Saunas.webp?alt=media&token=0e5f04dd-494e-49a9-8a68-3579fed68042',
         dataAiHint: 'woman relaxing sauna',
         href: '#',
     },
@@ -40,7 +40,7 @@ export default function SaunasPage() {
           src="https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Saunas%2Fsauna%20banner.jpeg?alt=media&token=fe69d19e-e7ff-403c-a3a4-53164de1eb21"
           alt="Woman relaxing in a premium sauna"
           fill
-          className="object-cover object-center"
+          className="object-cover object-center-top"
           priority
           data-ai-hint="woman relaxing sauna"
         />
