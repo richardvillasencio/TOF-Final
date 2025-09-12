@@ -55,6 +55,18 @@ export const headerContent: HeaderContent = {
       id: 'main-3',
       href: '/pools',
       label: 'POOL',
+      subLinks: [
+        {
+          id: 'main-3-1',
+          href: '/pools',
+          label: 'ABOVE GROUND POOLS',
+        },
+        {
+          id: 'main-3-2',
+          href: '/pools/endless-pools',
+          label: 'SWIM MACHINES',
+        }
+      ],
     },
     {
       id: 'main-4',
