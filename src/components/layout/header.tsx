@@ -132,6 +132,7 @@ const DesktopNav = ({ links, isMain }: { links: NavLink[], isMain?: boolean }) =
           <MenubarMenu key={link.id}>
             <MenubarTrigger asChild>
                <Button
+                asChild
                 variant="ghost"
                 className={cn(
                   'font-semibold text-white uppercase',
@@ -142,13 +143,10 @@ const DesktopNav = ({ links, isMain }: { links: NavLink[], isMain?: boolean }) =
                   'hover:bg-white/20 hover:text-white'
                 )}
               >
-                {link.subLinks && link.subLinks.length > 0 ? (
-                  <span>{link.label}</span>
-                ) : (
-                  <Link href={link.href}>{link.label}</Link>
-                )}
-
-                {link.subLinks && link.subLinks.length > 0 && <ChevronDown className="h-4 w-4 ml-1" />}
+                <Link href={link.href}>
+                  {link.label}
+                  {link.subLinks && link.subLinks.length > 0 && <ChevronDown className="h-4 w-4 ml-1" />}
+                </Link>
               </Button>
             </MenubarTrigger>
             {link.subLinks && link.subLinks.length > 0 && renderSubLinks(link.subLinks)}
