@@ -6,8 +6,8 @@ import { Calendar, Clock, MapPin, User, ChevronLeft, ChevronRight, Sparkles } fr
 import Link from 'next/link';
 
 export function BookingSection() {
-  const [selectedDate, setSelectedDate] = useState(new Date(2025, 7, 14)); // August 14, 2025
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 7, 1));
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('15 Mins');
   const [isVisible, setIsVisible] = useState(false);
 
