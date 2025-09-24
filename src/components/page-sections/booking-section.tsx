@@ -86,7 +86,7 @@ export function BookingSection() {
                 <span className="text-slate-800 font-semibold">WE INVITE YOU TO COME</span> and take a{' '}
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-bold">TEST DIP</span>{' '}
                 in one of our beautiful{' '}
-                <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">HOT TUBS</span>{' '}
+                <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">HOT TUBS</span>{'_'}
                 to see why one is right for{' '}
                 <span className="text-slate-800 font-semibold">YOUR HOME!</span>
               </p>
