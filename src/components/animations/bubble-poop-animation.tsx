@@ -31,56 +31,57 @@ export default function BubblePoopAnimation() {
   const [splashes, setSplashes] = useState<any[]>([]);
   const [sparkles, setSparkles] = useState<any[]>([]);
 
-  const createBubble = () => {
-    const newBubble = {
-      id: Date.now() + Math.random(),
-      x: Math.random() * 80 + 10, // Random x position (10% to 90%)
-      startTime: Date.now(),
-      size: Math.random() * 30 + 40, // Random size between 40-70px
-      duration: Math.random() * 4000 + 8000, // 8-12 seconds to reach top
-    };
-    
-    setBubbles(prev => [...prev, newBubble]);
-    
-    // Create splash when bubble "pops" at the top
-    setTimeout(() => {
-      createSplash(newBubble.x, newBubble.size, setSplashes);
-      setBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
-    }, newBubble.duration);
-  };
-
-  const createPoop = (bubbleX: number) => {
-    // Create multiple small poops
-    const numPoops = Math.floor(Math.random() * 3) + 2; // 2-4 poops
-    
-    for (let i = 0; i < numPoops; i++) {
-      const newPoop = {
-        id: Date.now() + Math.random() + i,
-        x: bubbleX + (Math.random() - 0.5) * 20, // Spread around bubble position
-        y: Math.random() * 20 + 40, // Start near middle-bottom
-        rotation: Math.random() * 360,
-        size: Math.random() * 8 + 6, // Small poops 6-14px
-        opacity: 1,
+  useEffect(() => {
+    // This function now runs only on the client, after the initial render.
+    const createBubble = () => {
+      const newBubble = {
+        id: Date.now() + Math.random(),
+        x: Math.random() * 80 + 10, // Random x position (10% to 90%)
+        startTime: Date.now(),
+        size: Math.random() * 30 + 40, // Random size between 40-70px
+        duration: Math.random() * 4000 + 8000, // 8-12 seconds to reach top
       };
       
-      setPoops(prev => [...prev, newPoop]);
+      setBubbles(prev => [...prev, newBubble]);
       
-      // Fade out and remove poop
+      // Create splash when bubble "pops" at the top
       setTimeout(() => {
-        setPoops(prev => prev.map(poop => 
-          poop.id === newPoop.id 
-            ? { ...poop, opacity: 0 }
-            : poop
-        ));
-        
-        setTimeout(() => {
-          setPoops(prev => prev.filter(poop => poop.id !== newPoop.id));
-        }, 500);
-      }, 1000);
-    }
-  };
+        createSplash(newBubble.x, newBubble.size, setSplashes);
+        setBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
+      }, newBubble.duration);
+    };
 
-  useEffect(() => {
+    const createPoop = (bubbleX: number) => {
+      const numPoops = Math.floor(Math.random() * 3) + 2; // 2-4 poops
+      
+      for (let i = 0; i < numPoops; i++) {
+        const newPoop = {
+          id: Date.now() + Math.random() + i,
+          x: bubbleX + (Math.random() - 0.5) * 20, // Spread around bubble position
+          y: Math.random() * 20 + 40, // Start near middle-bottom
+          rotation: Math.random() * 360,
+          size: Math.random() * 8 + 6, // Small poops 6-14px
+          opacity: 1,
+        };
+        
+        setPoops(prev => [...prev, newPoop]);
+        
+        // Fade out and remove poop
+        setTimeout(() => {
+          setPoops(prev => prev.map(poop => 
+            poop.id === newPoop.id 
+              ? { ...poop, opacity: 0 }
+              : poop
+          ));
+          
+          setTimeout(() => {
+            setPoops(prev => prev.filter(poop => poop.id !== newPoop.id));
+          }, 500);
+        }, 1000);
+      }
+    };
+
+
     // Generate sparkles on client-side only to prevent hydration mismatch
     const generatedSparkles = Array.from({ length: 15 }).map((_, i) => ({
         id: i,

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -6,41 +5,51 @@ import { Calendar, Clock, MapPin, User, ChevronLeft, ChevronRight, Sparkles } fr
 import Link from 'next/link';
 
 export function BookingSection() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('15 Mins');
   const [isVisible, setIsVisible] = useState(false);
+  const [days, setDays] = useState<(Date | null)[]>([]);
+  const [monthName, setMonthName] = useState('');
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Set initial selected date to today
+    const today = new Date();
+    setSelectedDate(today);
+    setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1));
   }, []);
 
-  const timeSlots = ['15 Mins', '30 Mins', '45 Mins', '60 Mins'];
+  useEffect(() => {
+    const getDaysInMonth = (date: Date) => {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
 
-  const getDaysInMonth = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
+      const daysArray = [];
+      
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        daysArray.push(null);
+      }
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        daysArray.push(new Date(year, month, day));
+      }
+      
+      return daysArray;
+    };
 
-    const days = [];
-    
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
-    }
-    
-    // Add all days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push(new Date(year, month, day));
-    }
-    
-    return days;
-  };
+    setDays(getDaysInMonth(currentMonth));
+    setMonthName(currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+  }, [currentMonth]);
 
-  const formatDate = (date: Date) => {
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'No date selected';
     return date.toLocaleDateString('en-US', { 
       weekday: 'short', 
       month: 'short', 
@@ -50,13 +59,12 @@ export function BookingSection() {
   };
 
   const navigateMonth = (direction: number) => {
-    const newMonth = new Date(currentMonth);
-    newMonth.setMonth(currentMonth.getMonth() + direction);
-    setCurrentMonth(newMonth);
+    setCurrentMonth(prev => {
+      const newMonth = new Date(prev);
+      newMonth.setMonth(prev.getMonth() + direction);
+      return newMonth;
+    });
   };
-
-  const days = getDaysInMonth(currentMonth);
-  const monthName = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 relative overflow-hidden">
@@ -128,7 +136,7 @@ export function BookingSection() {
                   <span className="text-slate-700 font-medium">Duration</span>
                 </div>
                 <div className="flex gap-2">
-                  {timeSlots.map((slot) => (
+                  {['15 Mins', '30 Mins', '45 Mins', '60 Mins'].map((slot) => (
                     <button
                       key={slot}
                       onClick={() => setSelectedTime(slot)}
@@ -191,7 +199,7 @@ export function BookingSection() {
                           <button
                             onClick={() => setSelectedDate(day)}
                             className={`w-8 h-8 rounded-lg text-sm font-medium transition-all duration-200 ${
-                              day.toDateString() === selectedDate.toDateString()
+                              selectedDate && day.toDateString() === selectedDate.toDateString()
                                 ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg scale-110'
                                 : day.getTime() < new Date().setHours(0, 0, 0, 0)
                                 ? 'text-slate-400 cursor-not-allowed'
