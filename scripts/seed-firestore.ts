@@ -1,3 +1,4 @@
+
 // A script to seed the Firestore database with initial page content.
 // Note: Next.js automatically loads environment variables from .env.local, so dotenv is not needed for this script when run with tsx.
 import { adminDb } from '../src/lib/firebase/admin';
