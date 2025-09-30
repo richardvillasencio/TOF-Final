@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { BookingSection } from '@/components/page-sections/booking-section';
 import Link from 'next/link';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 const services = [
   { name: 'HOT TUBS', image: 'https://firebasestorage.googleapis.com/v0/b/tubclone.firebasestorage.app/o/Services%20images%2FHottubs.webp?alt=media&token=f55778aa-72cf-477f-bbdf-4c480286ab70', dataAiHint: 'hot tub' },
@@ -55,7 +56,7 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative h-[95vh] text-primary-foreground flex items-center justify-center text-center hero-section">
-        <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster="https://placehold.co/1920x1080.png">
+        <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0" poster={placeholderImages.home.hero_poster}>
           <source src="https://storage.googleapis.com/msgsndr/Q8i1yKqsccON1uqGARTN/media/679284b1c21e371866b0d7ab.mp4" type="video/mp4" />
         </video>
         <div className="absolute top-0 left-0 w-full h-full z-10 bg-black/70"></div>
@@ -319,7 +320,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
-
-    

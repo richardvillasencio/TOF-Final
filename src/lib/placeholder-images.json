@@ -1,0 +1,133 @@
+{
+  "gallery": [
+    {
+      "src": "https://picsum.photos/seed/101/800/600",
+      "alt": "Luxury hot tub at night",
+      "dataAiHint": "luxury hot tub"
+    },
+    {
+      "src": "https://picsum.photos/seed/102/800/600",
+      "alt": "Close-up of water jets in a spa",
+      "dataAiHint": "water jets"
+    },
+    {
+      "src": "https://picsum.photos/seed/103/800/600",
+      "alt": "Family enjoying a spacious hot tub",
+      "dataAiHint": "family relaxing"
+    },
+    {
+      "src": "https://picsum.photos/seed/104/800/600",
+      "alt": "Modern hot tub in a backyard patio setting",
+      "dataAiHint": "backyard spa"
+    }
+  ],
+  "about": {
+    "hero": {
+      "src": "https://picsum.photos/seed/201/1920/600",
+      "alt": "Exterior of a modern building",
+      "dataAiHint": "company building exterior"
+    },
+    "story": {
+      "src": "https://picsum.photos/seed/202/600/400",
+      "alt": "Family enjoying a hot tub together",
+      "dataAiHint": "company history family"
+    }
+  },
+  "team": [
+    {
+      "name": "John Doe",
+      "role": "Founder & CEO",
+      "image": "https://picsum.photos/seed/301/400/400",
+      "dataAiHint": "professional portrait man"
+    },
+    {
+      "name": "Jane Smith",
+      "role": "Head of Sales",
+      "image": "https://picsum.photos/seed/302/400/400",
+      "dataAiHint": "professional portrait woman"
+    },
+    {
+      "name": "Mike Johnson",
+      "role": "Lead Technician",
+      "image": "https://picsum.photos/seed/303/400/400",
+      "dataAiHint": "friendly worker"
+    },
+    {
+      "name": "Emily Brown",
+      "role": "Customer Relations",
+      "image": "https://picsum.photos/seed/304/400/400",
+      "dataAiHint": "customer service representative"
+    }
+  ],
+  "contact": {
+    "hero": {
+      "src": "https://picsum.photos/seed/401/1920/600",
+      "alt": "Customer service representative smiling",
+      "dataAiHint": "customer service representative"
+    }
+  },
+  "design_studio": {
+    "hero": {
+      "src": "https://picsum.photos/seed/501/1920/1080",
+      "alt": "Serene and modern interior design",
+      "dataAiHint": "serene modern interior"
+    },
+    "grid": {
+      "src": "https://picsum.photos/seed/502/600/400",
+      "alt": "Team working together on a design",
+      "dataAiHint": "team working"
+    }
+  },
+  "hot_tubs": {
+    "hero": {
+      "src": "https://picsum.photos/seed/601/1920/600",
+      "alt": "Hot tub with a sunset view",
+      "dataAiHint": "hot tub sunset"
+    },
+    "brands": [
+      {
+        "name": "Bullfrog Spas",
+        "logoUrl": "https://picsum.photos/seed/602/400/300",
+        "dataAiHint": "brand logo",
+        "href": "/hot-tubs/bullfrog-spas"
+      }
+    ],
+    "collection": [
+      {
+        "name": "M-Series M9",
+        "category": "Bullfrog Spas",
+        "imageUrl": "https://picsum.photos/seed/603/600/400",
+        "imageHint": "luxury spa night",
+        "href": "/hot-tubs/bullfrog-spas/m-series",
+        "price": "Call for Price"
+      },
+      {
+        "name": "Model Ultra",
+        "category": "Premium Series",
+        "imageUrl": "https://picsum.photos/seed/604/600/400",
+        "imageHint": "modern hot tub",
+        "href": "/hot-tubs/models/ultra",
+        "price": "View Details"
+      },
+      {
+        "name": "Model Aquarius",
+        "category": "Premium Series",
+        "imageUrl": "https://picsum.photos/seed/605/600/400",
+        "imageHint": "family hot tub",
+        "href": "/hot-tubs/models/aquarius",
+        "price": "View Details"
+      },
+      {
+        "name": "Model Pisces",
+        "category": "Premium Series",
+        "imageUrl": "https://picsum.photos/seed/606/600/400",
+        "imageHint": "relaxing spa",
+        "href": "/hot-tubs/models/pisces",
+        "price": "View Details"
+      }
+    ]
+  },
+  "home": {
+    "hero_poster": "https://picsum.photos/seed/701/1920/1080"
+  }
+}

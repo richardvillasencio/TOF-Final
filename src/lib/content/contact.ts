@@ -1,6 +1,8 @@
+
 import type { HeroSectionProps } from '@/components/page-sections/hero-section';
 import type { ContactFormSectionProps } from '@/components/page-sections/contact-form-section';
 import type { LocationsSectionProps } from '@/components/page-sections/locations-section';
+import placeholderImages from './placeholder-images.json';
 
 export type PageSection = 
   | { component: 'HeroSection'; props: Omit<HeroSectionProps, 'id'>, id: string }
@@ -12,7 +14,7 @@ export const contactContent: PageSection[] = [
         id: 'hero',
         component: 'HeroSection',
         props: {
-            backgroundImage: 'https://placehold.co/1920x600.png',
+            backgroundImage: placeholderImages.contact.hero.src,
             backgroundHint: 'customer service representative smiling',
             title: 'Get In Touch',
             subtitle: "We're here to help! Contact us with any questions or visit one of our showrooms.",

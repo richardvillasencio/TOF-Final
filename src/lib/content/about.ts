@@ -1,7 +1,9 @@
+
 import type { HeroSectionProps } from '@/components/page-sections/hero-section';
 import type { TextWithImageSectionProps } from '@/components/page-sections/text-with-image-section';
 import type { MissionVisionSectionProps } from '@/components/page-sections/mission-vision-section';
 import type { TeamSectionProps } from '@/components/page-sections/team-section';
+import placeholderImages from './placeholder-images.json';
 
 export type PageSection = 
   | { component: 'HeroSection'; props: Omit<HeroSectionProps, 'id'>, id: string }
@@ -14,7 +16,7 @@ export const aboutContent: PageSection[] = [
     id: 'hero',
     component: 'HeroSection',
     props: {
-      backgroundImage: 'https://placehold.co/1920x600.png',
+      backgroundImage: placeholderImages.about.hero.src,
       backgroundHint: 'company building exterior',
       title: 'About TubClone',
       subtitle: 'Your trusted partner in home relaxation and recreation for over 20 years.',
@@ -34,7 +36,7 @@ export const aboutContent: PageSection[] = [
         "From our humble beginnings in Fargo, we expanded to our second location in Lakeville to better serve our growing family of customers. Despite our growth, our core values remain the same: integrity, quality, and unparalleled customer service."
       ],
       image: {
-        src: 'https://placehold.co/600x400.png',
+        src: placeholderImages.about.story.src,
         alt: 'Family enjoying a hot tub',
         dataAiHint: 'company history family'
       },
@@ -69,12 +71,7 @@ export const aboutContent: PageSection[] = [
     component: 'TeamSection',
     props: {
         title: 'Meet Our Team',
-        members: [
-            { name: 'John Doe', role: 'Founder & CEO', image: 'https://placehold.co/400x400.png', dataAiHint: 'professional portrait man' },
-            { name: 'Jane Smith', role: 'Head of Sales', image: 'https://placehold.co/400x400.png', dataAiHint: 'professional portrait woman' },
-            { name: 'Mike Johnson', role: 'Lead Technician', image: 'https://placehold.co/400x400.png', dataAiHint: 'friendly worker' },
-            { name: 'Emily Brown', role: 'Customer Relations', image: 'https://placehold.co/400x400.png', dataAiHint: 'customer service representative' },
-        ]
+        members: placeholderImages.team,
     }
   }
 ];

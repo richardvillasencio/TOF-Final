@@ -1,6 +1,9 @@
+
 import type { HeroSectionProps } from '@/components/page-sections/hero-section';
 import type { TestimonialsSectionProps } from '@/components/page-sections/testimonials-section';
 import type { WhyChooseUsSectionProps } from '@/components/page-sections/why-choose-us-section';
+import placeholderImages from './placeholder-images.json';
+
 // We don't need a specific prop type for CustomizableFeatureGrid as it manages its own content.
 // We'll just define it as a component that takes an `id`.
 
@@ -15,7 +18,7 @@ export const designStudioContent: PageSection[] = [
       id: 'hero',
       component: 'HeroSection',
       props: {
-        backgroundImage: 'https://placehold.co/1920x1080.png',
+        backgroundImage: placeholderImages.design_studio.hero.src,
         backgroundHint: 'serene modern interior',
         title: 'Design Your Dream Space',
         subtitle: 'Use our interactive tools to create the perfect backyard oasis or home relaxation setup. Your vision, our expertise.',
