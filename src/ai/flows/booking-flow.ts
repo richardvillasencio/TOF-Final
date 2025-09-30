@@ -7,7 +7,6 @@
  * - CreateBookingInput - The input type for the createBooking function.
  * - CreateBookingOutput - The return type for the createBooking function.
  */
-import 'dotenv/config';
 import { ai } from '@/ai/genkit';
 import { adminDb } from '@/lib/firebase/admin';
 import { z } from 'genkit';
